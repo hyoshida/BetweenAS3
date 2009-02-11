@@ -25,19 +25,27 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.easing.classes
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.easing.EasingAllTests;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.test;
+	import org.libspark.betweenas3.easing.IEasing;
+	
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class EaseNoneTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			EasingAllTests
-		];
+		test function calculate():void
+		{
+			var e:IEasing = new EaseNone();
+			
+			assertEquals(2.0, e.calculate(0.0, 2.0, 3.0, 1.0));
+			assertEquals(3.5, e.calculate(0.5, 2.0, 3.0, 1.0));
+			assertEquals(4.4, e.calculate(0.8, 2.0, 3.0, 1.0));
+			assertEquals(5.0, e.calculate(1.0, 2.0, 3.0, 1.0));
+		}
 	}
 }

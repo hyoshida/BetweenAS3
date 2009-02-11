@@ -25,19 +25,24 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.easing.EasingAllTests;
+	import org.libspark.betweenas3.easing.classes.EaseNone;
 	
 	/**
+	 * リニアなイージングへのショートカット.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class Linear
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			EasingAllTests
-		];
+		private static const _linear:IEasing = new EaseNone();
+		
+		public static const linear:IEasing = _linear;
+		public static const easeNone:IEasing = _linear;
+		public static const easeIn:IEasing = _linear;
+		public static const easeOut:IEasing = _linear;
+		public static const easeInOut:IEasing = _linear;
+		public static const easeOutIn:IEasing = _linear;
 	}
 }
