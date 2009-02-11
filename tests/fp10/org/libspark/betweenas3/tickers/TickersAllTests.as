@@ -25,23 +25,18 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.tickers
 {
 	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.easing.EasingAllTests;
-	import org.libspark.betweenas3.targets.TargetsAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class TickersAllTests
 	{
 		public static const RunWith:Class = Suite;
 		public static const SuiteClasses:Array = [
-			EasingAllTests,
-			TickersAllTests,
-			TargetsAllTests
+			EnterFrameTickerTest
 		];
 	}
 }
