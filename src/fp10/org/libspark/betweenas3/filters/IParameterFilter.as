@@ -25,34 +25,38 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.filters
 {
-	import org.libspark.betweenas3.tweens.ITween;
+	// Tweener で言う SpecialProeprtySplitter のようなもの。
+	// トゥイーンのパラメータをフィルタリングして正規化などを行う
 	
-	// 新しい ITween, ITweenTarget 実装クラスを作った場合、BetweenAS3 クラスにメソッド追加するのは無理なので、
-	// HogeTween.hoge(t).play(); という形でそのクラス自体にファクトリメソッドを用意してもらう感じにする (暫定)。
-	// そのとき必要になりそうなユーティリティメソッドは BetweenAS3 側で用意する。
-	
-	// SmartRotation は smartRotation という特殊プロパティを用意する。
+	// たとえば
+	// 
+	// target = MovieClip
+	// to = {frame: 'hoge'}
+	//
+	// が渡ってきた場合、MovieClipFrameLabelFilter は
+	// target からフレームラベル「hoge」のフレームの位置を取得して
+	//
+	// to = {frame:3}
+	//
+	// に変更するなど。
 	
 	/**
+	 * トゥイーンのパラメータフィルタ.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3
+	public interface IParameterFilter
 	{
-		public static const VERSION:String = '0.00 (Preview)';
-		
 		/**
-		 * 新しいトゥイーンを作成します.
+		 * フィルタ処理を行います.
 		 * 
-		 * @param	target	トゥイーンの対象となるオブジェクト
-		 * @param	to	トゥイーンのパラメータ (終了値)
-		 * @param	from	トゥイーンのパラメータ (開始値)
-		 * @return
+		 * @param	target	フィルタ対象となるターゲット
+		 * @param	to	フィルタ対象となるパラメータ (開始値)
+		 * @param	from	フィルタ対象となるパラメータ (終了値)
+		 * @param	args	フィルタ対象となるパラメータ (そのほか)
 		 */
-		public static function tween(target:Object, to:Object, from:Object = null):ITween
-		{
-			return null;
-		}
+		function filter(target:Object, to:Object, from:Object, args:Object):void;
 	}
 }

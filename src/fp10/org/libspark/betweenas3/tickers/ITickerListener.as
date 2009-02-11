@@ -25,34 +25,21 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.tickers
 {
-	import org.libspark.betweenas3.tweens.ITween;
-	
-	// 新しい ITween, ITweenTarget 実装クラスを作った場合、BetweenAS3 クラスにメソッド追加するのは無理なので、
-	// HogeTween.hoge(t).play(); という形でそのクラス自体にファクトリメソッドを用意してもらう感じにする (暫定)。
-	// そのとき必要になりそうなユーティリティメソッドは BetweenAS3 側で用意する。
-	
-	// SmartRotation は smartRotation という特殊プロパティを用意する。
-	
 	/**
+	 * 更新のタイミングを受け取る.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3
+	public interface ITickerListener
 	{
-		public static const VERSION:String = '0.00 (Preview)';
-		
 		/**
-		 * 新しいトゥイーンを作成します.
+		 * 指定された時間に基づいて処理を行うべき時に呼び出されるコールバック.
 		 * 
-		 * @param	target	トゥイーンの対象となるオブジェクト
-		 * @param	to	トゥイーンのパラメータ (終了値)
-		 * @param	from	トゥイーンのパラメータ (開始値)
-		 * @return
+		 * @param	time	時間 (ミリ秒)
+		 * @return	このリスナの処理が完了し今後コールバックを受け取る必要がないのであれば true, そうでなければ false.
 		 */
-		public static function tween(target:Object, to:Object, from:Object = null):ITween
-		{
-			return null;
-		}
+		function tick(time:uint):Boolean;
 	}
 }

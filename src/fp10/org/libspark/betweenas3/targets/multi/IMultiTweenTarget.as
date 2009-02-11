@@ -25,34 +25,22 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.targets.multi
 {
+	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.tweens.ITween;
 	
-	// 新しい ITween, ITweenTarget 実装クラスを作った場合、BetweenAS3 クラスにメソッド追加するのは無理なので、
-	// HogeTween.hoge(t).play(); という形でそのクラス自体にファクトリメソッドを用意してもらう感じにする (暫定)。
-	// そのとき必要になりそうなユーティリティメソッドは BetweenAS3 側で用意する。
-	
-	// SmartRotation は smartRotation という特殊プロパティを用意する。
-	
 	/**
+	 * 複数のトゥイーンをひとつにまとめます.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3
+	public interface IMultiTweenTarget extends ITweenTarget
 	{
-		public static const VERSION:String = '0.00 (Preview)';
-		
-		/**
-		 * 新しいトゥイーンを作成します.
-		 * 
-		 * @param	target	トゥイーンの対象となるオブジェクト
-		 * @param	to	トゥイーンのパラメータ (終了値)
-		 * @param	from	トゥイーンのパラメータ (開始値)
-		 * @return
-		 */
-		public static function tween(target:Object, to:Object, from:Object = null):ITween
-		{
-			return null;
-		}
+		function addTween(tween:ITween):void;
+		function addTweenAt(tween:ITween, index:uint):void;
+		function removeTween(tween:ITween):void;
+		function getTweenAt(index:uint):ITween;
+		function getTweenIndex(tween:ITween):int;
 	}
 }

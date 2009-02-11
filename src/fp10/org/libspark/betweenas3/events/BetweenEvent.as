@@ -25,34 +25,25 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.events
 {
-	import org.libspark.betweenas3.tweens.ITween;
-	
-	// 新しい ITween, ITweenTarget 実装クラスを作った場合、BetweenAS3 クラスにメソッド追加するのは無理なので、
-	// HogeTween.hoge(t).play(); という形でそのクラス自体にファクトリメソッドを用意してもらう感じにする (暫定)。
-	// そのとき必要になりそうなユーティリティメソッドは BetweenAS3 側で用意する。
-	
-	// SmartRotation は smartRotation という特殊プロパティを用意する。
+	import flash.events.Event;
 	
 	/**
+	 * ITween によって配信されるイベント.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3
+	public class BetweenEvent extends Event
 	{
-		public static const VERSION:String = '0.00 (Preview)';
+		public static const PLAY:String = 'play';
+		public static const STOP:String = 'stop';
+		public static const UPDATE:String = 'update';
+		public static const COMPLETE:String = 'complete';
 		
-		/**
-		 * 新しいトゥイーンを作成します.
-		 * 
-		 * @param	target	トゥイーンの対象となるオブジェクト
-		 * @param	to	トゥイーンのパラメータ (終了値)
-		 * @param	from	トゥイーンのパラメータ (開始値)
-		 * @return
-		 */
-		public static function tween(target:Object, to:Object, from:Object = null):ITween
+		public function BetweenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
-			return null;
+			super(type, bubbles, cancelable);
 		}
 	}
 }

@@ -25,34 +25,29 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.targets
 {
-	import org.libspark.betweenas3.tweens.ITween;
-	
-	// 新しい ITween, ITweenTarget 実装クラスを作った場合、BetweenAS3 クラスにメソッド追加するのは無理なので、
-	// HogeTween.hoge(t).play(); という形でそのクラス自体にファクトリメソッドを用意してもらう感じにする (暫定)。
-	// そのとき必要になりそうなユーティリティメソッドは BetweenAS3 側で用意する。
-	
-	// SmartRotation は smartRotation という特殊プロパティを用意する。
+	// BetweenAS3 の「トゥイーンの加工」は ITweenTarget が肝になる。
+	// 末端は ISingleTweenTarget で、それを他の ITweenTarget 実装クラスでデコレートすることで
+	// トゥイーンの振る舞いを様々に変化させる。
 	
 	/**
+	 * トゥイーンの対象を表します.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3
+	public interface ITweenTarget
 	{
-		public static const VERSION:String = '0.00 (Preview)';
+		/**
+		 * このトゥイーンターゲットが完了するまでにかかる時間 (ミリ秒) を返します.
+		 */
+		function get duration():uint;
 		
 		/**
-		 * 新しいトゥイーンを作成します.
+		 * このトゥイーンターゲットを指定された時間の状態に更新します.
 		 * 
-		 * @param	target	トゥイーンの対象となるオブジェクト
-		 * @param	to	トゥイーンのパラメータ (終了値)
-		 * @param	from	トゥイーンのパラメータ (開始値)
-		 * @return
+		 * @param	time	時間 (ミリ秒)
 		 */
-		public static function tween(target:Object, to:Object, from:Object = null):ITween
-		{
-			return null;
-		}
+		function update(time:uint):void;
 	}
 }
