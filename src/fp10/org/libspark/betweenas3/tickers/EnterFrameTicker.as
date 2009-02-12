@@ -42,41 +42,36 @@ package org.libspark.betweenas3.tickers
 		
 		public function EnterFrameTicker()
 		{
-			_tickerHolderPaddings = new Array(10);
+			_tickerListenerPaddings = new Vector.<TickerListener>(10, true);
 			
-			var prevHolder:TickerListenerHolder = null;
+			var prevListener:TickerListener = null;
 			
 			for (var i:uint = 0; i < 10; ++i) {
-				var holder:TickerListenerHolder = new TickerListenerHolder();
-				holder.listener = new NullTickerListener();
-				if (prevHolder != null) {
-					prevHolder.next = holder;
-					holder.prev = prevHolder;
+				var listener:TickerListener = new TickerListener();
+				if (prevListener != null) {
+					prevListener.nextListener = listener;
+					listener.prevListener = prevListener;
 				}
-				prevHolder = holder;
-				_tickerHolderPaddings[i] = holder;
+				prevListener = listener;
+				_tickerListenerPaddings[i] = listener;
 			}
 		}
 		
-		private var _first:TickerListenerHolder = null;
+		private var _first:TickerListener = null;
 		private var _numListeners:uint = 0;
-		private var _tickerHolderPaddings:Array;
+		private var _tickerListenerPaddings:Vector.<TickerListener>;
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function addTickerListener(listener:ITickerListener):void
+		public function addTickerListener(listener:TickerListener):void
 		{
-			var holder:TickerListenerHolder = new TickerListenerHolder();
-			
-			holder.listener = listener;
-			
 			if (_first != null) {
-				holder.next = _first;
-				_first.prev = holder;
+				listener.nextListener = _first;
+				_first.prevListener = listener;
 			}
 			
-			_first = holder;
+			_first = listener;
 			
 			++_numListeners;
 		}
@@ -84,26 +79,26 @@ package org.libspark.betweenas3.tickers
 		/**
 		 * @inheritDoc
 		 */
-		public function removeTickerListener(listener:ITickerListener):void
+		public function removeTickerListener(listener:TickerListener):void
 		{
-			var holder:TickerListenerHolder = _first;
+			var l:TickerListener = _first;
 			
-			while (holder != null) {
+			while (l != null) {
 				
-				if (holder.listener == listener) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
+				if (l == listener) {
+					if (l.prevListener != null) {
+						l.prevListener.nextListener = l.nextListener;
 					}
 					else {
-						_first = holder.next;
+						_first = l.nextListener;
 					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
+					if (l.nextListener != null) {
+						l.nextListener.prevListener = l.prevListener;
 					}
 					--_numListeners;
 				}
 				
-				holder = holder.next;
+				l = l.nextListener;
 			}
 		}
 		
@@ -134,103 +129,94 @@ package org.libspark.betweenas3.tickers
 			
 			var t:uint = getTimer();
 			var n:uint = 8 - (_numListeners % 8);
-			var holder:TickerListenerHolder = _tickerHolderPaddings[0] as TickerListenerHolder;
-			var h:TickerListenerHolder = _tickerHolderPaddings[n] as TickerListenerHolder;
+			var listener:TickerListener = _tickerListenerPaddings[0];
+			var l:TickerListener = _tickerListenerPaddings[n];
 			
 			// このようにつなぎかえることでパディングの数を変える
-			if ((h.next = _first) != null) {
-				_first.prev = h;
+			if ((l.nextListener = _first) != null) {
+				_first.prevListener = l;
 			}
 			
-			while (holder.next != null) {
-				if ((holder = holder.next).listener.tick(t)) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
+			while (listener.nextListener != null) {
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
 					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
-					}
-					--_numListeners;
-				}
-				if ((holder = holder.next).listener.tick(t)) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
-					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
 					}
 					--_numListeners;
 				}
-				if ((holder = holder.next).listener.tick(t)) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
 					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
-					}
-					--_numListeners;
-				}
-				if ((holder = holder.next).listener.tick(t)) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
-					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
 					}
 					--_numListeners;
 				}
-				if ((holder = holder.next).listener.tick(t)) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
 					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
-					}
-					--_numListeners;
-				}
-				if ((holder = holder.next).listener.tick(t)) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
-					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
 					}
 					--_numListeners;
 				}
-				if ((holder = holder.next).listener.tick(t)) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
 					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
 					}
 					--_numListeners;
 				}
-				if ((holder = holder.next).listener.tick(t)) {
-					if (holder.prev != null) {
-						holder.prev.next = holder.next;
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
 					}
-					if (holder.next != null) {
-						holder.next.prev = holder.prev;
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
 					}
 					--_numListeners;
 				}
 			}
 			
 			// 元に戻す
-			if ((_first = h.next) != null) {
-				_first.prev = null;
+			if ((_first = l.nextListener) != null) {
+				_first.prevListener = null;
 			}
-			h.next = _tickerHolderPaddings[n + 1] as TickerListenerHolder;
+			l.nextListener = _tickerListenerPaddings[n + 1];
 		}
 	}
-}
-
-import org.libspark.betweenas3.tickers.ITickerListener;
-
-internal class TickerListenerHolder
-{
-	public var listener:ITickerListener;
-	public var next:TickerListenerHolder;
-	public var prev:TickerListenerHolder;
 }

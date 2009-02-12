@@ -27,12 +27,33 @@
  */
 package org.libspark.betweenas3.tickers
 {
+	// 本当はインターフェイスのほうが好ましいのだけど速度とメモリ的な理由からクラスで。
+	
 	/**
-	 * @private
+	 * 更新のタイミングを受け取るためのリスナー.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class NullTickerListener implements ITickerListener
+	public class TickerListener
 	{
+		/**
+		 * ひとつ前のリスナーを設定します.
+		 * 双方向リンクリストのために内部的に使用されます。
+		 */
+		public var prevListener:TickerListener = null;
+		
+		/**
+		 * ひとつ後のリスナーを設定します.
+		 * 双方向リンクリストのために内部的に使用されます。
+		 */
+		public var nextListener:TickerListener = null;
+		
+		/**
+		 * 指定された時間に基づいて処理を行うべき時に呼び出されるコールバック.
+		 * 
+		 * @param	time	時間 (ミリ秒)
+		 * @return	このリスナの処理が完了し今後コールバックを受け取る必要がないのであれば true, そうでなければ false.
+		 */
 		public function tick(time:uint):Boolean
 		{
 			return false;

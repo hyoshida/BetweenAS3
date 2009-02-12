@@ -39,14 +39,14 @@ package org.libspark.betweenas3.tickers
 		 * 
 		 * @param	listener	コールバックを受け取るリスナ
 		 */
-		function addTickerListener(listener:ITickerListener):void;
+		function addTickerListener(listener:TickerListener):void;
 		
 		/**
 		 * 追加されているリスナを削除します.
 		 * 
 		 * @param	listener	削除するリスナ
 		 */
-		function removeTickerListener(listener:ITickerListener):void;
+		function removeTickerListener(listener:TickerListener):void;
 		
 		/**
 		 * タイミング管理の処理を開始します.

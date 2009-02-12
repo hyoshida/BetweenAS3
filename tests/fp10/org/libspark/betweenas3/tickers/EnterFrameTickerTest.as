@@ -40,30 +40,30 @@ package org.libspark.betweenas3.tickers
 	{
 		test function update():void
 		{
-			var l01:TickerListener = new TickerListener(1);
-			var l02:TickerListener = new TickerListener(1);
-			var l03:TickerListener = new TickerListener(2);
-			var l04:TickerListener = new TickerListener(3);
-			var l05:TickerListener = new TickerListener(5);
-			var l06:TickerListener = new TickerListener(8);
-			var l07:TickerListener = new TickerListener(13);
-			var l08:TickerListener = new TickerListener(21);
-			var l09:TickerListener = new TickerListener(34);
-			var l10:TickerListener = new TickerListener(55);
-			var l11:TickerListener = new TickerListener(89);
-			var l12:TickerListener = new TickerListener(144);
-			var l13:TickerListener = new TickerListener(233);
-			var l14:TickerListener = new TickerListener(377);
-			var l15:TickerListener = new TickerListener(610);
-			var l16:TickerListener = new TickerListener(987);
-			var l17:TickerListener = new TickerListener(1597);
-			var l18:TickerListener = new TickerListener(2584);
-			var l19:TickerListener = new TickerListener(4181);
-			var l20:TickerListener = new TickerListener(6765);
-			var l21:TickerListener = new TickerListener(10946);
-			var l22:TickerListener = new TickerListener(17711);
-			var l23:TickerListener = new TickerListener(28657);
-			var l24:TickerListener = new TickerListener(46368);
+			var l01:MockTickerListener = new MockTickerListener(1);
+			var l02:MockTickerListener = new MockTickerListener(1);
+			var l03:MockTickerListener = new MockTickerListener(2);
+			var l04:MockTickerListener = new MockTickerListener(3);
+			var l05:MockTickerListener = new MockTickerListener(5);
+			var l06:MockTickerListener = new MockTickerListener(8);
+			var l07:MockTickerListener = new MockTickerListener(13);
+			var l08:MockTickerListener = new MockTickerListener(21);
+			var l09:MockTickerListener = new MockTickerListener(34);
+			var l10:MockTickerListener = new MockTickerListener(55);
+			var l11:MockTickerListener = new MockTickerListener(89);
+			var l12:MockTickerListener = new MockTickerListener(144);
+			var l13:MockTickerListener = new MockTickerListener(233);
+			var l14:MockTickerListener = new MockTickerListener(377);
+			var l15:MockTickerListener = new MockTickerListener(610);
+			var l16:MockTickerListener = new MockTickerListener(987);
+			var l17:MockTickerListener = new MockTickerListener(1597);
+			var l18:MockTickerListener = new MockTickerListener(2584);
+			var l19:MockTickerListener = new MockTickerListener(4181);
+			var l20:MockTickerListener = new MockTickerListener(6765);
+			var l21:MockTickerListener = new MockTickerListener(10946);
+			var l22:MockTickerListener = new MockTickerListener(17711);
+			var l23:MockTickerListener = new MockTickerListener(28657);
+			var l24:MockTickerListener = new MockTickerListener(46368);
 			
 			var ticker:EnterFrameTicker = new EnterFrameTicker();
 			
@@ -122,14 +122,14 @@ package org.libspark.betweenas3.tickers
 			assertEquals(46368, l24.c);
 		}
 		
-		/*
+		/**
 		test function speed():void
 		{
 			var i:uint;
 			var ticker:EnterFrameTicker = new EnterFrameTicker();
 			
 			for (i = 0; i < 8000; ++i) {
-				ticker.addTickerListener(new TickerListener(600));
+				ticker.addTickerListener(new MockTickerListener(600));
 			}
 			
 			var t:uint = getTimer();
@@ -140,15 +140,15 @@ package org.libspark.betweenas3.tickers
 			
 			trace('time<' + (getTimer() - t) + '>');
 		}
-		*/
+		/**/
 	}
 }
 
-import org.libspark.betweenas3.tickers.ITickerListener;
+import org.libspark.betweenas3.tickers.TickerListener;
 
-internal class TickerListener implements ITickerListener
+internal class MockTickerListener extends TickerListener
 {
-	public function TickerListener(n:uint)
+	public function MockTickerListener(n:uint)
 	{
 		this.n = n;
 		this.c = 0;
@@ -157,7 +157,7 @@ internal class TickerListener implements ITickerListener
 	public var n:uint;
 	public var c:uint;
 	
-	public function tick(time:uint):Boolean
+	override public function tick(time:uint):Boolean
 	{
 		return ++c == n;
 	}
