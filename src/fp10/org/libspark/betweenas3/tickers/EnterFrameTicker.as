@@ -64,6 +64,14 @@ package org.libspark.betweenas3.tickers
 		/**
 		 * @inheritDoc
 		 */
+		public function get time():uint
+		{
+			return getTimer();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function addTickerListener(listener:TickerListener):void
 		{
 			if (_first != null) {

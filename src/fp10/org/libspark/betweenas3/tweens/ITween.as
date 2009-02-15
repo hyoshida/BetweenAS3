@@ -45,11 +45,6 @@ package org.libspark.betweenas3.tweens
 		function get tweenTarget():ITweenTarget;
 		
 		/**
-		 * @private
-		 */
-		function set tweenTarget(value:ITweenTarget):void;
-		
-		/**
 		 * このトゥイーンの継続時間 (ミリ秒) を返します.
 		 */
 		function get duration():uint;

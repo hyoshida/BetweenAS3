@@ -33,6 +33,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.registries.RegistriesAllTests;
 	import org.libspark.betweenas3.targets.TargetsAllTests;
 	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.tweens.TweensAllTests;
 	
 	/**
 	 * @author	yossy:beinteractive
@@ -44,6 +45,7 @@ package org.libspark.betweenas3
 			EasingAllTests,
 			TickersAllTests,
 			TargetsAllTests,
+			TweensAllTests,
 			RegistriesAllTests,
 			FactoriesAllTests
 		];
