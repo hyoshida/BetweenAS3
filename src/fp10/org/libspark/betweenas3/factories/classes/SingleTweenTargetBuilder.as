@@ -28,6 +28,7 @@
 package org.libspark.betweenas3.factories.classes
 {
 	import flash.utils.Dictionary;
+	import org.libspark.betweenas3.easing.IEasing;
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.single.ISingleTweenTarget;
 	
@@ -43,6 +44,7 @@ package org.libspark.betweenas3.factories.classes
 		private var _targetClass:Class;
 		private var _time:uint;
 		private var _delay:uint;
+		private var _easing:IEasing;
 		private var _tweenTargetMap:Dictionary = new Dictionary();
 		private var _tweenTargets:Vector.<ISingleTweenTarget> = new Vector.<ISingleTweenTarget>();
 		
@@ -56,12 +58,13 @@ package org.libspark.betweenas3.factories.classes
 			_registry = value;
 		}
 		
-		public function reset(target:Object, time:uint, delay:uint):void
+		public function reset(target:Object, time:uint, delay:uint, easing:IEasing):void
 		{
 			_target = target;
 			_targetClass = target != null ? target.constructor : null;
 			_time = time;
 			_delay = delay;
+			_easing = easing;
 			for (var p:* in _tweenTargetMap) {
 				delete _tweenTargetMap[p];
 			}
@@ -78,6 +81,7 @@ package org.libspark.betweenas3.factories.classes
 					t.target = _target;
 					t.delay = _delay;
 					t.time = _time;
+					t.easing = _easing;
 					_tweenTargetMap[tweenTargetClass] = t;
 					_tweenTargets.push(t);
 				}

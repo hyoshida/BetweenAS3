@@ -28,6 +28,8 @@
 package org.libspark.betweenas3.factories
 {
 	import org.libspark.betweenas3.classes.ObjectCache;
+	import org.libspark.betweenas3.easing.IEasing;
+	import org.libspark.betweenas3.easing.Linear;
 	import org.libspark.betweenas3.factories.classes.SingleTweenTargetBuilder;
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.single.CompositeSingleTweenTarget;
@@ -77,17 +79,25 @@ package org.libspark.betweenas3.factories
 			var source:Object = cloneObject(from);
 			var args:Object = {
 				time: getObjectProperty('time', dest, source, 1.0),
-				delay: getObjectProperty('delay', dest, source, 0.0)
+				delay: getObjectProperty('delay', dest, source, 0.0),
+				transition: getObjectProperty('transition', dest, source, null)
 			};
 			
 			// TODO: Value filter
 			
+			// TODO: Easing
+			
 			var time:uint = uint(args.time * 1000);
 			var delay:uint = uint(args.delay * 1000);
+			var transition:IEasing = args.transition as IEasing;
+			
+			if (transition == null) {
+				transition = Linear.easeNone;
+			}
 			
 			var tweenTargetBuilder:SingleTweenTargetBuilder = _tweenTargetBuilderCache.pop() as SingleTweenTargetBuilder;
 			
-			tweenTargetBuilder.reset(target, time, delay);
+			tweenTargetBuilder.reset(target, time, delay, transition);
 			
 			var name:String;
 			var value:Object;
@@ -124,10 +134,10 @@ package org.libspark.betweenas3.factories
 				tweenTarget = tweenTargets[0];
 			}
 			else if (tweenTargets.length > 1) {
-				tweenTarget = new CompositeSingleTweenTarget(target, time, delay, tweenTargets);
+				tweenTarget = new CompositeSingleTweenTarget(target, time, delay, transition, tweenTargets);
 			}
 			
-			tweenTargetBuilder.reset(null, 0, 0);
+			tweenTargetBuilder.reset(null, 0, 0, null);
 			
 			_tweenTargetBuilderCache.push(tweenTargetBuilder);
 			

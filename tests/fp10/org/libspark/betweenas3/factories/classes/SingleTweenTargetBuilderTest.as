@@ -31,6 +31,8 @@ package org.libspark.betweenas3.factories.classes
 	import org.libspark.as3unit.before;
 	import org.libspark.as3unit.after;
 	import org.libspark.as3unit.test;
+	import org.libspark.betweenas3.easing.classes.EaseNone;
+	import org.libspark.betweenas3.easing.IEasing;
 	import org.libspark.betweenas3.factories.ClassA;
 	import org.libspark.betweenas3.factories.ClassB;
 	import org.libspark.betweenas3.registries.ClassRegistry;
@@ -66,7 +68,8 @@ package org.libspark.betweenas3.factories.classes
 		test function createA():void
 		{
 			var obj:Object = new ClassA();
-			_b.reset(obj, 100, 200);
+			var easing:IEasing = new EaseNone();
+			_b.reset(obj, 100, 200, easing);
 			var t1:ISingleTweenTarget = _b.createTweenTarget('a1');
 			var t2:ISingleTweenTarget = _b.createTweenTarget('a1');
 			var t3:ISingleTweenTarget = _b.createTweenTarget('a2');
@@ -76,6 +79,7 @@ package org.libspark.betweenas3.factories.classes
 			assertSame(obj, t1.target);
 			assertEquals(100, t1.time);
 			assertEquals(200, t1.delay);
+			assertSame(easing, t1.easing);
 			assertSame(t1, t2);
 			assertSame(t1, t3);
 			assertNull(t4);
@@ -86,7 +90,8 @@ package org.libspark.betweenas3.factories.classes
 		test function createB():void
 		{
 			var obj:Object = new ClassB();
-			_b.reset(obj, 100, 200);
+			var easing:IEasing = new EaseNone();
+			_b.reset(obj, 100, 200, easing);
 			var t1:ISingleTweenTarget = _b.createTweenTarget('a1');
 			var t2:ISingleTweenTarget = _b.createTweenTarget('a1');
 			var t3:ISingleTweenTarget = _b.createTweenTarget('a2');
@@ -96,11 +101,13 @@ package org.libspark.betweenas3.factories.classes
 			assertSame(obj, t1.target);
 			assertEquals(100, t1.time);
 			assertEquals(200, t1.delay);
+			assertSame(easing, t1.easing);
 			assertSame(t1, t2);
 			assertTrue(t3 is TestTweenTargetA);
 			assertSame(obj, t3.target);
 			assertEquals(100, t3.time);
 			assertEquals(200, t3.delay);
+			assertSame(easing, t3.easing);
 			assertSame(t1, t4);
 			assertEquals(2, t.length);
 			assertSame(t1, t[0]);

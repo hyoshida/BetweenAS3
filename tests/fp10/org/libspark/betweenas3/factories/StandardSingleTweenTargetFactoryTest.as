@@ -31,6 +31,8 @@ package org.libspark.betweenas3.factories
 	import org.libspark.as3unit.before;
 	import org.libspark.as3unit.after;
 	import org.libspark.as3unit.test;
+	import org.libspark.betweenas3.easing.classes.EaseNone;
+	import org.libspark.betweenas3.easing.IEasing;
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.single.CompositeSingleTweenTarget;
 	import org.libspark.betweenas3.targets.single.ISingleTweenTarget;
@@ -67,11 +69,13 @@ package org.libspark.betweenas3.factories
 			_builder.targets.push(t);
 			
 			var obj:Object = new Object();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0}, null);
+			var easing:IEasing = new EaseNone();
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0, transition: easing}, null);
 			
 			assertSame(t, result);
 			assertEquals(2000, t.delay);
 			assertEquals(3000, t.time);
+			assertSame(easing, t.easing);
 			
 			var destA:Object = t.dest['a'];
 			var destB:Object = t.dest['b'];
@@ -96,11 +100,13 @@ package org.libspark.betweenas3.factories
 			_builder.targets.push(t);
 			
 			var obj:Object = new Object();
-			var result:ISingleTweenTarget = _f.create(obj, null, {a: 10, $b: 20, delay: 2.0, time: 3.0});
+			var easing:IEasing = new EaseNone();
+			var result:ISingleTweenTarget = _f.create(obj, null, {a: 10, $b: 20, delay: 2.0, time: 3.0, transition: easing});
 			
 			assertSame(t, result);
 			assertEquals(2000, t.delay);
 			assertEquals(3000, t.time);
+			assertSame(easing, t.easing);
 			
 			var destA:Object = t.dest['a'];
 			var destB:Object = t.dest['b'];
@@ -125,11 +131,14 @@ package org.libspark.betweenas3.factories
 			_builder.targets.push(t);
 			
 			var obj:Object = new Object();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0}, {b: 30, $c: 40, delay: 1.0, time: 2.0});
+			var e1:IEasing = new EaseNone();
+			var e2:IEasing = new EaseNone();
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0, transition: e1}, {b: 30, $c: 40, delay: 1.0, time: 2.0, transition: e2});
 			
 			assertSame(t, result);
 			assertEquals(2000, t.delay);
 			assertEquals(3000, t.time);
+			assertSame(e1, t.easing);
 			
 			var destA:Object = t.dest['a'];
 			var destB:Object = t.dest['b'];
@@ -164,7 +173,8 @@ package org.libspark.betweenas3.factories
 			_builder.targets.push(t2);
 			
 			var obj:Object = new Object();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0}, null);
+			var easing:IEasing = new EaseNone();
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0, transition: easing}, null);
 			
 			assertTrue(result is CompositeSingleTweenTarget);
 			
@@ -172,6 +182,7 @@ package org.libspark.betweenas3.factories
 			
 			assertEquals(2000, r.delay);
 			assertEquals(3000, r.time);
+			assertSame(easing, r.easing);
 			
 			assertSame(t1, r.getSingleTweenTargetAt(0));
 			assertSame(t2, r.getSingleTweenTargetAt(1));
@@ -179,6 +190,7 @@ package org.libspark.betweenas3.factories
 	}
 }
 
+import org.libspark.betweenas3.easing.IEasing;
 import org.libspark.betweenas3.factories.classes.SingleTweenTargetBuilder;
 import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
 import org.libspark.betweenas3.targets.single.ISingleTweenTarget;
@@ -242,17 +254,20 @@ internal class TestSingleTweenTargetBuilder extends SingleTweenTargetBuilder
 	
 	private var _time:uint;
 	private var _delay:uint;
+	private var _easing:IEasing;
 	
-	override public function reset(t:Object, time:uint, delay:uint):void
+	override public function reset(t:Object, time:uint, delay:uint, easing:IEasing):void
 	{
 		_time = time;
 		_delay = delay;
+		_easing = easing;
 	}
 	
 	override public function createTweenTarget(propertyName:String):ISingleTweenTarget
 	{
 		target.time = _time;
 		target.delay = _delay;
+		target.easing = _easing;
 		return target;
 	}
 	
