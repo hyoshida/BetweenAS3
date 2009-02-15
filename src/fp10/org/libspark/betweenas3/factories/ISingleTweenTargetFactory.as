@@ -25,27 +25,35 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.factories
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.easing.EasingAllTests;
-	import org.libspark.betweenas3.factories.FactoriesAllTests;
-	import org.libspark.betweenas3.registries.RegistriesAllTests;
-	import org.libspark.betweenas3.targets.TargetsAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.registries.ClassRegistry;
+	import org.libspark.betweenas3.targets.single.ISingleTweenTarget;
 	
 	/**
+	 * ISingleTweenTarget のファクトリ.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface ISingleTweenTargetFactory
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			EasingAllTests,
-			TickersAllTests,
-			TargetsAllTests,
-			RegistriesAllTests,
-			FactoriesAllTests
-		];
+		/**
+		 * 
+		 */
+		function get tweenTargetClassRegistry():ClassRegistry;
+		
+		/**
+		 * @private
+		 */
+		function set tweenTargetClassRegistry(value:ClassRegistry):void;
+		
+		/**
+		 * 
+		 * @param	target
+		 * @param	to
+		 * @param	from
+		 * @return
+		 */
+		function create(target:Object, to:Object, from:Object):ISingleTweenTarget;
 	}
 }

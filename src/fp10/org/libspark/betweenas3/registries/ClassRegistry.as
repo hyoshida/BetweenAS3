@@ -56,11 +56,13 @@ package org.libspark.betweenas3.registries
 			var l:uint = tree.length;
 			for (var i:uint = 0; i < l; ++i) {
 				var properties:Dictionary = classes[tree[i]] as Dictionary;
-				if (properties[propertyName] != undefined) {
-					return properties[propertyName] as Class;
-				}
-				if (properties['*'] != undefined) {
-					return properties['*'] as Class;
+				if (properties != null) {
+					if (properties[propertyName] != undefined) {
+						return properties[propertyName] as Class;
+					}
+					if (properties['*'] != undefined) {
+						return properties['*'] as Class;
+					}
 				}
 			}
 			

@@ -25,27 +25,45 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.classes
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.easing.EasingAllTests;
-	import org.libspark.betweenas3.factories.FactoriesAllTests;
-	import org.libspark.betweenas3.registries.RegistriesAllTests;
-	import org.libspark.betweenas3.targets.TargetsAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * オブジェクトのキャッシュ機構.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class ObjectCache
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			EasingAllTests,
-			TickersAllTests,
-			TargetsAllTests,
-			RegistriesAllTests,
-			FactoriesAllTests
-		];
+		public function ObjectCache(limit:uint, factory:Function)
+		{
+			_objects = new Vector.<Object>(limit, true);
+			_cursor = 0;
+			_limit = limit;
+			_factory = factory;
+		}
+		
+		private var _objects:Vector.<Object>;
+		private var _limit:uint;
+		private var _cursor:uint;
+		private var _factory:Function;
+		
+		public function pop():Object
+		{
+			if (_cursor > 0) {
+				var obj:Object = _objects[_cursor];
+				_objects[_cursor] = null;
+				--_cursor;
+				return obj;
+			}
+			return _factory();
+		}
+		
+		public function push(obj:Object):void
+		{
+			if (_cursor < _limit) {
+				_objects[_cursor] = obj;
+				++_cursor;
+			}
+		}
 	}
 }
