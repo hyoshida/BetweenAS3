@@ -27,7 +27,14 @@
  */
 package org.libspark.betweenas3
 {
+	import org.libspark.betweenas3.factories.ISingleTweenTargetFactory;
+	import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
+	import org.libspark.betweenas3.registries.ClassRegistry;
+	import org.libspark.betweenas3.targets.single.ObjectTweenTarget;
+	import org.libspark.betweenas3.tickers.EnterFrameTicker;
+	import org.libspark.betweenas3.tickers.ITicker;
 	import org.libspark.betweenas3.tweens.ITween;
+	import org.libspark.betweenas3.tweens.StandardTween;
 	
 	// 新しい ITween, ITweenTarget 実装クラスを作った場合、BetweenAS3 クラスにメソッド追加するのは無理なので、
 	// HogeTween.hoge(t).play(); という形でそのクラス自体にファクトリメソッドを用意してもらう感じにする (暫定)。
@@ -42,6 +49,21 @@ package org.libspark.betweenas3
 	{
 		public static const VERSION:String = '0.00 (Preview)';
 		
+		// 超とりあえず
+		
+		private static var _ticker:ITicker;
+		private static var _singleTweenTargetFactory:ISingleTweenTargetFactory;
+		private static var _tweenTargetClassRegistry:ClassRegistry;
+		
+		{
+			_ticker = new EnterFrameTicker();
+			_ticker.start();
+			_tweenTargetClassRegistry = new ClassRegistry();
+			_tweenTargetClassRegistry.registerClassWithTargetClassAndProeprtyName(ObjectTweenTarget, Object, '*');
+			_singleTweenTargetFactory = new StandardSingleTweenTargetFactory();
+			_singleTweenTargetFactory.tweenTargetClassRegistry = _tweenTargetClassRegistry;
+		}
+		
 		/**
 		 * 新しいトゥイーンを作成します.
 		 * 
@@ -52,7 +74,7 @@ package org.libspark.betweenas3
 		 */
 		public static function tween(target:Object, to:Object, from:Object = null):ITween
 		{
-			return null;
+			return new StandardTween(_singleTweenTargetFactory.create(target, to, from), _ticker, 0);
 		}
 	}
 }
