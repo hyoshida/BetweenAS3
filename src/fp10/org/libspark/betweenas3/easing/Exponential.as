@@ -25,36 +25,23 @@
  * THE SOFTWARE.
  * 
  */
-package
+package org.libspark.betweenas3.easing
 {
-	import flash.display.Shape;
-	import flash.display.Sprite;
-	import org.libspark.betweenas3.BetweenAS3;
-	import org.libspark.betweenas3.easing.Exponential;
+	import org.libspark.betweenas3.easing.classes.ExponentialEaseIn;
+	import org.libspark.betweenas3.easing.classes.ExponentialEaseInOut;
+	import org.libspark.betweenas3.easing.classes.ExponentialEaseOut;
+	import org.libspark.betweenas3.easing.classes.ExponentialEaseOutIn;
 	
 	/**
+	 * Exponential.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class TweenTest extends Sprite
+	public class Exponential
 	{
-		public function TweenTest()
-		{
-			var s:Shape = new Shape();
-			s.graphics.beginFill(0);
-			s.graphics.drawRect(-10, -10, 20, 20);
-			s.graphics.endFill();
-			
-			addChild(s);
-			
-			BetweenAS3.tween(s, {
-				x: 400,
-				y: 200,
-				time: 2.0,
-				transition: Exponential.easeOut
-			}, {
-				x: 100,
-				y: 100
-			}).play();
-		}
+		public static const easeIn:IEasing = new ExponentialEaseIn();
+		public static const easeOut:IEasing = new ExponentialEaseOut();
+		public static const easeInOut:IEasing = new ExponentialEaseInOut();
+		public static const easeOutIn:IEasing = new ExponentialEaseOutIn();
 	}
 }
