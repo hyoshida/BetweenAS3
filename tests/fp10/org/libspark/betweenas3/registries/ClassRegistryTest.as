@@ -46,10 +46,10 @@ package org.libspark.betweenas3.registries
 		before function initialize():void
 		{
 			_r = new ClassRegistry();
-			_r.registerClassWithTargetClassAndProeprtyName(A, ClassB, 'a');
-			_r.registerClassWithTargetClassAndProeprtyName(B, ClassA, 'a');
-			_r.registerClassWithTargetClassAndProeprtyName(C, ClassA, 'b');
 			_r.registerClassWithTargetClassAndProeprtyName(D, Object, '*');
+			_r.registerClassWithTargetClassAndProeprtyName(C, ClassA, 'b');
+			_r.registerClassWithTargetClassAndProeprtyName(B, ClassA, 'a');
+			_r.registerClassWithTargetClassAndProeprtyName(A, ClassB, 'a');
 		}
 		
 		after function finalize():void
@@ -91,6 +91,13 @@ package org.libspark.betweenas3.registries
 		{
 			assertSame(D, _r.getClassByTargetClassAndPropertyName(Object, 'c'));
 		}
+		
+		test function overrideRegister():void
+		{
+			_r.registerClassWithTargetClassAndProeprtyName(E, ClassA, 'a');
+			assertSame(E, _r.getClassByTargetClassAndPropertyName(ClassA, 'a'));
+			assertSame(C, _r.getClassByTargetClassAndPropertyName(ClassA, 'b'));
+		}
 	}
 }
 
@@ -107,5 +114,9 @@ internal class C
 }
 
 internal class D
+{
+}
+
+internal class E
 {
 }
