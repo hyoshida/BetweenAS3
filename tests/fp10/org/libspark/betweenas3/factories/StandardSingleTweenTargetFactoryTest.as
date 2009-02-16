@@ -70,7 +70,7 @@ package org.libspark.betweenas3.factories
 			
 			var obj:Object = new Object();
 			var easing:IEasing = new EaseNone();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0, transition: easing}, null);
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, null, 3000, easing, 2000);
 			
 			assertSame(t, result);
 			assertEquals(2000, t.delay);
@@ -101,7 +101,7 @@ package org.libspark.betweenas3.factories
 			
 			var obj:Object = new Object();
 			var easing:IEasing = new EaseNone();
-			var result:ISingleTweenTarget = _f.create(obj, null, {a: 10, $b: 20, delay: 2.0, time: 3.0, transition: easing});
+			var result:ISingleTweenTarget = _f.create(obj, null, {a: 10, $b: 20}, 3000, easing, 2000);
 			
 			assertSame(t, result);
 			assertEquals(2000, t.delay);
@@ -131,14 +131,13 @@ package org.libspark.betweenas3.factories
 			_builder.targets.push(t);
 			
 			var obj:Object = new Object();
-			var e1:IEasing = new EaseNone();
-			var e2:IEasing = new EaseNone();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0, transition: e1}, {b: 30, $c: 40, delay: 1.0, time: 2.0, transition: e2});
+			var easing:IEasing = new EaseNone();
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, {b: 30, $c: 40}, 3000, easing, 2000);
 			
 			assertSame(t, result);
 			assertEquals(2000, t.delay);
 			assertEquals(3000, t.time);
-			assertSame(e1, t.easing);
+			assertSame(easing, t.easing);
 			
 			var destA:Object = t.dest['a'];
 			var destB:Object = t.dest['b'];
@@ -174,7 +173,7 @@ package org.libspark.betweenas3.factories
 			
 			var obj:Object = new Object();
 			var easing:IEasing = new EaseNone();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20, delay: 2.0, time: 3.0, transition: easing}, null);
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, null, 3000, easing, 2000);
 			
 			assertTrue(result is CompositeSingleTweenTarget);
 			

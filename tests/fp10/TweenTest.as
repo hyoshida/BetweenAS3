@@ -27,6 +27,7 @@
  */
 package
 {
+	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import org.libspark.betweenas3.BetweenAS3;
@@ -39,22 +40,19 @@ package
 	{
 		public function TweenTest()
 		{
-			var s:Shape = new Shape();
-			s.graphics.beginFill(0);
-			s.graphics.drawRect(-10, -10, 20, 20);
-			s.graphics.endFill();
+			var mc:MovieClip = new MovieClip();
+			mc.graphics.beginFill(0);
+			mc.graphics.drawRect(-10, -10, 20, 20);
+			mc.graphics.endFill();
 			
-			addChild(s);
+			addChild(mc);
 			
-			BetweenAS3.tween(s, {
+			BetweenAS3.tween(mc, {
 				x: 400,
 				y: 200,
-				time: 2.0,
-				transition: Exponential.easeOut
-			}, {
-				x: 100,
-				y: 100
-			}).play();
+				scaleX: 2.0,
+				scaleY: 2.0
+			}, null, 0.5, Exponential.easeIn, 0.5).play();
 		}
 	}
 }

@@ -29,7 +29,6 @@ package org.libspark.betweenas3.factories
 {
 	import org.libspark.betweenas3.classes.ObjectCache;
 	import org.libspark.betweenas3.easing.IEasing;
-	import org.libspark.betweenas3.easing.Linear;
 	import org.libspark.betweenas3.factories.classes.SingleTweenTargetBuilder;
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.single.CompositeSingleTweenTarget;
@@ -73,40 +72,13 @@ package org.libspark.betweenas3.factories
 		/**
 		 * @inheritDoc
 		 */
-		public function create(target:Object, dest:Object, source:Object):ISingleTweenTarget
+		public function create(target:Object, dest:Object, source:Object, time:uint, easing:IEasing, delay:uint):ISingleTweenTarget
 		{
 			// TODO: Value filter
 			
-			var time:uint = 1000;
-			var delay:uint = 0;
-			var transition:IEasing = Linear.easeNone;
-			
-			if (source != null) {
-				if ('time' in source) {
-					time = uint(source.time * 1000);
-				}
-				if ('delay' in source) {
-					delay = uint(source.delay * 1000);
-				}
-				if ('transition' in source) {
-					transition = source.transition as IEasing;
-				}
-			}
-			if (dest != null) {
-				if ('time' in dest) {
-					time = uint(dest.time * 1000);
-				}
-				if ('delay' in dest) {
-					delay = uint(dest.delay * 1000);
-				}
-				if ('transition' in dest) {
-					transition = dest.transition as IEasing;
-				}
-			}
-			
 			var tweenTargetBuilder:SingleTweenTargetBuilder = _tweenTargetBuilderCache.pop() as SingleTweenTargetBuilder;
 			
-			tweenTargetBuilder.reset(target, time, delay, transition);
+			tweenTargetBuilder.reset(target, time, delay, easing);
 			
 			var name:String;
 			var value:Object;
@@ -143,7 +115,7 @@ package org.libspark.betweenas3.factories
 				tweenTarget = tweenTargets[0];
 			}
 			else if (tweenTargets.length > 1) {
-				tweenTarget = new CompositeSingleTweenTarget(target, time, delay, transition, tweenTargets);
+				tweenTarget = new CompositeSingleTweenTarget(target, time, delay, easing, tweenTargets);
 			}
 			
 			tweenTargetBuilder.reset(null, 0, 0, null);

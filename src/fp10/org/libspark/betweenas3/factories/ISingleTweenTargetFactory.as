@@ -27,6 +27,7 @@
  */
 package org.libspark.betweenas3.factories
 {
+	import org.libspark.betweenas3.easing.IEasing;
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.single.ISingleTweenTarget;
 	
@@ -52,8 +53,11 @@ package org.libspark.betweenas3.factories
 		 * @param	target
 		 * @param	to
 		 * @param	from
+		 * @param	time
+		 * @param	easing
+		 * @param	delay
 		 * @return
 		 */
-		function create(target:Object, to:Object, from:Object):ISingleTweenTarget;
+		function create(target:Object, to:Object, from:Object, time:uint, easing:IEasing, delay:uint):ISingleTweenTarget;
 	}
 }

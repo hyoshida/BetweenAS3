@@ -28,6 +28,8 @@
 package org.libspark.betweenas3
 {
 	import flash.display.DisplayObject;
+	import org.libspark.betweenas3.easing.IEasing;
+	import org.libspark.betweenas3.easing.Linear;
 	import org.libspark.betweenas3.factories.ISingleTweenTargetFactory;
 	import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
 	import org.libspark.betweenas3.registries.ClassRegistry;
@@ -85,9 +87,9 @@ package org.libspark.betweenas3
 		 * @param	from	トゥイーンのパラメータ (開始値)
 		 * @return
 		 */
-		public static function tween(target:Object, to:Object, from:Object = null):ITween
+		public static function tween(target:Object, to:Object, from:Object = null, time:Number = 1.0, easing:IEasing = null, delay:Number = 0.0):ITween
 		{
-			return new StandardTween(_singleTweenTargetFactory.create(target, to, from), _ticker, 0);
+			return new StandardTween(_singleTweenTargetFactory.create(target, to, from, uint(time * 1000), easing || Linear.easeNone, uint(delay * 1000)), _ticker, 0);
 		}
 	}
 }
