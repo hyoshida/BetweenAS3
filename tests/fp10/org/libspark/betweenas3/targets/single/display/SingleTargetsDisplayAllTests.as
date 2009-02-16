@@ -25,20 +25,18 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3.targets.single
+package org.libspark.betweenas3.targets.single.display
 {
 	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.targets.single.display.SingleTargetsDisplayAllTests;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class SingleTargetsAllTests
+	public class SingleTargetsDisplayAllTests
 	{
 		public static const RunWith:Class = Suite;
 		public static const SuiteClasses:Array = [
-			ObjectTweenTargetTest,
-			SingleTargetsDisplayAllTests
+			DisplayObjectTweenTargetTest
 		];
 	}
 }

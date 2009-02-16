@@ -27,9 +27,11 @@
  */
 package org.libspark.betweenas3
 {
+	import flash.display.DisplayObject;
 	import org.libspark.betweenas3.factories.ISingleTweenTargetFactory;
 	import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
 	import org.libspark.betweenas3.registries.ClassRegistry;
+	import org.libspark.betweenas3.targets.single.display.DisplayObjectTweenTarget;
 	import org.libspark.betweenas3.targets.single.ObjectTweenTarget;
 	import org.libspark.betweenas3.tickers.EnterFrameTicker;
 	import org.libspark.betweenas3.tickers.ITicker;
@@ -59,9 +61,20 @@ package org.libspark.betweenas3
 			_ticker = new EnterFrameTicker();
 			_ticker.start();
 			_tweenTargetClassRegistry = new ClassRegistry();
-			_tweenTargetClassRegistry.registerClassWithTargetClassAndProeprtyName(ObjectTweenTarget, Object, '*');
 			_singleTweenTargetFactory = new StandardSingleTweenTargetFactory();
 			_singleTweenTargetFactory.tweenTargetClassRegistry = _tweenTargetClassRegistry;
+			
+			registerTweenTarget(Object, ['*'], ObjectTweenTarget);
+			registerTweenTarget(DisplayObject, DisplayObjectTweenTarget.TARGET_PROPERTIES, DisplayObjectTweenTarget);
+		}
+		
+		public static function registerTweenTarget(targetClass:Class, properties:Array, tweenTargetClass:Class):void
+		{
+			var registry:ClassRegistry = _tweenTargetClassRegistry;
+			var l:uint = properties.length;
+			for (var i:uint = 0; i < l; ++i) {
+				registry.registerClassWithTargetClassAndProeprtyName(tweenTargetClass, targetClass, properties[i]);
+			}
 		}
 		
 		/**
