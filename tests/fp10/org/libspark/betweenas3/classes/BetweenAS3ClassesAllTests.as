@@ -27,43 +27,16 @@
  */
 package org.libspark.betweenas3.classes
 {
+	import org.libspark.as3unit.runners.Suite;
+	
 	/**
-	 * オブジェクトのキャッシュ機構.
-	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class ObjectCache
+	public class BetweenAS3ClassesAllTests
 	{
-		public function ObjectCache(limit:uint, factory:Function)
-		{
-			_objects = new Vector.<Object>(limit, true);
-			_cursor = 0;
-			_limit = limit;
-			_factory = factory;
-		}
-		
-		private var _objects:Vector.<Object>;
-		private var _limit:uint;
-		private var _cursor:uint;
-		private var _factory:Function;
-		
-		public function pop():Object
-		{
-			if (_cursor > 0) {
-				--_cursor;
-				var obj:Object = _objects[_cursor];
-				_objects[_cursor] = null;
-				return obj;
-			}
-			return _factory();
-		}
-		
-		public function push(obj:Object):void
-		{
-			if (_cursor < _limit) {
-				_objects[_cursor] = obj;
-				++_cursor;
-			}
-		}
+		public static const RunWith:Class = Suite;
+		public static const SuiteClasses:Array = [
+			ObjectCacheTest
+		];
 	}
 }

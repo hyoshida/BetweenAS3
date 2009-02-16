@@ -27,43 +27,64 @@
  */
 package org.libspark.betweenas3.classes
 {
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.before;
+	import org.libspark.as3unit.after;
+	import org.libspark.as3unit.test;
+	import org.libspark.betweenas3.classes.ObjectCache;
+	
+	use namespace before;
+	use namespace after;
+	use namespace test;
+	
 	/**
-	 * オブジェクトのキャッシュ機構.
-	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class ObjectCache
+	public class ObjectCacheTest
 	{
-		public function ObjectCache(limit:uint, factory:Function)
+		private var _cache:ObjectCache;
+		
+		before function initialize():void
 		{
-			_objects = new Vector.<Object>(limit, true);
-			_cursor = 0;
-			_limit = limit;
-			_factory = factory;
+			_cache = new ObjectCache(3, create);
 		}
 		
-		private var _objects:Vector.<Object>;
-		private var _limit:uint;
-		private var _cursor:uint;
-		private var _factory:Function;
-		
-		public function pop():Object
+		private function create():Object
 		{
-			if (_cursor > 0) {
-				--_cursor;
-				var obj:Object = _objects[_cursor];
-				_objects[_cursor] = null;
-				return obj;
-			}
-			return _factory();
+			return new Object();
 		}
 		
-		public function push(obj:Object):void
+		after function finalize():void
 		{
-			if (_cursor < _limit) {
-				_objects[_cursor] = obj;
-				++_cursor;
-			}
+			_cache = null;
+		}
+		
+		test function popAndPush():void
+		{
+			var obj1:Object = _cache.pop();
+			var obj2:Object = _cache.pop();
+			var obj3:Object = _cache.pop();
+			var obj4:Object = _cache.pop();
+			
+			assertNotNull(obj1);
+			assertNotNull(obj2);
+			assertNotNull(obj3);
+			assertNotNull(obj4);
+			
+			_cache.push(obj1);
+			_cache.push(obj2);
+			_cache.push(obj3);
+			_cache.push(obj4);
+			
+			var objA:Object = _cache.pop();
+			var objB:Object = _cache.pop();
+			var objC:Object = _cache.pop();
+			var objD:Object = _cache.pop();
+			
+			assertSame(obj3, objA);
+			assertSame(obj2, objB);
+			assertSame(obj1, objC);
+			assertNotNull(objD);
 		}
 	}
 }

@@ -28,6 +28,7 @@
 package org.libspark.betweenas3
 {
 	import org.libspark.as3unit.runners.Suite;
+	import org.libspark.betweenas3.classes.BetweenAS3ClassesAllTests;
 	import org.libspark.betweenas3.easing.EasingAllTests;
 	import org.libspark.betweenas3.factories.FactoriesAllTests;
 	import org.libspark.betweenas3.registries.RegistriesAllTests;
@@ -43,6 +44,7 @@ package org.libspark.betweenas3
 		public static const RunWith:Class = Suite;
 		public static const SuiteClasses:Array = [
 			EasingAllTests,
+			BetweenAS3ClassesAllTests,
 			TickersAllTests,
 			TargetsAllTests,
 			TweensAllTests,
