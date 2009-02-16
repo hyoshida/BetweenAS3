@@ -59,6 +59,23 @@ package org.libspark.betweenas3.tweens
 		 */
 		function get isPlaying():Boolean;
 		
+		function get onPlay():Function;
+		function set onPlay(value:Function):void;
+		function get onPlayParams():Array;
+		function set onPlayParams(value:Array):void;
+		function get onStop():Function;
+		function set onStop(value:Function):void;
+		function get onStopParams():Array;
+		function set onStopParams(value:Array):void;
+		function get onUpdate():Function;
+		function set onUpdate(value:Function):void;
+		function get onUpdateParams():Array;
+		function set onUpdateParams(value:Array):void;
+		function get onComplete():Function;
+		function set onComplete(value:Function):void;
+		function get onCompleteParams():Array;
+		function set onCompleteParams(value:Array):void;
+		
 		/**
 		 * このトゥイーンの再生を現在の位置から開始します.
 		 */

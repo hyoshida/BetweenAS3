@@ -56,6 +56,14 @@ package org.libspark.betweenas3.tweens
 		private var _isPlaying:Boolean = false;
 		private var _dispatcher:IEventDispatcher;
 		private var _willTriggerFlags:uint = 0;
+		private var _onPlay:Function;
+		private var _onPlayParams:Array;
+		private var _onStop:Function;
+		private var _onStopParams:Array;
+		private var _onUpdate:Function;
+		private var _onUpdateParams:Array;
+		private var _onComplete:Function;
+		private var _onCompleteParams:Array;
 		
 		/**
 		 * @inheritDoc
@@ -89,6 +97,86 @@ package org.libspark.betweenas3.tweens
 			return _isPlaying;
 		}
 		
+		public function get onPlay():Function
+		{
+			return _onPlay;
+		}
+		
+		public function set onPlay(value:Function):void
+		{
+			_onPlay = value;
+		}
+		
+		public function get onPlayParams():Array
+		{
+			return _onPlayParams;
+		}
+		
+		public function set onPlayParams(value:Array):void
+		{
+			_onPlayParams = value;
+		}
+		
+		public function get onStop():Function
+		{
+			return _onStop;
+		}
+		
+		public function set onStop(value:Function):void
+		{
+			_onStop = value;
+		}
+		
+		public function get onStopParams():Array
+		{
+			return _onStopParams;
+		}
+		
+		public function set onStopParams(value:Array):void
+		{
+			_onStopParams = value;
+		}
+		
+		public function get onUpdate():Function
+		{
+			return _onUpdate;
+		}
+		
+		public function set onUpdate(value:Function):void
+		{
+			_onUpdate = value;
+		}
+		
+		public function get onUpdateParams():Array
+		{
+			return _onUpdateParams;
+		}
+		
+		public function set onUpdateParams(value:Array):void
+		{
+			_onUpdateParams = value;
+		}
+		
+		public function get onComplete():Function
+		{
+			return _onComplete;
+		}
+		
+		public function set onComplete(value:Function):void
+		{
+			_onComplete = value;
+		}
+		
+		public function get onCompleteParams():Array
+		{
+			return _onCompleteParams;
+		}
+		
+		public function set onCompleteParams(value:Array):void
+		{
+			_onCompleteParams = value;
+		}
+		
 		/**
 		 * このトゥイーンの再生を現在の位置から開始します.
 		 */
@@ -101,6 +189,9 @@ package org.libspark.betweenas3.tweens
 				_ticker.addTickerListener(this);
 				if ((_willTriggerFlags & 0x01) != 0) {
 					_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.PLAY));
+				}
+				if (_onPlay != null) {
+					_onPlay.apply(null, _onPlayParams);
 				}
 				tick(t);
 			}
@@ -116,6 +207,9 @@ package org.libspark.betweenas3.tweens
 				_ticker.removeTickerListener(this);
 				if ((_willTriggerFlags & 0x02) != 0) {
 					_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.STOP));
+				}
+				if (_onStop != null) {
+					_onStop.apply(null, _onStopParams);
 				}
 			}
 		}
@@ -143,6 +237,9 @@ package org.libspark.betweenas3.tweens
 			if ((_willTriggerFlags & 0x04) != 0) {
 				_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.UPDATE));
 			}
+			if (_onUpdate != null) {
+				_onUpdate.apply(null, _onUpdateParams);
+			}
 			stop();
 		}
 		
@@ -156,12 +253,18 @@ package org.libspark.betweenas3.tweens
 			if ((_willTriggerFlags & 0x04) != 0) {
 				_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.UPDATE));
 			}
+			if (_onUpdate != null) {
+				_onUpdate.apply(null, _onUpdateParams);
+			}
 			
 			if (t >= _tweenTarget.duration) {
 				_position = _tweenTarget.duration;
 				_isPlaying = false;
 				if ((_willTriggerFlags & 0x08) != 0) {
 					_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.COMPLETE));
+				}
+				if (_onComplete != null) {
+					_onComplete.apply(null, _onCompleteParams);
 				}
 				return true;
 			}
