@@ -52,9 +52,10 @@ package org.libspark.betweenas3.tweens
 		private var _tweenTarget:ITweenTarget;
 		private var _ticker:ITicker;
 		private var _position:uint;
-		private var _startTime:uint;
+		private var _startTime:int;
 		private var _isPlaying:Boolean = false;
 		private var _dispatcher:IEventDispatcher;
+		private var _willTriggerFlags:uint = 0;
 		
 		/**
 		 * @inheritDoc
@@ -94,14 +95,14 @@ package org.libspark.betweenas3.tweens
 		public function play():void
 		{
 			if (!_isPlaying && _position < _tweenTarget.duration) {
-				_startTime = _ticker.time;
+				var t:uint = _ticker.time;
+				_startTime = t - _position;
 				_isPlaying = true;
 				_ticker.addTickerListener(this);
-				if (_dispatcher != null) {
-					if (_dispatcher.willTrigger(BetweenEvent.PLAY)) {
-						_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.PLAY));
-					}
+				if ((_willTriggerFlags & 0x01) != 0) {
+					_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.PLAY));
 				}
+				tick(t);
 			}
 		}
 		
@@ -113,10 +114,8 @@ package org.libspark.betweenas3.tweens
 			if (_isPlaying) {
 				_isPlaying = false;
 				_ticker.removeTickerListener(this);
-				if (_dispatcher != null) {
-					if (_dispatcher.willTrigger(BetweenEvent.STOP)) {
-						_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.STOP));
-					}
+				if ((_willTriggerFlags & 0x02) != 0) {
+					_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.STOP));
 				}
 			}
 		}
@@ -128,7 +127,8 @@ package org.libspark.betweenas3.tweens
 		 */
 		public function gotoAndPlay(position:uint):void
 		{
-			// TODO
+			_position = position;
+			play();
 		}
 		
 		/**
@@ -138,7 +138,12 @@ package org.libspark.betweenas3.tweens
 		 */
 		public function gotoAndStop(position:uint):void
 		{
-			// TODO
+			_position = position;
+			_tweenTarget.update(position);
+			if ((_willTriggerFlags & 0x04) != 0) {
+				_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.UPDATE));
+			}
+			stop();
 		}
 		
 		override public function tick(time:uint):Boolean
@@ -148,19 +153,15 @@ package org.libspark.betweenas3.tweens
 			_position = t;
 			_tweenTarget.update(t);
 			
-			if (_dispatcher != null) {
-				if (_dispatcher.willTrigger(BetweenEvent.UPDATE)) {
-					_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.UPDATE));
-				}
+			if ((_willTriggerFlags & 0x04) != 0) {
+				_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.UPDATE));
 			}
 			
 			if (t >= _tweenTarget.duration) {
 				_position = _tweenTarget.duration;
 				_isPlaying = false;
-				if (_dispatcher != null) {
-					if (_dispatcher.willTrigger(BetweenEvent.COMPLETE)) {
-						_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.COMPLETE));
-					}
+				if ((_willTriggerFlags & 0x08) != 0) {
+					_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.COMPLETE));
 				}
 				return true;
 			}
@@ -177,6 +178,7 @@ package org.libspark.betweenas3.tweens
 				_dispatcher = new EventDispatcher(this);
 			}
 			_dispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			updateWillTriggerFlags();
 		}
 		
 		/**
@@ -208,6 +210,7 @@ package org.libspark.betweenas3.tweens
 		{
 			if (_dispatcher != null) {
 				_dispatcher.removeEventListener(type, listener, useCapture);
+				updateWillTriggerFlags();
 			}
 		}
 		
@@ -220,6 +223,34 @@ package org.libspark.betweenas3.tweens
 				return _dispatcher.willTrigger(type);
 			}
 			return false;
+		}
+		
+		private function updateWillTriggerFlags():void
+		{
+			if (_dispatcher.willTrigger(BetweenEvent.PLAY)) {
+				_willTriggerFlags |= 0x01;
+			}
+			else {
+				_willTriggerFlags &= ~0x01;
+			}
+			if (_dispatcher.willTrigger(BetweenEvent.STOP)) {
+				_willTriggerFlags |= 0x02;
+			}
+			else {
+				_willTriggerFlags &= ~0x02;
+			}
+			if (_dispatcher.willTrigger(BetweenEvent.UPDATE)) {
+				_willTriggerFlags |= 0x04;
+			}
+			else {
+				_willTriggerFlags &= ~0x04;
+			}
+			if (_dispatcher.willTrigger(BetweenEvent.COMPLETE)) {
+				_willTriggerFlags |= 0x08;
+			}
+			else {
+				_willTriggerFlags &= ~0x08;
+			}
 		}
 	}
 }

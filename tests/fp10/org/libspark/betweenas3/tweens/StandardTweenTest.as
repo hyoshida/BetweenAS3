@@ -53,6 +53,7 @@ package org.libspark.betweenas3.tweens
 			_ticker.t = 1000;
 			_target = new TestTweenTarget();
 			_target.d = 3000;
+			_target.t = 9999;
 			_tween = new StandardTween(_target, _ticker, 0);
 			_tween.addEventListener(BetweenEvent.PLAY, playHandler);
 			_tween.addEventListener(BetweenEvent.STOP, stopHandler);
@@ -101,17 +102,19 @@ package org.libspark.betweenas3.tweens
 		test function play():void
 		{
 			assertFalse(_tween.isPlaying);
+			assertEquals(9999, _target.t);
 			
 			_tween.play();
 			
 			assertTrue(_tween.isPlaying);
-			assertEquals('play ', Static.log);
+			assertEquals('play update ', Static.log);
 			assertSame(_tween, _ticker.listener);
+			assertEquals(0, _target.t);
 			
 			_ticker.listener.tick(2500);
 			
 			assertEquals(1500, _target.t);
-			assertEquals('play update ', Static.log);
+			assertEquals('play update update ', Static.log);
 		}
 		
 		test function playStop():void
@@ -121,7 +124,7 @@ package org.libspark.betweenas3.tweens
 			_tween.stop();
 			
 			assertFalse(_tween.isPlaying);
-			assertEquals('play update stop ', Static.log);
+			assertEquals('play update update stop ', Static.log);
 			assertNull(_ticker.listener);
 		}
 		
@@ -134,8 +137,51 @@ package org.libspark.betweenas3.tweens
 			assertFalse(b1);
 			assertTrue(b2);
 			assertFalse(_tween.isPlaying);
-			assertEquals('play update update complete ', Static.log);
+			assertEquals('play update update update complete ', Static.log);
 			assertEquals(3500, _target.t);
+		}
+		
+		test function gotoAndPlay():void
+		{
+			assertFalse(_tween.isPlaying);
+			assertEquals(9999, _target.t);
+			
+			_tween.gotoAndPlay(1000);
+			
+			assertTrue(_tween.isPlaying);
+			assertEquals('play update ', Static.log);
+			assertSame(_tween, _ticker.listener);
+			assertEquals(1000, _target.t);
+			
+			_ticker.listener.tick(2500);
+			
+			assertEquals(2500, _target.t);
+			assertEquals('play update update ', Static.log);
+		}
+		
+		test function gotoAndStop():void
+		{
+			assertFalse(_tween.isPlaying);
+			assertEquals(9999, _target.t);
+			
+			_tween.gotoAndStop(2000);
+			
+			assertFalse(_tween.isPlaying);
+			assertEquals('update ', Static.log);
+			assertNull(_ticker.listener);
+			assertEquals(2000, _target.t);
+		}
+		
+		test function playGotoAndStop():void
+		{
+			_tween.play();
+			_ticker.listener.tick(2500);
+			_tween.gotoAndStop(2500);
+			
+			assertFalse(_tween.isPlaying);
+			assertEquals('play update update update stop ', Static.log);
+			assertNull(_ticker.listener);
+			assertEquals(2500, _target.t);
 		}
 	}
 }
