@@ -75,6 +75,10 @@ package org.libspark.betweenas3.tickers
 		public function addTickerListener(listener:TickerListener):void
 		{
 			if (_first != null) {
+				if (_first.prevListener != null) {
+					_first.prevListener.nextListener = listener;
+					listener.prevListener = _first.prevListener;
+				}
 				listener.nextListener = _first;
 				_first.prevListener = listener;
 			}

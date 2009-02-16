@@ -141,10 +141,30 @@ package org.libspark.betweenas3.tickers
 			trace('time<' + (getTimer() - t) + '>');
 		}
 		/**/
+		
+		test function addListenerInTick():void
+		{
+			var ticker:EnterFrameTicker = new EnterFrameTicker();
+			
+			var l3:MockTickerListener = new MockTickerListener(5);
+			var l2:MockTickerListener = new MockTickerListener(5);
+			var l1:AddingListenerTickerListener = new AddingListenerTickerListener(5, ticker, l3);
+			
+			ticker.addTickerListener(l1);
+			ticker.addTickerListener(l2);
+			
+			ticker.update(null);
+			ticker.update(null);
+			
+			assertEquals(2, l1.c);
+			assertEquals(2, l2.c);
+			assertEquals(1, l3.c);
+		}
 	}
 }
 
 import org.libspark.betweenas3.tickers.TickerListener;
+import org.libspark.betweenas3.tickers.ITicker;
 
 internal class MockTickerListener extends TickerListener
 {
@@ -160,5 +180,27 @@ internal class MockTickerListener extends TickerListener
 	override public function tick(time:uint):Boolean
 	{
 		return ++c == n;
+	}
+}
+
+internal class AddingListenerTickerListener extends MockTickerListener
+{
+	public function AddingListenerTickerListener(n:uint, ticker:ITicker, listener:TickerListener)
+	{
+		super(n);
+		
+		this.ticker = ticker;
+		this.listener = listener;
+	}
+	
+	public var ticker:ITicker;
+	public var listener:TickerListener;
+	
+	override public function tick(time:uint):Boolean
+	{
+		if (c == 0) {
+			ticker.addTickerListener(listener);
+		}
+		return super.tick(time);
 	}
 }
