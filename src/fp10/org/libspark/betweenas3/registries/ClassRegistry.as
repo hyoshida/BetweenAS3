@@ -52,16 +52,28 @@ package org.libspark.betweenas3.registries
 		public function getClassByTargetClassAndPropertyName(targetClass:Class, propertyName:String):Class
 		{
 			var classes:Dictionary = _classes;
-			var tree:Vector.<Class> = getClassTree(targetClass);
+			var c:Class;
+			var properties:Dictionary = classes[targetClass] as Dictionary;
+			if (properties != null) {
+				if ((c = properties[propertyName] as Class) != null) {
+					return c;
+				}
+				if ((c = properties['*'] as Class) != null) {
+					return c;
+				}
+			}
+			var tree:Vector.<Class> = _classTreeCache[targetClass] as Vector.<Class>;
+			if (tree == null) {
+				_classTreeCache[targetClass] = tree = getClassTree(targetClass);
+			}
 			var l:uint = tree.length;
 			for (var i:uint = 0; i < l; ++i) {
-				var properties:Dictionary = classes[tree[i]] as Dictionary;
-				if (properties != null) {
-					if (properties[propertyName] != undefined) {
-						return properties[propertyName] as Class;
+				if ((properties = classes[tree[i]] as Dictionary) != null) {
+					if ((c = properties[propertyName] as Class) != null) {
+						return c;
 					}
-					if (properties['*'] != undefined) {
-						return properties['*'] as Class;
+					if ((c = properties['*'] as Class) != null) {
+						return c;
 					}
 				}
 			}
@@ -71,10 +83,6 @@ package org.libspark.betweenas3.registries
 		
 		private function getClassTree(klass:Class):Vector.<Class>
 		{
-			if (_classTreeCache[klass] != undefined) {
-				return _classTreeCache[klass] as Vector.<Class>;
-			}
-			
 			var tree:Vector.<Class> = new Vector.<Class>();
 			var superClassName:String;
 			var c:Class = klass;
@@ -94,7 +102,7 @@ package org.libspark.betweenas3.registries
 				}
 			}
 			
-			_classTreeCache[klass] = tree;
+			tree.shift();
 			
 			return tree;
 		}

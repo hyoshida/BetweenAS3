@@ -73,26 +73,35 @@ package org.libspark.betweenas3.factories
 		/**
 		 * @inheritDoc
 		 */
-		public function create(target:Object, to:Object, from:Object):ISingleTweenTarget
+		public function create(target:Object, dest:Object, source:Object):ISingleTweenTarget
 		{
-			var dest:Object = cloneObject(to);
-			var source:Object = cloneObject(from);
-			var args:Object = {
-				time: getObjectProperty('time', dest, source, 1.0),
-				delay: getObjectProperty('delay', dest, source, 0.0),
-				transition: getObjectProperty('transition', dest, source, null)
-			};
-			
 			// TODO: Value filter
 			
-			// TODO: Easing
+			var time:uint = 1000;
+			var delay:uint = 0;
+			var transition:IEasing = Linear.easeNone;
 			
-			var time:uint = uint(args.time * 1000);
-			var delay:uint = uint(args.delay * 1000);
-			var transition:IEasing = args.transition as IEasing;
-			
-			if (transition == null) {
-				transition = Linear.easeNone;
+			if (source != null) {
+				if ('time' in source) {
+					time = uint(source.time * 1000);
+				}
+				if ('delay' in source) {
+					delay = uint(source.delay * 1000);
+				}
+				if ('transition' in source) {
+					transition = source.transition as IEasing;
+				}
+			}
+			if (dest != null) {
+				if ('time' in dest) {
+					time = uint(dest.time * 1000);
+				}
+				if ('delay' in dest) {
+					delay = uint(dest.delay * 1000);
+				}
+				if ('transition' in dest) {
+					transition = dest.transition as IEasing;
+				}
 			}
 			
 			var tweenTargetBuilder:SingleTweenTargetBuilder = _tweenTargetBuilderCache.pop() as SingleTweenTargetBuilder;
