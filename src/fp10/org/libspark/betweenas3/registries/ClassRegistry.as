@@ -39,19 +39,36 @@ package org.libspark.betweenas3.registries
 	public class ClassRegistry
 	{
 		private var _classes:Dictionary = new Dictionary();
-		private var _classTreeCache:Dictionary = new Dictionary();
+		private var _subclasses:Dictionary = new Dictionary();
 		
 		public function registerClassWithTargetClassAndProeprtyName(klass:Class, targetClass:Class, propertyName:String):void
 		{
 			if (_classes[targetClass] == undefined) {
-				_classes[targetClass] = new Dictionary();
+				buildCacheFor(targetClass);
 			}
-			_classes[targetClass][propertyName] = klass;
+			
+			var classes:Dictionary = _classes;
+			var oldClass:Class = classes[targetClass][propertyName] as Class;
+			
+			classes[targetClass][propertyName] = klass;
+			
+			// サブクラスへ新しい値を伝播
+			
+			var subclasses:Vector.<Class> = _subclasses[targetClass] as Vector.<Class>;
+			if (subclasses != null) {
+				var l:uint = subclasses.length;
+				for (var i:uint = 0; i < l; ++i) {
+					var subclass:Class = subclasses[i];
+					if (classes[subclass][propertyName] == oldClass) {
+						classes[subclass][propertyName] = klass;
+					}
+				}
+			}
 		}
 		
 		public function getClassByTargetClassAndPropertyName(targetClass:Class, propertyName:String):Class
 		{
-			var classes:Dictionary = _classes, c:*, properties:* = classes[targetClass];
+			var properties:* = _classes[targetClass], c:*;
 			if (properties != null) {
 				if ((c = properties[propertyName]) != null) {
 					return c as Class;
@@ -60,24 +77,63 @@ package org.libspark.betweenas3.registries
 					return c as Class;
 				}
 			}
-			
-			var tree:Vector.<Class> = _classTreeCache[targetClass] as Vector.<Class>;
-			if (tree == null) {
-				_classTreeCache[targetClass] = tree = getClassTree(targetClass);
-			}
-			var l:uint = tree.length;
-			for (var i:uint = 0; i < l; ++i) {
-				if ((properties = classes[tree[i]]) != null) {
-					if ((c = properties[propertyName]) != null) {
-						return c as Class;
-					}
-					if ((c = properties['*']) != null) {
-						return c as Class;
-					}
-				}
+			else {
+				buildCacheFor(targetClass);
+				return getClassByTargetClassAndPropertyName(targetClass, propertyName);
 			}
 			
 			return null;
+		}
+		
+		private function buildCacheFor(targetClass:Class):void
+		{
+			var classes:Dictionary = _classes;
+			var subclasses:Dictionary = _subclasses;
+			var dict:Dictionary = new Dictionary();
+			var tree:Vector.<Class> = getClassTree(targetClass);
+			var l:uint = tree.length;
+			var i:int = l;
+			while (--i >= 0) {
+				var c:Class = tree[i];
+				var d:Dictionary = classes[c] as Dictionary;
+				var p:String;
+				if (d != null) {
+					var newDict:Dictionary = new Dictionary();
+					// 祖先からの継承
+					if (dict != null) {
+						for (p in dict) {
+							newDict[p] = dict[p];
+							// 祖先からこのクラスへ
+							if (!(p in d)) {
+								d[p] = dict[p];
+							}
+						}
+					}
+					// このクラスからの継承
+					for (p in d) {
+						newDict[p] = d[p];
+					}
+					dict = newDict;
+				}
+				else {
+					classes[c] = dict;
+				}
+				
+				// このクラス (c) のサブクラスのリストを保存
+				
+				if (subclasses[c] != undefined) {
+					var sub:Vector.<Class> = subclasses[c] as Vector.<Class>;
+					for (var j:int = i - 1; j >= 0; --j) {
+						var subC:Class = tree[j];
+						if (sub.indexOf(subC) == -1) {
+							sub.push(subC);
+						}
+					}
+				}
+				else {
+					subclasses[c] = tree.slice(0, i);
+				}
+			}
 		}
 		
 		private function getClassTree(klass:Class):Vector.<Class>
@@ -100,8 +156,6 @@ package org.libspark.betweenas3.registries
 					c = null;
 				}
 			}
-			
-			tree.shift();
 			
 			return tree;
 		}

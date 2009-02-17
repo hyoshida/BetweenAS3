@@ -92,11 +92,33 @@ package org.libspark.betweenas3.registries
 			assertSame(D, _r.getClassByTargetClassAndPropertyName(Object, 'c'));
 		}
 		
+		test function getByClassC():void
+		{
+			assertSame(A, _r.getClassByTargetClassAndPropertyName(ClassC, 'a'));
+			assertSame(C, _r.getClassByTargetClassAndPropertyName(ClassC, 'b'));
+			assertSame(D, _r.getClassByTargetClassAndPropertyName(ClassC, 'c'));
+		}
+		
+		test function getByClassD():void
+		{
+			assertSame(A, _r.getClassByTargetClassAndPropertyName(ClassD, 'a'));
+			assertSame(C, _r.getClassByTargetClassAndPropertyName(ClassD, 'b'));
+			assertSame(D, _r.getClassByTargetClassAndPropertyName(ClassD, 'c'));
+		}
+		
 		test function overrideRegister():void
 		{
 			_r.registerClassWithTargetClassAndProeprtyName(E, ClassA, 'a');
 			assertSame(E, _r.getClassByTargetClassAndPropertyName(ClassA, 'a'));
 			assertSame(C, _r.getClassByTargetClassAndPropertyName(ClassA, 'b'));
+		}
+		
+		test function overrideRegister2():void
+		{
+			_r.registerClassWithTargetClassAndProeprtyName(E, Object, 'c');
+			assertSame(E, _r.getClassByTargetClassAndPropertyName(ClassB, 'c'));
+			_r.registerClassWithTargetClassAndProeprtyName(F, ClassA, 'c');
+			assertSame(F, _r.getClassByTargetClassAndPropertyName(ClassB, 'c'));
 		}
 	}
 }
@@ -118,5 +140,9 @@ internal class D
 }
 
 internal class E
+{
+}
+
+internal class F
 {
 }
