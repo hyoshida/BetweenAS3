@@ -128,7 +128,7 @@ package org.libspark.betweenas3.targets
 			
 			assertTrue(isNaN(t1.t));
 			assertTrue(isNaN(t2.t));
-			assertTrue(isNaN(t3.t));
+			assertEquals(1, t3.t);
 			assertEquals(0, t4.t);
 			assertEquals(-1, t5.t);
 			assertEquals(-2, t6.t);
@@ -142,7 +142,7 @@ package org.libspark.betweenas3.targets
 			assertEquals(0, t1.t);
 			assertEquals(-1, t2.t);
 			assertEquals(-2, t3.t);
-			assertTrue(isNaN(t4.t));
+			assertEquals(-3, t4.t);
 			assertTrue(isNaN(t5.t));
 			assertTrue(isNaN(t6.t));
 		}

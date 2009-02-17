@@ -129,32 +129,32 @@ package org.libspark.betweenas3.targets
 				if (_targets != null) {
 					for (i = _targets.length - 1; i >= 0; --i) {
 						t = _targets[i];
-						if (time <= (d -= t.duration) && ld <= lt) {
+						if (lt >= (d -= t.duration) && ld >= time) {
 							t.update(time - d);
 						}
 						ld = d;
 					}
 				}
 				if (_d != null) {
-					if (time <= (d -= _d.duration) && ld <= lt) {
+					if (lt >= (d -= _d.duration) && ld >= time) {
 						_d.update(time - d);
 					}
 					ld = d;
 				}
 				if (_c != null) {
-					if (time <= (d -= _c.duration) && ld <= lt) {
+					if (lt >= (d -= _c.duration) && ld >= time) {
 						_c.update(time - d);
 					}
 					ld = d;
 				}
 				if (_b != null) {
-					if (time <= (d -= _b.duration) && ld <= lt) {
+					if (lt >= (d -= _b.duration) && ld >= time) {
 						_b.update(time - d);
 					}
 					ld = d;
 				}
 				if (_a != null) {
-					if (time <= (d -= _a.duration) && ld <= lt) {
+					if (lt >= (d -= _a.duration) && ld >= time) {
 						_a.update(time - d);
 					}
 					ld = d;
