@@ -27,20 +27,38 @@
  */
 package org.libspark.betweenas3.targets
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.targets.single.SingleTargetsAllTests;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.test;
+	
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class TargetsAllTests
+	public class ReversedTweenTargetTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			SingleTargetsAllTests,
-			ParallelTweenTargetTest,
-			SerialTweenTargetTest,
-			ReversedTweenTargetTest
-		];
+		test function reverse():void
+		{
+			var t:TestTweenTarget = new TestTweenTarget(4);
+			var r:ReversedTweenTarget = new ReversedTweenTarget(t);
+			
+			assertEquals(4, r.duration);
+			
+			r.update(0);
+			
+			assertEquals(4, t.t);
+			
+			r.update(1);
+			
+			assertEquals(3, t.t);
+			
+			r.update(2.5);
+			
+			assertEquals(1.5, t.t);
+			
+			r.update(4);
+			
+			assertEquals(0, t.t);
+		}
 	}
 }

@@ -25,22 +25,52 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3.targets
+package
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.targets.single.SingleTargetsAllTests;
+	import flash.display.Sprite;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class TargetsAllTests
+	public class ReversedTweenTest extends Sprite
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			SingleTargetsAllTests,
-			ParallelTweenTargetTest,
-			SerialTweenTargetTest,
-			ReversedTweenTargetTest
-		];
+		public function ReversedTweenTest()
+		{
+			for (var i:uint = 0; i < 6; ++i) {
+				var button:RollOverButton = new RollOverButton();
+				button.y = 20 + 30 * i;
+				addChild(button);
+			}
+		}
+	}
+}
+
+import flash.display.Sprite;
+import flash.events.MouseEvent;
+import org.libspark.betweenas3.BetweenAS3;
+import org.libspark.betweenas3.easing.Cubic;
+import org.libspark.betweenas3.tweens.ITween;
+
+internal class RollOverButton extends Sprite
+{
+	public function RollOverButton()
+	{
+		graphics.beginFill(0);
+		graphics.drawRect(0, 0, 80, 20);
+		graphics.endFill();
+		
+		_t = BetweenAS3.reverse(BetweenAS3.tween(this, {$x: 20}, null, 0.5, Cubic.easeOut));
+		
+		addEventListener(MouseEvent.ROLL_OVER, rollHandler);
+		addEventListener(MouseEvent.ROLL_OUT, rollHandler);
+	}
+	
+	private var _t:ITween;
+	
+	private function rollHandler(e:MouseEvent):void
+	{
+		_t.stop();
+		_t = BetweenAS3.reverse(_t);
+		_t.play();
 	}
 }

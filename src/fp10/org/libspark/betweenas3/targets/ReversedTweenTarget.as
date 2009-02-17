@@ -27,20 +27,41 @@
  */
 package org.libspark.betweenas3.targets
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.targets.single.SingleTargetsAllTests;
-	
 	/**
+	 * ITweenTarget を逆に実行.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class TargetsAllTests
+	public class ReversedTweenTarget implements ITweenTarget
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			SingleTargetsAllTests,
-			ParallelTweenTargetTest,
-			SerialTweenTargetTest,
-			ReversedTweenTargetTest
-		];
+		public function ReversedTweenTarget(baseTweenTarget:ITweenTarget)
+		{
+			_baseTweenTarget = baseTweenTarget;
+			_duration = baseTweenTarget.duration;
+		}
+		
+		private var _baseTweenTarget:ITweenTarget;
+		private var _duration:Number;
+		
+		public function get baseTweenTarget():ITweenTarget
+		{
+			return _baseTweenTarget;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get duration():Number
+		{
+			return _duration;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function update(time:Number):void
+		{
+			_baseTweenTarget.update(_duration - time);
+		}
 	}
 }

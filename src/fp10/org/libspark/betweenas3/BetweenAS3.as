@@ -35,6 +35,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.ParallelTweenTarget;
+	import org.libspark.betweenas3.targets.ReversedTweenTarget;
 	import org.libspark.betweenas3.targets.SerialTweenTarget;
 	import org.libspark.betweenas3.targets.single.display.DisplayObjectTweenTarget;
 	import org.libspark.betweenas3.targets.single.ObjectTweenTarget;
@@ -113,6 +114,24 @@ package org.libspark.betweenas3
 				targets[i] = (tweens[i] as ITween).tweenTarget;
 			}
 			return new StandardTween(new SerialTweenTarget(targets), _ticker, 0);
+		}
+		
+		public static function reverse(tween:ITween, reversePosition:Boolean = true):ITween
+		{
+			var target:ITweenTarget = tween.tweenTarget;
+			if (target is ReversedTweenTarget) {
+				target = (target as ReversedTweenTarget).baseTweenTarget;
+			}
+			else {
+				target = new ReversedTweenTarget(target);
+			}
+			var p:Number = 0;
+			if (reversePosition) {
+				if ((p = tween.position) != 0) {
+					p = tween.duration - p;
+				}
+			}
+			return new StandardTween(target, _ticker, p);
 		}
 	}
 }
