@@ -33,6 +33,7 @@ package
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import org.libspark.betweenas3.BetweenAS3;
+	import org.libspark.betweenas3.easing.Cubic;
 	import org.libspark.betweenas3.easing.Exponential;
 	import org.libspark.betweenas3.easing.Linear;
 	import org.libspark.betweenas3.tweens.ITween;
@@ -83,10 +84,10 @@ package
 					BetweenAS3.tween(mc1, {$y: 0}, {$y: 100}, 1, Exponential.easeIn)
 				),
 				BetweenAS3.serial(
-					BetweenAS3.tween(mc2, {$x: 100}, null, 1, Linear.easeNone),
-					BetweenAS3.tween(mc2, {$y: 100}, null, 1, Linear.easeNone),
-					BetweenAS3.tween(mc2, {$x: 0}, {$x: 100}, 1, Linear.easeNone),
-					BetweenAS3.tween(mc2, {$y: 0}, {$y: 100}, 1, Linear.easeNone)
+					BetweenAS3.tween(mc2, {$x: 100}, null, 1, Cubic.easeOut),
+					BetweenAS3.tween(mc2, {$y: 100}, null, 1, Cubic.easeOut),
+					BetweenAS3.tween(mc2, {$x: 0}, {$x: 100}, 1, Cubic.easeOut),
+					BetweenAS3.tween(mc2, {$y: 0}, {$y: 100}, 1, Cubic.easeOut)
 				)
 			);
 			
