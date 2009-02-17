@@ -33,6 +33,9 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.factories.ISingleTweenTargetFactory;
 	import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
 	import org.libspark.betweenas3.registries.ClassRegistry;
+	import org.libspark.betweenas3.targets.ITweenTarget;
+	import org.libspark.betweenas3.targets.ParallelTweenTarget;
+	import org.libspark.betweenas3.targets.SerialTweenTarget;
 	import org.libspark.betweenas3.targets.single.display.DisplayObjectTweenTarget;
 	import org.libspark.betweenas3.targets.single.ObjectTweenTarget;
 	import org.libspark.betweenas3.tickers.EnterFrameTicker;
@@ -90,6 +93,26 @@ package org.libspark.betweenas3
 		public static function tween(target:Object, to:Object, from:Object = null, time:Number = 1.0, easing:IEasing = null, delay:Number = 0.0):ITween
 		{
 			return new StandardTween(_singleTweenTargetFactory.create(target, to, from, time, easing || Linear.easeNone, delay), _ticker, 0);
+		}
+		
+		public static function parallel(...tweens:Array):ITween
+		{
+			var l:uint = tweens.length;
+			var targets:Vector.<ITweenTarget> = new Vector.<ITweenTarget>(l, true);
+			for (var i:uint = 0; i < l; ++i) {
+				targets[i] = (tweens[i] as ITween).tweenTarget;
+			}
+			return new StandardTween(new ParallelTweenTarget(targets), _ticker, 0);
+		}
+		
+		public static function serial(...tweens:Array):ITween
+		{
+			var l:uint = tweens.length;
+			var targets:Vector.<ITweenTarget> = new Vector.<ITweenTarget>(l, true);
+			for (var i:uint = 0; i < l; ++i) {
+				targets[i] = (tweens[i] as ITween).tweenTarget;
+			}
+			return new StandardTween(new SerialTweenTarget(targets), _ticker, 0);
 		}
 	}
 }

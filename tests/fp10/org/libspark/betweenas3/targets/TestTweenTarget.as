@@ -25,22 +25,29 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3.targets.multi
+package org.libspark.betweenas3.targets
 {
-	import org.libspark.betweenas3.targets.ITweenTarget;
-	import org.libspark.betweenas3.tweens.ITween;
-	
 	/**
-	 * 複数のトゥイーンをひとつにまとめます.
-	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public interface IMultiTweenTarget extends ITweenTarget
+	public class TestTweenTarget implements ITweenTarget
 	{
-		function addTween(tween:ITween):void;
-		function addTweenAt(tween:ITween, index:uint):void;
-		function removeTween(tween:ITween):void;
-		function getTweenAt(index:uint):ITween;
-		function getTweenIndex(tween:ITween):int;
+		public function TestTweenTarget(d:Number)
+		{
+			this.d = d;
+		}
+		
+		public var d:Number;
+		public var t:Number = NaN;
+		
+		public function get duration():Number
+		{
+			return d;
+		}
+		
+		public function update(time:Number):void
+		{
+			t = time;
+		}
 	}
 }

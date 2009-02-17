@@ -27,19 +27,63 @@
  */
 package org.libspark.betweenas3.targets
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.targets.single.SingleTargetsAllTests;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.test;
+	
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class TargetsAllTests
+	public class ParallelTweenTargetTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			SingleTargetsAllTests,
-			ParallelTweenTargetTest,
-			SerialTweenTargetTest
-		];
+		test function parallel():void
+		{
+			var t1:TestTweenTarget = new TestTweenTarget(1.0);
+			var t2:TestTweenTarget = new TestTweenTarget(2.0);
+			var t3:TestTweenTarget = new TestTweenTarget(3.0);
+			var t4:TestTweenTarget = new TestTweenTarget(4.0);
+			var t5:TestTweenTarget = new TestTweenTarget(5.0);
+			var t6:TestTweenTarget = new TestTweenTarget(6.0);
+			
+			var v:Vector.<ITweenTarget> = new Vector.<ITweenTarget>(6, true);
+			v[0] = t1;
+			v[1] = t2;
+			v[2] = t3;
+			v[3] = t4;
+			v[4] = t5;
+			v[5] = t6;
+			
+			var parallel:ParallelTweenTarget = new ParallelTweenTarget(v);
+			
+			assertEquals(6, parallel.duration);
+			
+			parallel.update(0);
+			
+			assertEquals(0, t1.t);
+			assertEquals(0, t2.t);
+			assertEquals(0, t3.t);
+			assertEquals(0, t4.t);
+			assertEquals(0, t5.t);
+			assertEquals(0, t6.t);
+			
+			parallel.update(3);
+			
+			assertEquals(3, t1.t);
+			assertEquals(3, t2.t);
+			assertEquals(3, t3.t);
+			assertEquals(3, t4.t);
+			assertEquals(3, t5.t);
+			assertEquals(3, t6.t);
+			
+			parallel.update(6);
+			
+			assertEquals(6, t1.t);
+			assertEquals(6, t2.t);
+			assertEquals(6, t3.t);
+			assertEquals(6, t4.t);
+			assertEquals(6, t5.t);
+			assertEquals(6, t6.t);
+		}
 	}
 }

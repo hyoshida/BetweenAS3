@@ -30,8 +30,12 @@ package
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import org.libspark.betweenas3.BetweenAS3;
 	import org.libspark.betweenas3.easing.Exponential;
+	import org.libspark.betweenas3.easing.Linear;
+	import org.libspark.betweenas3.tweens.ITween;
 	
 	/**
 	 * @author	yossy:beinteractive
@@ -40,19 +44,72 @@ package
 	{
 		public function TweenTest()
 		{
-			var mc:MovieClip = new MovieClip();
-			mc.graphics.beginFill(0);
-			mc.graphics.drawRect(-10, -10, 20, 20);
-			mc.graphics.endFill();
+			addEventListener(Event.ADDED_TO_STAGE, initialize);
+		}
+		
+		private function initialize(e:Event):void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			addChild(mc);
+			var bg:Shape = new Shape();
+			bg.graphics.beginFill(0xffffff);
+			bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+			bg.graphics.endFill();
+			addChild(bg);
 			
-			BetweenAS3.tween(mc, {
-				x: 400,
-				y: 200,
-				scaleX: 2.0,
-				scaleY: 2.0
-			}, null, 0.5, Exponential.easeIn, 0.5).play();
+			var mc1:MovieClip = new MovieClip();
+			mc1.graphics.beginFill(0);
+			mc1.graphics.drawRect(-10, -10, 20, 20);
+			mc1.graphics.endFill();
+			addChild(mc1);
+			
+			var mc2:MovieClip = new MovieClip();
+			mc2.graphics.beginFill(0x666666);
+			mc2.graphics.drawRect(-10, -10, 20, 20);
+			mc2.graphics.endFill();
+			addChild(mc2);
+			
+			mc1.x = 100;
+			mc1.y = 100;
+			
+			mc2.x = 200;
+			mc2.y = 100;
+			
+			_t = BetweenAS3.parallel(
+				BetweenAS3.serial(
+					BetweenAS3.tween(mc1, {$x: 100}, null, 1, Exponential.easeIn),
+					BetweenAS3.tween(mc1, {$y: 100}, null, 1, Exponential.easeIn),
+					BetweenAS3.tween(mc1, {$x: 0}, {$x: 100}, 1, Exponential.easeIn),
+					BetweenAS3.tween(mc1, {$y: 0}, {$y: 100}, 1, Exponential.easeIn)
+				),
+				BetweenAS3.serial(
+					BetweenAS3.tween(mc2, {$x: 100}, null, 1, Linear.easeNone),
+					BetweenAS3.tween(mc2, {$y: 100}, null, 1, Linear.easeNone),
+					BetweenAS3.tween(mc2, {$x: 0}, {$x: 100}, 1, Linear.easeNone),
+					BetweenAS3.tween(mc2, {$y: 0}, {$y: 100}, 1, Linear.easeNone)
+				)
+			);
+			
+			_t.play();
+			
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler)
+		}
+		
+		private var _t:ITween;
+		
+		private function mouseDownHandler(e:MouseEvent):void
+		{
+			if (_t.isPlaying) {
+				_t.stop();
+			}
+			else {
+				if (_t.position == _t.duration) {
+					_t.gotoAndPlay(0);
+				}
+				else {
+					_t.play();
+				}
+			}
 		}
 	}
 }
