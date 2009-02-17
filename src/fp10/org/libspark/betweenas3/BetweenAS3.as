@@ -35,6 +35,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.ParallelTweenTarget;
+	import org.libspark.betweenas3.targets.RepeatedTweenTarget;
 	import org.libspark.betweenas3.targets.ReversedTweenTarget;
 	import org.libspark.betweenas3.targets.SerialTweenTarget;
 	import org.libspark.betweenas3.targets.single.display.DisplayObjectTweenTarget;
@@ -132,6 +133,11 @@ package org.libspark.betweenas3
 				}
 			}
 			return new StandardTween(target, _ticker, p);
+		}
+		
+		public static function repeat(tween:ITween, repeatCount:uint):ITween
+		{
+			return new StandardTween(new RepeatedTweenTarget(tween.tweenTarget, repeatCount), _ticker, 0);
 		}
 	}
 }

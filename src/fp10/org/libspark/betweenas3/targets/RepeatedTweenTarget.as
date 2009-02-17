@@ -27,21 +27,53 @@
  */
 package org.libspark.betweenas3.targets
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.targets.single.SingleTargetsAllTests;
-	
 	/**
+	 * ITweenTarget を指定回数繰り返して実行.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class TargetsAllTests
+	public class RepeatedTweenTarget implements ITweenTarget
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			SingleTargetsAllTests,
-			ParallelTweenTargetTest,
-			SerialTweenTargetTest,
-			ReversedTweenTargetTest,
-			RepeatedTweenTargetTest
-		];
+		public function RepeatedTweenTarget(baseTweenTarget:ITweenTarget, repeatCount:uint)
+		{
+			_baseTweenTarget = baseTweenTarget;
+			_baseDuration = baseTweenTarget.duration;
+			_repeatCount = repeatCount;
+			_duration = _baseDuration * repeatCount;
+		}
+		
+		private var _baseTweenTarget:ITweenTarget;
+		private var _baseDuration:Number;
+		private var _duration:Number;
+		private var _repeatCount:uint;
+		
+		public function get baseTweenTarget():ITweenTarget
+		{
+			return _baseTweenTarget;
+		}
+		
+		public function get repeatCount():uint
+		{
+			return _repeatCount;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get duration():Number
+		{
+			return _duration;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function update(time:Number):void
+		{
+			if (time >= 0) {
+				time -= time < _duration ? _baseDuration * int(time / _baseDuration) : _duration - _baseDuration;
+			}
+			_baseTweenTarget.update(time);
+		}
 	}
 }
