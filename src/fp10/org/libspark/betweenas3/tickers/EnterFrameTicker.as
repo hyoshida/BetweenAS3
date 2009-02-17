@@ -64,9 +64,9 @@ package org.libspark.betweenas3.tickers
 		/**
 		 * @inheritDoc
 		 */
-		public function get time():uint
+		public function get time():Number
 		{
-			return getTimer();
+			return getTimer() / 1000;
 		}
 		
 		/**
@@ -139,7 +139,7 @@ package org.libspark.betweenas3.tickers
 		{
 			// リスナの数を 8 の倍数になるようにパディングして 8 個ずつ一気にループさせる
 			
-			var t:uint = getTimer();
+			var t:Number = getTimer() / 1000;
 			var n:uint = 8 - (_numListeners % 8);
 			var listener:TickerListener = _tickerListenerPaddings[0];
 			var l:TickerListener = _tickerListenerPaddings[n];

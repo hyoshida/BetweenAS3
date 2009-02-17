@@ -36,22 +36,22 @@ package org.libspark.betweenas3.targets.single
 	 */
 	public class AbstractSingleTweenTarget implements ISingleTweenTarget
 	{
-		protected var _time:uint = 0;
-		protected var _delay:uint = 0;
+		protected var _time:Number = 0;
+		protected var _delay:Number = 0;
 		protected var _easing:IEasing = null;
 		
 		/**
-		 * このトゥイーンターゲットが完了するまでにかかる時間 (ミリ秒) を返します.
+		 * このトゥイーンターゲットが完了するまでにかかる時間 (秒) を返します.
 		 */
-		public function get duration():uint
+		public function get duration():Number
 		{
 			return _time + _delay;
 		}
 		
 		/**
-		 * このトゥイーンに掛ける時間 (ミリ秒) を設定します.
+		 * このトゥイーンに掛ける時間 (秒) を設定します.
 		 */
-		public function get time():uint
+		public function get time():Number
 		{
 			return _time;
 		}
@@ -59,15 +59,15 @@ package org.libspark.betweenas3.targets.single
 		/**
 		 * @private
 		 */
-		public function set time(value:uint):void
+		public function set time(value:Number):void
 		{
 			_time = value;
 		}
 		
 		/**
-		 * このトゥイーンが開始されるまでに掛ける時間 (ミリ秒) を設定します.
+		 * このトゥイーンが開始されるまでに掛ける時間 (秒) を設定します.
 		 */
-		public function get delay():uint
+		public function get delay():Number
 		{
 			return _delay;
 		}
@@ -75,7 +75,7 @@ package org.libspark.betweenas3.targets.single
 		/**
 		 * @private
 		 */
-		public function set delay(value:uint):void
+		public function set delay(value:Number):void
 		{
 			_delay = value;
 		}
@@ -161,9 +161,9 @@ package org.libspark.betweenas3.targets.single
 		/**
 		 * このトゥイーンターゲットを指定された時間の状態に更新します.
 		 * 
-		 * @param	time	時間 (ミリ秒)
+		 * @param	time	時間 (秒)
 		 */
-		public function update(time:uint):void
+		public function update(time:Number):void
 		{
 			
 		}

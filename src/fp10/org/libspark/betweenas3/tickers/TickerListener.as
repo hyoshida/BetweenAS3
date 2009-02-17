@@ -51,10 +51,10 @@ package org.libspark.betweenas3.tickers
 		/**
 		 * 指定された時間に基づいて処理を行うべき時に呼び出されるコールバック.
 		 * 
-		 * @param	time	時間 (ミリ秒)
+		 * @param	time	時間 (秒)
 		 * @return	このリスナの処理が完了し今後コールバックを受け取る必要がないのであれば true, そうでなければ false.
 		 */
-		public function tick(time:uint):Boolean
+		public function tick(time:Number):Boolean
 		{
 			return false;
 		}

@@ -177,7 +177,7 @@ internal class MockTickerListener extends TickerListener
 	public var n:uint;
 	public var c:uint;
 	
-	override public function tick(time:uint):Boolean
+	override public function tick(time:Number):Boolean
 	{
 		return ++c == n;
 	}
@@ -196,7 +196,7 @@ internal class AddingListenerTickerListener extends MockTickerListener
 	public var ticker:ITicker;
 	public var listener:TickerListener;
 	
-	override public function tick(time:uint):Boolean
+	override public function tick(time:Number):Boolean
 	{
 		if (c == 0) {
 			ticker.addTickerListener(listener);

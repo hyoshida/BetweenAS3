@@ -197,10 +197,10 @@ internal class Static
 
 internal class TestTicker implements ITicker
 {
-	public var t:uint;
+	public var t:Number;
 	public var listener:TickerListener;
 	
-	public function get time():uint
+	public function get time():Number
 	{
 		return t;
 	}
@@ -230,15 +230,15 @@ internal class TestTicker implements ITicker
 
 internal class TestTweenTarget implements ITweenTarget
 {
-	public var d:uint;
-	public var t:uint;
+	public var d:Number;
+	public var t:Number;
 	
-	public function get duration():uint
+	public function get duration():Number
 	{
 		return d;
 	}
 	
-	public function update(time:uint):void
+	public function update(time:Number):void
 	{
 		t = time;
 	}

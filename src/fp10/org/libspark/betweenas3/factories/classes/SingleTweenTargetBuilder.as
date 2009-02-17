@@ -42,8 +42,8 @@ package org.libspark.betweenas3.factories.classes
 		private var _registry:ClassRegistry;
 		private var _target:Object;
 		private var _targetClass:Class;
-		private var _time:uint;
-		private var _delay:uint;
+		private var _time:Number;
+		private var _delay:Number;
 		private var _easing:IEasing;
 		private var _tweenTargetMap:Dictionary = new Dictionary();
 		private var _tweenTargets:Vector.<ISingleTweenTarget> = new Vector.<ISingleTweenTarget>();
@@ -58,7 +58,7 @@ package org.libspark.betweenas3.factories.classes
 			_registry = value;
 		}
 		
-		public function reset(target:Object, time:uint, delay:uint, easing:IEasing):void
+		public function reset(target:Object, time:Number, delay:Number, easing:IEasing):void
 		{
 			_target = target;
 			_targetClass = target != null ? target.constructor : null;

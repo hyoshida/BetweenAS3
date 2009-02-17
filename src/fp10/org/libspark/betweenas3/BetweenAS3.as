@@ -89,7 +89,7 @@ package org.libspark.betweenas3
 		 */
 		public static function tween(target:Object, to:Object, from:Object = null, time:Number = 1.0, easing:IEasing = null, delay:Number = 0.0):ITween
 		{
-			return new StandardTween(_singleTweenTargetFactory.create(target, to, from, uint(time * 1000), easing || Linear.easeNone, uint(delay * 1000)), _ticker, 0);
+			return new StandardTween(_singleTweenTargetFactory.create(target, to, from, time, easing || Linear.easeNone, delay), _ticker, 0);
 		}
 	}
 }

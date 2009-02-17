@@ -37,7 +37,7 @@ package org.libspark.betweenas3.tickers
 		/**
 		 * 現在の時間を返します.
 		 */
-		function get time():uint;
+		function get time():Number;
 		
 		/**
 		 * コールバックを受け取るリスナを追加します.

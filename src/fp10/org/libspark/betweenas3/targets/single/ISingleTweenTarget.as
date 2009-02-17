@@ -46,24 +46,24 @@ package org.libspark.betweenas3.targets.single
 		// duration は time + delay
 		
 		/**
-		 * このトゥイーンに掛ける時間 (ミリ秒) を設定します.
+		 * このトゥイーンに掛ける時間 (秒) を設定します.
 		 */
-		function get time():uint;
+		function get time():Number;
 		
 		/**
 		 * @private
 		 */
-		function set time(value:uint):void;
+		function set time(value:Number):void;
 		
 		/**
-		 * このトゥイーンが開始されるまでに掛ける時間 (ミリ秒) を設定します.
+		 * このトゥイーンが開始されるまでに掛ける時間 (秒) を設定します.
 		 */
-		function get delay():uint;
+		function get delay():Number;
 		
 		/**
 		 * @private
 		 */
-		function set delay(value:uint):void;
+		function set delay(value:Number):void;
 		
 		/**
 		 * このトゥイーンで使用するイージングを設定します.

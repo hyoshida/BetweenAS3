@@ -105,7 +105,7 @@ package org.libspark.betweenas3.targets.single
 		/**
 		 * @inheritDoc
 		 */
-		override public function update(time:uint):void
+		override public function update(time:Number):void
 		{
 			if (time < _delay) {
 				time = 0;

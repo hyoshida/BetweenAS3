@@ -39,15 +39,15 @@ package org.libspark.betweenas3.targets
 	public interface ITweenTarget
 	{
 		/**
-		 * このトゥイーンターゲットが完了するまでにかかる時間 (ミリ秒) を返します.
+		 * このトゥイーンターゲットが完了するまでにかかる時間 (秒) を返します.
 		 */
-		function get duration():uint;
+		function get duration():Number;
 		
 		/**
 		 * このトゥイーンターゲットを指定された時間の状態に更新します.
 		 * 
-		 * @param	time	時間 (ミリ秒)
+		 * @param	time	時間 (秒)
 		 */
-		function update(time:uint):void;
+		function update(time:Number):void;
 	}
 }

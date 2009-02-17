@@ -35,7 +35,7 @@ package org.libspark.betweenas3.targets.single
 	 */
 	public class CompositeSingleTweenTarget extends AbstractSingleTweenTarget
 	{
-		public function CompositeSingleTweenTarget(target:Object, time:uint, delay:uint, easing:IEasing, targets:Vector.<ISingleTweenTarget>)
+		public function CompositeSingleTweenTarget(target:Object, time:Number, delay:Number, easing:IEasing, targets:Vector.<ISingleTweenTarget>)
 		{
 			_target = target;
 			this.time = time;
@@ -111,7 +111,7 @@ package org.libspark.betweenas3.targets.single
 		/**
 		 * @inheritDoc
 		 */
-		override public function update(time:uint):void
+		override public function update(time:Number):void
 		{
 			if (_a != null) {
 				_a.update(time);

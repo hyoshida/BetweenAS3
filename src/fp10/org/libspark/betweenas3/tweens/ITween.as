@@ -45,14 +45,14 @@ package org.libspark.betweenas3.tweens
 		function get tweenTarget():ITweenTarget;
 		
 		/**
-		 * このトゥイーンの継続時間 (ミリ秒) を返します.
+		 * このトゥイーンの継続時間 (秒) を返します.
 		 */
-		function get duration():uint;
+		function get duration():Number;
 		
 		/**
-		 * このトゥイーンの現在位置 (ミリ秒) を返します.
+		 * このトゥイーンの現在位置 (秒) を返します.
 		 */
-		function get position():uint;
+		function get position():Number;
 		
 		/**
 		 * このトゥイーンが現在再生中であれば true, そうでなければ false を返します.
@@ -89,15 +89,15 @@ package org.libspark.betweenas3.tweens
 		/**
 		 * このトゥイーンの再生を指定された位置から開始します.
 		 * 
-		 * @param	position	再生を開始する位置 (ミリ秒)
+		 * @param	position	再生を開始する位置 (秒)
 		 */
-		function gotoAndPlay(position:uint):void;
+		function gotoAndPlay(position:Number):void;
 		
 		/**
 		 * このトゥイーンの再生を指定された位置で停止します.
 		 * 
-		 * @param	position	再生を停止する位置 (ミリ秒)
+		 * @param	position	再生を停止する位置 (秒)
 		 */
-		function gotoAndStop(position:uint):void;
+		function gotoAndStop(position:Number):void;
 	}
 }

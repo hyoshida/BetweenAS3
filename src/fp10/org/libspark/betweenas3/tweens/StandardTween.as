@@ -42,7 +42,7 @@ package org.libspark.betweenas3.tweens
 	 */
 	public class StandardTween extends TickerListener implements ITween
 	{
-		public function StandardTween(tweenTarget:ITweenTarget, ticker:ITicker, position:uint)
+		public function StandardTween(tweenTarget:ITweenTarget, ticker:ITicker, position:Number)
 		{
 			_tweenTarget = tweenTarget;
 			_ticker = ticker;
@@ -51,8 +51,8 @@ package org.libspark.betweenas3.tweens
 		
 		private var _tweenTarget:ITweenTarget;
 		private var _ticker:ITicker;
-		private var _position:uint;
-		private var _startTime:int;
+		private var _position:Number;
+		private var _startTime:Number;
 		private var _isPlaying:Boolean = false;
 		private var _dispatcher:IEventDispatcher;
 		private var _willTriggerFlags:uint = 0;
@@ -74,17 +74,17 @@ package org.libspark.betweenas3.tweens
 		}
 		
 		/**
-		 * このトゥイーンの継続時間 (ミリ秒) を返します.
+		 * このトゥイーンの継続時間 (秒) を返します.
 		 */
-		public function get duration():uint
+		public function get duration():Number
 		{
 			return _tweenTarget.duration;
 		}
 		
 		/**
-		 * このトゥイーンの現在位置 (ミリ秒) を返します.
+		 * このトゥイーンの現在位置 (秒) を返します.
 		 */
-		public function get position():uint
+		public function get position():Number
 		{
 			return _position;
 		}
@@ -183,7 +183,7 @@ package org.libspark.betweenas3.tweens
 		public function play():void
 		{
 			if (!_isPlaying && _position < _tweenTarget.duration) {
-				var t:uint = _ticker.time;
+				var t:Number = _ticker.time;
 				_startTime = t - _position;
 				_isPlaying = true;
 				_ticker.addTickerListener(this);
@@ -217,9 +217,9 @@ package org.libspark.betweenas3.tweens
 		/**
 		 * このトゥイーンの再生を指定された位置から開始します.
 		 * 
-		 * @param	position	再生を開始する位置 (ミリ秒)
+		 * @param	position	再生を開始する位置 (秒)
 		 */
-		public function gotoAndPlay(position:uint):void
+		public function gotoAndPlay(position:Number):void
 		{
 			_position = position;
 			play();
@@ -228,9 +228,9 @@ package org.libspark.betweenas3.tweens
 		/**
 		 * このトゥイーンの再生を指定された位置で停止します.
 		 * 
-		 * @param	position	再生を停止する位置 (ミリ秒)
+		 * @param	position	再生を停止する位置 (秒)
 		 */
-		public function gotoAndStop(position:uint):void
+		public function gotoAndStop(position:Number):void
 		{
 			_position = position;
 			_tweenTarget.update(position);
@@ -243,9 +243,9 @@ package org.libspark.betweenas3.tweens
 			stop();
 		}
 		
-		override public function tick(time:uint):Boolean
+		override public function tick(time:Number):Boolean
 		{
-			var t:uint = time - _startTime;
+			var t:Number = time - _startTime;
 			
 			_position = t;
 			_tweenTarget.update(t);

@@ -251,11 +251,11 @@ internal class TestSingleTweenTargetBuilder extends SingleTweenTargetBuilder
 	public var target:ISingleTweenTarget;
 	public var targets:Vector.<ISingleTweenTarget> = new Vector.<ISingleTweenTarget>();
 	
-	private var _time:uint;
-	private var _delay:uint;
+	private var _time:Number;
+	private var _delay:Number;
 	private var _easing:IEasing;
 	
-	override public function reset(t:Object, time:uint, delay:uint, easing:IEasing):void
+	override public function reset(t:Object, time:Number, delay:Number, easing:IEasing):void
 	{
 		_time = time;
 		_delay = delay;

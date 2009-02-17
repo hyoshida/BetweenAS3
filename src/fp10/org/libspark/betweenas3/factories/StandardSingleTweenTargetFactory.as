@@ -72,7 +72,7 @@ package org.libspark.betweenas3.factories
 		/**
 		 * @inheritDoc
 		 */
-		public function create(target:Object, dest:Object, source:Object, time:uint, easing:IEasing, delay:uint):ISingleTweenTarget
+		public function create(target:Object, dest:Object, source:Object, time:Number, easing:IEasing, delay:Number):ISingleTweenTarget
 		{
 			// TODO: Value filter
 			
