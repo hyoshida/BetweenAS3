@@ -51,29 +51,28 @@ package org.libspark.betweenas3.registries
 		
 		public function getClassByTargetClassAndPropertyName(targetClass:Class, propertyName:String):Class
 		{
-			var classes:Dictionary = _classes;
-			var c:Class;
-			var properties:Dictionary = classes[targetClass] as Dictionary;
+			var classes:Dictionary = _classes, c:*, properties:* = classes[targetClass];
 			if (properties != null) {
-				if ((c = properties[propertyName] as Class) != null) {
-					return c;
+				if ((c = properties[propertyName]) != null) {
+					return c as Class;
 				}
-				if ((c = properties['*'] as Class) != null) {
-					return c;
+				if ((c = properties['*']) != null) {
+					return c as Class;
 				}
 			}
+			
 			var tree:Vector.<Class> = _classTreeCache[targetClass] as Vector.<Class>;
 			if (tree == null) {
 				_classTreeCache[targetClass] = tree = getClassTree(targetClass);
 			}
 			var l:uint = tree.length;
 			for (var i:uint = 0; i < l; ++i) {
-				if ((properties = classes[tree[i]] as Dictionary) != null) {
-					if ((c = properties[propertyName] as Class) != null) {
-						return c;
+				if ((properties = classes[tree[i]]) != null) {
+					if ((c = properties[propertyName]) != null) {
+						return c as Class;
 					}
-					if ((c = properties['*'] as Class) != null) {
-						return c;
+					if ((c = properties['*']) != null) {
+						return c as Class;
 					}
 				}
 			}

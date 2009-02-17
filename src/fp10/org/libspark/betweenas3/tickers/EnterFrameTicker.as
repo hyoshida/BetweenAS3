@@ -60,13 +60,14 @@ package org.libspark.betweenas3.tickers
 		private var _first:TickerListener = null;
 		private var _numListeners:uint = 0;
 		private var _tickerListenerPaddings:Vector.<TickerListener>;
+		private var _time:Number;
 		
 		/**
 		 * @inheritDoc
 		 */
 		public function get time():Number
 		{
-			return getTimer() / 1000;
+			return _time;
 		}
 		
 		/**
@@ -119,6 +120,7 @@ package org.libspark.betweenas3.tickers
 		 */
 		public function start():void
 		{
+			_time = getTimer() / 1000;
 			_shape.addEventListener(Event.ENTER_FRAME, update);
 		}
 		
@@ -139,10 +141,7 @@ package org.libspark.betweenas3.tickers
 		{
 			// リスナの数を 8 の倍数になるようにパディングして 8 個ずつ一気にループさせる
 			
-			var t:Number = getTimer() / 1000;
-			var n:uint = 8 - (_numListeners % 8);
-			var listener:TickerListener = _tickerListenerPaddings[0];
-			var l:TickerListener = _tickerListenerPaddings[n];
+			var t:Number = _time = getTimer() / 1000, n:uint = 8 - (_numListeners % 8), listener:TickerListener = _tickerListenerPaddings[0], l:TickerListener = _tickerListenerPaddings[n];
 			
 			// このようにつなぎかえることでパディングの数を変える
 			if ((l.nextListener = _first) != null) {

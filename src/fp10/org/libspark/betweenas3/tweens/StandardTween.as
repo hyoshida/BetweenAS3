@@ -47,11 +47,13 @@ package org.libspark.betweenas3.tweens
 			_tweenTarget = tweenTarget;
 			_ticker = ticker;
 			_position = position;
+			_duration = tweenTarget.duration;
 		}
 		
 		private var _tweenTarget:ITweenTarget;
 		private var _ticker:ITicker;
 		private var _position:Number;
+		private var _duration:Number;
 		private var _startTime:Number;
 		private var _isPlaying:Boolean = false;
 		private var _dispatcher:IEventDispatcher;
@@ -78,7 +80,7 @@ package org.libspark.betweenas3.tweens
 		 */
 		public function get duration():Number
 		{
-			return _tweenTarget.duration;
+			return _duration;
 		}
 		
 		/**
@@ -257,7 +259,7 @@ package org.libspark.betweenas3.tweens
 				_onUpdate.apply(null, _onUpdateParams);
 			}
 			
-			if (t >= _tweenTarget.duration) {
+			if (t >= _duration) {
 				_position = _tweenTarget.duration;
 				_isPlaying = false;
 				if ((_willTriggerFlags & 0x08) != 0) {

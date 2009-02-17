@@ -52,8 +52,7 @@ package org.libspark.betweenas3.factories
 		before function initialize():void
 		{
 			_builder = new TestSingleTweenTargetBuilder();
-			_f = new StandardSingleTweenTargetFactory();
-			_f._tweenTargetBuilderCache = new TestObjectCache(_builder);
+			_f = new StandardSingleTweenTargetFactoryForTest(_builder);
 		}
 		
 		after function finalize():void
@@ -190,10 +189,26 @@ package org.libspark.betweenas3.factories
 }
 
 import org.libspark.betweenas3.easing.IEasing;
+import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
 import org.libspark.betweenas3.factories.classes.SingleTweenTargetBuilder;
 import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
 import org.libspark.betweenas3.targets.single.ISingleTweenTarget;
 import org.libspark.betweenas3.classes.ObjectCache;
+
+internal class StandardSingleTweenTargetFactoryForTest extends StandardSingleTweenTargetFactory
+{
+	public function StandardSingleTweenTargetFactoryForTest(builder:SingleTweenTargetBuilder)
+	{
+		this.builder = builder;
+	}
+	
+	public var builder:SingleTweenTargetBuilder;
+	
+	override protected function newSingleTweenTargetBuilder():SingleTweenTargetBuilder
+	{
+		return builder;
+	}
+}
 
 internal class TestTweenTarget extends AbstractSingleTweenTarget
 {
@@ -226,23 +241,6 @@ internal class TestTweenTarget extends AbstractSingleTweenTarget
 			value: value,
 			isRelative: isRelative
 		};
-	}
-}
-
-internal class TestObjectCache extends ObjectCache
-{
-	public function TestObjectCache(obj:Object)
-	{
-		super(0, null);
-		
-		_obj = obj;
-	}
-	
-	private var _obj:Object;
-	
-	override public function pop():Object
-	{
-		return _obj;
 	}
 }
 

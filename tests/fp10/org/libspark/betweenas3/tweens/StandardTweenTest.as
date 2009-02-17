@@ -93,10 +93,6 @@ package org.libspark.betweenas3.tweens
 		test function duration():void
 		{
 			assertEquals(3000, _tween.duration);
-			
-			_target.d = 5000;
-			
-			assertEquals(5000, _tween.duration);
 		}
 		
 		test function play():void

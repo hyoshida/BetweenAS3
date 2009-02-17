@@ -276,19 +276,18 @@ package org.libspark.betweenas3.targets.single.display
 		 */
 		override public function update(time:Number):void
 		{
-			if (time < _delay) {
-				time = 0;
-			}
-			else {
-				time -= _delay;
+			var factor:Number = 0, t:DisplayObject = _target, d:DisplayObjectParameter = _destination, s:DisplayObjectParameter = _source, f:uint = _flags;
+			
+			if (time >= _delay) {
+				if ((time -= _delay) < _time) {
+					factor = _easing.calculate(time, 0.0, 1.0, _time);
+				}
+				else {
+					factor = 1.0;
+				}
 			}
 			
-			var factor:Number = _easing.calculate(time < _time ? time : _time, 0.0, 1.0, _time);
 			var invert:Number = 1.0 - factor;
-			var t:DisplayObject = _target;
-			var d:DisplayObjectParameter = _destination;
-			var s:DisplayObjectParameter = _source;
-			var f:uint = _flags;
 			
 			if ((f & 0x0001) != 0) {
 				t.x = s.x * invert + d.x * factor;
@@ -299,35 +298,41 @@ package org.libspark.betweenas3.targets.single.display
 			if ((f & 0x0004) != 0) {
 				t.z = s.z * invert + d.z * factor;
 			}
-			if ((f & 0x0008) != 0) {
-				t.scaleX = s.scaleX * invert + d.scaleX * factor;
+			if ((f & 0x0038) != 0) {
+				if ((f & 0x0008) != 0) {
+					t.scaleX = s.scaleX * invert + d.scaleX * factor;
+				}
+				if ((f & 0x0010) != 0) {
+					t.scaleY = s.scaleY * invert + d.scaleY * factor;
+				}
+				if ((f & 0x0020) != 0) {
+					t.scaleZ = s.scaleZ * invert + d.scaleZ * factor;
+				}
 			}
-			if ((f & 0x0010) != 0) {
-				t.scaleY = s.scaleY * invert + d.scaleY * factor;
+			if ((f & 0x03c0) != 0) {
+				if ((f & 0x0040) != 0) {
+					t.rotation = s.rotation * invert + d.rotation * factor;
+				}
+				if ((f & 0x0080) != 0) {
+					t.rotationX = s.rotationX * invert + d.rotationX * factor;
+				}
+				if ((f & 0x0100) != 0) {
+					t.rotationY = s.rotationY * invert + d.rotationY * factor;
+				}
+				if ((f & 0x0200) != 0) {
+					t.rotationZ = s.rotationZ * invert + d.rotationZ * factor;
+				}
 			}
-			if ((f & 0x0020) != 0) {
-				t.scaleZ = s.scaleZ * invert + d.scaleZ * factor;
-			}
-			if ((f & 0x0040) != 0) {
-				t.rotation = s.rotation * invert + d.rotation * factor;
-			}
-			if ((f & 0x0080) != 0) {
-				t.rotationX = s.rotationX * invert + d.rotationX * factor;
-			}
-			if ((f & 0x0100) != 0) {
-				t.rotationY = s.rotationY * invert + d.rotationY * factor;
-			}
-			if ((f & 0x0200) != 0) {
-				t.rotationZ = s.rotationZ * invert + d.rotationZ * factor;
-			}
-			if ((f & 0x0400) != 0) {
-				t.alpha = s.alpha * invert + d.alpha * factor;
-			}
-			if ((f & 0x0800) != 0) {
-				t.width = s.width * invert + d.width * factor;
-			}
-			if ((f & 0x1000) != 0) {
-				t.height = s.height * invert + d.height * factor;
+			if ((f & 0x1c00) != 0) {
+				if ((f & 0x0400) != 0) {
+					t.alpha = s.alpha * invert + d.alpha * factor;
+				}
+				if ((f & 0x0800) != 0) {
+					t.width = s.width * invert + d.width * factor;
+				}
+				if ((f & 0x1000) != 0) {
+					t.height = s.height * invert + d.height * factor;
+				}
 			}
 		}
 	}

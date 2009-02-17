@@ -43,8 +43,8 @@ package org.libspark.betweenas3.factories
 	{
 		private var _tweenTargetClassRegistry:ClassRegistry;
 		
-		// internal なのはテスト用
-		internal var _tweenTargetBuilderCache:ObjectCache = new ObjectCache(3, tweenBuilderFactory);
+		private var _builderCache:Vector.<SingleTweenTargetBuilder> = new Vector.<SingleTweenTargetBuilder>();
+		private var _builderCacheIndex:uint = 0;
 		
 		/**
 		 * 
@@ -62,7 +62,7 @@ package org.libspark.betweenas3.factories
 			_tweenTargetClassRegistry = value;
 		}
 		
-		private function tweenBuilderFactory():SingleTweenTargetBuilder
+		protected function newSingleTweenTargetBuilder():SingleTweenTargetBuilder
 		{
 			var builder:SingleTweenTargetBuilder = new SingleTweenTargetBuilder();
 			builder.tweenTargetClassRegistry = _tweenTargetClassRegistry;
@@ -76,13 +76,9 @@ package org.libspark.betweenas3.factories
 		{
 			// TODO: Value filter
 			
-			var tweenTargetBuilder:SingleTweenTargetBuilder = _tweenTargetBuilderCache.pop() as SingleTweenTargetBuilder;
+			var tweenTargetBuilder:SingleTweenTargetBuilder = _builderCacheIndex > 0 ? _builderCache[--_builderCacheIndex] : newSingleTweenTargetBuilder(), name:String, value:Object, isRelative:Boolean, tweenTargets:Vector.<ISingleTweenTarget>, tweenTarget:ISingleTweenTarget;
 			
 			tweenTargetBuilder.reset(target, time, delay, easing);
-			
-			var name:String;
-			var value:Object;
-			var isRelative:Boolean;
 			
 			// TODO: Tween targets with factory
 			
@@ -108,10 +104,9 @@ package org.libspark.betweenas3.factories
 			}
 			// TODO: Object tween
 			
-			var tweenTargets:Vector.<ISingleTweenTarget> = tweenTargetBuilder.getCreatedTweenTargets();
-			var tweenTarget:ISingleTweenTarget = null;
 			
-			if (tweenTargets.length == 1) {
+			
+			if ((tweenTargets = tweenTargetBuilder.getCreatedTweenTargets()).length == 1) {
 				tweenTarget = tweenTargets[0];
 			}
 			else if (tweenTargets.length > 1) {
@@ -120,7 +115,7 @@ package org.libspark.betweenas3.factories
 			
 			tweenTargetBuilder.reset(null, 0, 0, null);
 			
-			_tweenTargetBuilderCache.push(tweenTargetBuilder);
+			_builderCache[_builderCacheIndex++] = tweenTargetBuilder;
 			
 			return tweenTarget;
 		}
