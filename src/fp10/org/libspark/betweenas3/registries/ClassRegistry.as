@@ -41,7 +41,7 @@ package org.libspark.betweenas3.registries
 		private var _classes:Dictionary = new Dictionary();
 		private var _subclasses:Dictionary = new Dictionary();
 		
-		public function registerClassWithTargetClassAndProeprtyName(klass:Class, targetClass:Class, propertyName:String):void
+		public function registerClassWithTargetClassAndPropertyName(klass:Class, targetClass:Class, propertyName:String):void
 		{
 			if (_classes[targetClass] == undefined) {
 				buildCacheFor(targetClass);

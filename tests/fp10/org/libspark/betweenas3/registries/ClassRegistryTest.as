@@ -46,10 +46,10 @@ package org.libspark.betweenas3.registries
 		before function initialize():void
 		{
 			_r = new ClassRegistry();
-			_r.registerClassWithTargetClassAndProeprtyName(D, Object, '*');
-			_r.registerClassWithTargetClassAndProeprtyName(C, ClassA, 'b');
-			_r.registerClassWithTargetClassAndProeprtyName(B, ClassA, 'a');
-			_r.registerClassWithTargetClassAndProeprtyName(A, ClassB, 'a');
+			_r.registerClassWithTargetClassAndPropertyName(D, Object, '*');
+			_r.registerClassWithTargetClassAndPropertyName(C, ClassA, 'b');
+			_r.registerClassWithTargetClassAndPropertyName(B, ClassA, 'a');
+			_r.registerClassWithTargetClassAndPropertyName(A, ClassB, 'a');
 		}
 		
 		after function finalize():void
@@ -108,16 +108,16 @@ package org.libspark.betweenas3.registries
 		
 		test function overrideRegister():void
 		{
-			_r.registerClassWithTargetClassAndProeprtyName(E, ClassA, 'a');
+			_r.registerClassWithTargetClassAndPropertyName(E, ClassA, 'a');
 			assertSame(E, _r.getClassByTargetClassAndPropertyName(ClassA, 'a'));
 			assertSame(C, _r.getClassByTargetClassAndPropertyName(ClassA, 'b'));
 		}
 		
 		test function overrideRegister2():void
 		{
-			_r.registerClassWithTargetClassAndProeprtyName(E, Object, 'c');
+			_r.registerClassWithTargetClassAndPropertyName(E, Object, 'c');
 			assertSame(E, _r.getClassByTargetClassAndPropertyName(ClassB, 'c'));
-			_r.registerClassWithTargetClassAndProeprtyName(F, ClassA, 'c');
+			_r.registerClassWithTargetClassAndPropertyName(F, ClassA, 'c');
 			assertSame(F, _r.getClassByTargetClassAndPropertyName(ClassB, 'c'));
 		}
 	}

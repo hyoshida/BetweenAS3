@@ -82,7 +82,7 @@ package org.libspark.betweenas3
 			var registry:ClassRegistry = _tweenTargetClassRegistry;
 			var l:uint = properties.length;
 			for (var i:uint = 0; i < l; ++i) {
-				registry.registerClassWithTargetClassAndProeprtyName(tweenTargetClass, targetClass, properties[i]);
+				registry.registerClassWithTargetClassAndPropertyName(tweenTargetClass, targetClass, properties[i]);
 			}
 		}
 		

@@ -52,10 +52,10 @@ package org.libspark.betweenas3.factories.classes
 		before function initialize():void
 		{
 			var r:ClassRegistry = new ClassRegistry();
-			r.registerClassWithTargetClassAndProeprtyName(TestTweenTargetA, ClassA, 'a1');
-			r.registerClassWithTargetClassAndProeprtyName(TestTweenTargetA, ClassA, 'a2');
-			r.registerClassWithTargetClassAndProeprtyName(TestTweenTargetB, ClassB, 'a1');
-			r.registerClassWithTargetClassAndProeprtyName(TestTweenTargetB, ClassB, 'b');
+			r.registerClassWithTargetClassAndPropertyName(TestTweenTargetA, ClassA, 'a1');
+			r.registerClassWithTargetClassAndPropertyName(TestTweenTargetA, ClassA, 'a2');
+			r.registerClassWithTargetClassAndPropertyName(TestTweenTargetB, ClassB, 'a1');
+			r.registerClassWithTargetClassAndPropertyName(TestTweenTargetB, ClassB, 'b');
 			_b.tweenTargetClassRegistry = r;
 		}
 		
