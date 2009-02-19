@@ -41,6 +41,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.targets.SerialTweenTarget;
 	import org.libspark.betweenas3.targets.single.display.DisplayObjectTweenTarget;
 	import org.libspark.betweenas3.targets.single.ObjectTweenTarget;
+	import org.libspark.betweenas3.targets.SlicedTweenTarget;
 	import org.libspark.betweenas3.tickers.EnterFrameTicker;
 	import org.libspark.betweenas3.tickers.ITicker;
 	import org.libspark.betweenas3.tweens.ITween;
@@ -144,6 +145,18 @@ package org.libspark.betweenas3
 		public static function scale(tween:ITween, scale:Number):ITween
 		{
 			return new StandardTween(new ScaledTweenTarget(tween.tweenTarget, scale), _ticker, 0);
+		}
+		
+		public static function slice(tween:ITween, begin:Number, end:Number, isPercent:Boolean = false):ITween
+		{
+			if (isPercent) {
+				begin = tween.duration * begin;
+				end = tween.duration * end;
+			}
+			if (begin > end) {
+				return new StandardTween(new ReversedTweenTarget(new SlicedTweenTarget(tween.tweenTarget, end, begin)), _ticker, 0);
+			}
+			return new StandardTween(new SlicedTweenTarget(tween.tweenTarget, begin, end), _ticker, 0);
 		}
 	}
 }
