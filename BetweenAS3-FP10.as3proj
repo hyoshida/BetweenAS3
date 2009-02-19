@@ -62,7 +62,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="tests\fp10\RunTests.as" />
+    <compile path="tests\fp10\ScaledTweenTest.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

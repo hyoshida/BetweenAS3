@@ -37,6 +37,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.targets.ParallelTweenTarget;
 	import org.libspark.betweenas3.targets.RepeatedTweenTarget;
 	import org.libspark.betweenas3.targets.ReversedTweenTarget;
+	import org.libspark.betweenas3.targets.ScaledTweenTarget;
 	import org.libspark.betweenas3.targets.SerialTweenTarget;
 	import org.libspark.betweenas3.targets.single.display.DisplayObjectTweenTarget;
 	import org.libspark.betweenas3.targets.single.ObjectTweenTarget;
@@ -138,6 +139,11 @@ package org.libspark.betweenas3
 		public static function repeat(tween:ITween, repeatCount:uint):ITween
 		{
 			return new StandardTween(new RepeatedTweenTarget(tween.tweenTarget, repeatCount), _ticker, 0);
+		}
+		
+		public static function scale(tween:ITween, scale:Number):ITween
+		{
+			return new StandardTween(new ScaledTweenTarget(tween.tweenTarget, scale), _ticker, 0);
 		}
 	}
 }
