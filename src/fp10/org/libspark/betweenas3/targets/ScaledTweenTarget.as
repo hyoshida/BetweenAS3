@@ -27,22 +27,48 @@
  */
 package org.libspark.betweenas3.targets
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.targets.single.SingleTargetsAllTests;
-	
 	/**
+	 * ITweenTarget をタイムスケールして実行.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class TargetsAllTests
+	public class ScaledTweenTarget implements ITweenTarget
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			SingleTargetsAllTests,
-			ParallelTweenTargetTest,
-			SerialTweenTargetTest,
-			ReversedTweenTargetTest,
-			RepeatedTweenTargetTest,
-			ScaledTweenTargetTest
-		];
+		public function ScaledTweenTarget(baseTweenTarget:ITweenTarget, scale:Number)
+		{
+			_baseTweenTarget = baseTweenTarget;
+			_duration = baseTweenTarget.duration * scale;
+			_scale = scale;
+		}
+		
+		private var _baseTweenTarget:ITweenTarget;
+		private var _duration:Number;
+		private var _scale:Number;
+		
+		public function get baseTweenTarget():ITweenTarget
+		{
+			return _baseTweenTarget;
+		}
+		
+		public function get scale():Number
+		{
+			return _scale;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get duration():Number
+		{
+			return _duration;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function update(time:Number):void
+		{
+			_baseTweenTarget.update(time / _scale);
+		}
 	}
 }
