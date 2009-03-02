@@ -27,8 +27,19 @@
  */
 package org.libspark.betweenas3.targets.single.display
 {
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.filters.BevelFilter;
+	import flash.filters.BitmapFilter;
+	import flash.filters.BlurFilter;
+	import flash.filters.ColorMatrixFilter;
+	import flash.filters.ConvolutionFilter;
+	import flash.filters.DisplacementMapFilter;
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
+	import flash.filters.GradientBevelFilter;
+	import flash.filters.GradientGlowFilter;
 	import org.libspark.as3unit.assert.*;
 	import org.libspark.as3unit.test;
 	import org.libspark.betweenas3.easing.classes.EaseNone;
@@ -952,6 +963,142 @@ package org.libspark.betweenas3.targets.single.display
 			assertEquals(130.0, d.rotationY);
 			assertEquals(140.0, d.rotationZ);
 			assertEquals(1.0, d.alpha);
+		}
+		
+		test function getFilters():void
+		{
+			var d:DisplayObject = new Sprite();
+			
+			var t:ISingleTweenTarget = new DisplayObjectTweenTarget();
+			t.target = d;
+			
+			assertNotNull(t.getObject('_bevelFilter') as BevelFilter);
+			assertNotNull(t.getObject('_blurFilter') as BlurFilter);
+			assertNotNull(t.getObject('_colorMatrixFilter') as ColorMatrixFilter);
+			assertNotNull(t.getObject('_convolutionFilter') as ConvolutionFilter);
+			assertNotNull(t.getObject('_displacementMapFilter') as DisplacementMapFilter);
+			assertNotNull(t.getObject('_dropShadowFilter') as DropShadowFilter);
+			assertNotNull(t.getObject('_glowFilter') as GlowFilter);
+			assertNotNull(t.getObject('_gradientBevelFilter') as GradientBevelFilter);
+			assertNotNull(t.getObject('_gradientGlowFilter') as GradientGlowFilter);
+			
+			assertEquals(9, d.filters.length);
+			
+			assertNotNull(d.filters[0] as BevelFilter);
+			assertNotNull(d.filters[1] as BlurFilter);
+			assertNotNull(d.filters[2] as ColorMatrixFilter);
+			assertNotNull(d.filters[3] as ConvolutionFilter);
+			assertNotNull(d.filters[4] as DisplacementMapFilter);
+			assertNotNull(d.filters[5] as DropShadowFilter);
+			assertNotNull(d.filters[6] as GlowFilter);
+			assertNotNull(d.filters[7] as GradientBevelFilter);
+			assertNotNull(d.filters[8] as GradientGlowFilter);
+		}
+		
+		test function getExistingFilters():void
+		{
+			var d:DisplayObject = new Sprite();
+			var b:BitmapData = new BitmapData(1, 1, false);
+			
+			d.filters = [
+				new BevelFilter(8),
+				new BlurFilter(8),
+				new ColorMatrixFilter([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0.5, 0]),
+				new ConvolutionFilter(1, 1, [2]),
+				new DisplacementMapFilter(b),
+				new DropShadowFilter(8),
+				new GlowFilter(0xffff00),
+				new GradientBevelFilter(8),
+				new GradientGlowFilter(8),
+			];
+			
+			var t:ISingleTweenTarget = new DisplayObjectTweenTarget();
+			t.target = d;
+			
+			assertEquals(8, (t.getObject('_bevelFilter') as BevelFilter).distance);
+			assertEquals(8, (t.getObject('_blurFilter') as BlurFilter).blurX);
+			assertEquals(0.5, (t.getObject('_colorMatrixFilter') as ColorMatrixFilter).matrix[18]);
+			assertEquals(2, (t.getObject('_convolutionFilter') as ConvolutionFilter).matrix[0]);
+			assertEquals(1, (t.getObject('_displacementMapFilter') as DisplacementMapFilter).mapBitmap.width);
+			assertEquals(8, (t.getObject('_dropShadowFilter') as DropShadowFilter).distance);
+			assertEquals(0xffff00, (t.getObject('_glowFilter') as GlowFilter).color);
+			assertEquals(8, (t.getObject('_gradientBevelFilter') as GradientBevelFilter).distance);
+			assertEquals(8, (t.getObject('_gradientGlowFilter') as GradientGlowFilter).distance);
+		}
+		
+		test function setFilters():void
+		{
+			var d:DisplayObject = new Sprite();
+			var b:BitmapData = new BitmapData(1, 1, false);
+			
+			var t:ISingleTweenTarget = new DisplayObjectTweenTarget();
+			t.target = d;
+			
+			t.setObject('_bevelFilter', new BevelFilter(16));
+			t.setObject('_blurFilter', new BlurFilter(16));
+			t.setObject('_colorMatrixFilter', new ColorMatrixFilter([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0.5, 0]));
+			t.setObject('_convolutionFilter', new ConvolutionFilter(1, 1, [4]));
+			t.setObject('_displacementMapFilter', new DisplacementMapFilter(b));
+			t.setObject('_dropShadowFilter', new DropShadowFilter(16));
+			t.setObject('_glowFilter', new GlowFilter(0x0000ff));
+			t.setObject('_gradientBevelFilter', new GradientBevelFilter(16));
+			t.setObject('_gradientGlowFilter', new GradientGlowFilter(16));
+			
+			assertEquals(9, d.filters.length);
+			
+			assertEquals(16, (d.filters[0] as BevelFilter).distance);
+			assertEquals(16, (d.filters[1] as BlurFilter).blurX);
+			assertEquals(0.5, (d.filters[2] as ColorMatrixFilter).matrix[18]);
+			assertEquals(4, (d.filters[3] as ConvolutionFilter).matrix[0]);
+			assertEquals(1, (d.filters[4] as DisplacementMapFilter).mapBitmap.width);
+			assertEquals(16, (d.filters[5] as DropShadowFilter).distance);
+			assertEquals(0x0000ff, (d.filters[6] as GlowFilter).color);
+			assertEquals(16, (d.filters[7] as GradientBevelFilter).distance);
+			assertEquals(16, (d.filters[8] as GradientGlowFilter).distance);
+		}
+		
+		test function overrideFilters():void
+		{
+			var d:DisplayObject = new Sprite();
+			var b:BitmapData = new BitmapData(1, 1, false);
+			var b2:BitmapData = new BitmapData(1, 1, false);
+			
+			d.filters = [
+				new BevelFilter(8),
+				new BlurFilter(8),
+				new ColorMatrixFilter([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0.3, 0]),
+				new ConvolutionFilter(1, 1, [2]),
+				new DisplacementMapFilter(b2),
+				new DropShadowFilter(8),
+				new GlowFilter(0xffff00),
+				new GradientBevelFilter(8),
+				new GradientGlowFilter(8),
+			];
+			
+			var t:ISingleTweenTarget = new DisplayObjectTweenTarget();
+			t.target = d;
+			
+			t.setObject('_bevelFilter', new BevelFilter(16));
+			t.setObject('_blurFilter', new BlurFilter(16));
+			t.setObject('_colorMatrixFilter', new ColorMatrixFilter([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0.5, 0]));
+			t.setObject('_convolutionFilter', new ConvolutionFilter(1, 1, [4]));
+			t.setObject('_displacementMapFilter', new DisplacementMapFilter(b));
+			t.setObject('_dropShadowFilter', new DropShadowFilter(16));
+			t.setObject('_glowFilter', new GlowFilter(0x0000ff));
+			t.setObject('_gradientBevelFilter', new GradientBevelFilter(16));
+			t.setObject('_gradientGlowFilter', new GradientGlowFilter(16));
+			
+			assertEquals(9, d.filters.length);
+			
+			assertEquals(16, (d.filters[0] as BevelFilter).distance);
+			assertEquals(16, (d.filters[1] as BlurFilter).blurX);
+			assertEquals(0.5, (d.filters[2] as ColorMatrixFilter).matrix[18]);
+			assertEquals(4, (d.filters[3] as ConvolutionFilter).matrix[0]);
+			assertEquals(1, (d.filters[4] as DisplacementMapFilter).mapBitmap.width);
+			assertEquals(16, (d.filters[5] as DropShadowFilter).distance);
+			assertEquals(0x0000ff, (d.filters[6] as GlowFilter).color);
+			assertEquals(16, (d.filters[7] as GradientBevelFilter).distance);
+			assertEquals(16, (d.filters[8] as GradientGlowFilter).distance);
 		}
 	}
 }

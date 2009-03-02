@@ -28,6 +28,17 @@
 package org.libspark.betweenas3.targets.single.display
 {
 	import flash.display.DisplayObject;
+	import flash.filters.BevelFilter;
+	import flash.filters.BitmapFilter;
+	import flash.filters.BlurFilter;
+	import flash.filters.ColorMatrixFilter;
+	import flash.filters.ConvolutionFilter;
+	import flash.filters.DisplacementMapFilter;
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
+	import flash.filters.GradientBevelFilter;
+	import flash.filters.GradientGlowFilter;
+	import flash.filters.ShaderFilter;
 	import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
 	
 	/**
@@ -37,7 +48,31 @@ package org.libspark.betweenas3.targets.single.display
 	 */
 	public class DisplayObjectTweenTarget extends AbstractSingleTweenTarget
 	{
-		public static const TARGET_PROPERTIES:Array = ['x', 'y', 'z', 'scaleX', 'scaleY', 'scaleZ', 'rotation', 'rotationX', 'rotationY', 'rotationZ', 'alpha', 'width', 'height'];
+		public static const TARGET_PROPERTIES:Array = [
+			'x',
+			'y',
+			'z',
+			'scaleX',
+			'scaleY',
+			'scaleZ',
+			'rotation',
+			'rotationX',
+			'rotationY',
+			'rotationZ',
+			'alpha',
+			'width',
+			'height',
+			'_bevelFilter',
+			'_blurFilter',
+			'_colorMatrixFilter',
+			'_convolutionFilter',
+			'_displacementMapFilter',
+			'_dropShadowFilter',
+			'_glowFilter',
+			'_gradientBevelFilter',
+			'_gradientGlowFilter',
+			'_shaderFilter',
+		];
 		
 		protected var _target:DisplayObject = null;
 		protected var _source:DisplayObjectParameter = new DisplayObjectParameter();
@@ -261,7 +296,53 @@ package org.libspark.betweenas3.targets.single.display
 		 */
 		override public function getObject(propertyName:String):Object
 		{
+			if (propertyName == '_blurFilter') {
+				return getFilterByClass(BlurFilter);
+			}
+			if (propertyName == '_glowFilter') {
+				return getFilterByClass(GlowFilter);
+			}
+			if (propertyName == '_dropShadowFilter') {
+				return getFilterByClass(DropShadowFilter);
+			}
+			if (propertyName == '_colorMatrixFilter') {
+				return getFilterByClass(ColorMatrixFilter);
+			}
+			if (propertyName == '_bevelFilter') {
+				return getFilterByClass(BevelFilter);
+			}
+			if (propertyName == '_gradientGlowFilter') {
+				return getFilterByClass(GradientGlowFilter);
+			}
+			if (propertyName == '_gradientBevelFilter') {
+				return getFilterByClass(GradientBevelFilter);
+			}
+			if (propertyName == '_convolutionFilter') {
+				return getFilterByClass(ConvolutionFilter);
+			}
+			if (propertyName == '_displacementMapFilter') {
+				return getFilterByClass(DisplacementMapFilter);
+			}
+			if (propertyName == '_shaderFilter') {
+				return getFilterByClass(ShaderFilter);
+			}
 			return null;
+		}
+		
+		protected function getFilterByClass(klass:Class):BitmapFilter
+		{
+			var filter:BitmapFilter = null;
+			var filters:Array = _target.filters;
+			var l:uint = filters.length;
+			for (var i:uint = 0; i < l; ++i) {
+				if ((filter = filters[i] as BitmapFilter) is klass) {
+					return filter;
+				}
+			}
+			filter = new klass();
+			filters.push(filter);
+			_target.filters = filters;
+			return filter;
 		}
 		
 		/**
@@ -269,6 +350,61 @@ package org.libspark.betweenas3.targets.single.display
 		 */
 		override public function setObject(propertyName:String, value:Object):void
 		{
+			if (propertyName == '_blurFilter') {
+				setFilterByClass(value as BitmapFilter, BlurFilter);
+				return;
+			}
+			if (propertyName == '_glowFilter') {
+				setFilterByClass(value as BitmapFilter, GlowFilter);
+				return;
+			}
+			if (propertyName == '_dropShadowFilter') {
+				setFilterByClass(value as BitmapFilter, DropShadowFilter);
+				return;
+			}
+			if (propertyName == '_colorMatrixFilter') {
+				setFilterByClass(value as BitmapFilter, ColorMatrixFilter);
+				return;
+			}
+			if (propertyName == '_bevelFilter') {
+				setFilterByClass(value as BitmapFilter, BevelFilter);
+				return;
+			}
+			if (propertyName == '_gradientGlowFilter') {
+				setFilterByClass(value as BitmapFilter, GradientGlowFilter);
+				return;
+			}
+			if (propertyName == '_gradientBevelFilter') {
+				setFilterByClass(value as BitmapFilter, GradientBevelFilter);
+				return;
+			}
+			if (propertyName == '_convolutionFilter') {
+				setFilterByClass(value as BitmapFilter, ConvolutionFilter);
+				return;
+			}
+			if (propertyName == '_displacementMapFilter') {
+				setFilterByClass(value as BitmapFilter, DisplacementMapFilter);
+				return;
+			}
+			if (propertyName == '_shaderFilter') {
+				setFilterByClass(value as BitmapFilter, ShaderFilter);
+				return;
+			}
+		}
+		
+		protected function setFilterByClass(filter:BitmapFilter, klass:Class):void
+		{
+			var filters:Array = _target.filters;
+			var l:uint = filters.length;
+			for (var i:uint = 0; i < l; ++i) {
+				if (filters[i] is klass) {
+					filters[i] = filter;
+					_target.filters = filters;
+					return;
+				}
+			}
+			filters.push(filter);
+			_target.filters = filters;
 		}
 		
 		/**
