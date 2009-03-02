@@ -99,7 +99,7 @@ package org.libspark.betweenas3
 			return new StandardTween(_singleTweenTargetFactory.create(target, to, from, time, easing || Linear.easeNone, delay), _ticker, 0);
 		}
 		
-		public static function apply(target:Object, to:Object, from:Object = null, time:Number = 0.0, applyTime:Number = 0.0, easing:IEasing = null):void
+		public static function apply(target:Object, to:Object, from:Object = null, time:Number = 1.0, applyTime:Number = 1.0, easing:IEasing = null):void
 		{
 			_singleTweenTargetFactory.create(target, to, from, time, easing || Linear.easeNone, 0.0).update(applyTime);
 		}
