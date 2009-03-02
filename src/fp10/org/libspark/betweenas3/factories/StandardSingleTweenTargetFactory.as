@@ -108,7 +108,7 @@ package org.libspark.betweenas3.factories
 						tweenTargetBuilder.createTweenTarget(name).setDestinationValue(name, Number(value), isRelative);
 					}
 					else {
-						if (!(name in source)) {
+						if (!(source != null && name in source)) {
 							parentTarget = tweenTargetBuilder.createTweenTarget(name);
 							childTarget = create(parentTarget.getObject(name), value, source != null ? source[name] : null, time, easing, delay);
 							tweenTargetBuilder.addTweenTarget(childTarget);
