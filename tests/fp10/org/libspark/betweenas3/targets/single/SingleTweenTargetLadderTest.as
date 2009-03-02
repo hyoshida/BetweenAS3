@@ -27,19 +27,34 @@
  */
 package org.libspark.betweenas3.targets.single
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.targets.single.display.SingleTargetsDisplayAllTests;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.test;
+	
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class SingleTargetsAllTests
+	public class SingleTweenTargetLadderTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			ObjectTweenTargetTest,
-			SingleTweenTargetLadderTest,
-			SingleTargetsDisplayAllTests
-		];
+		test function update():void
+		{
+			var o1:Object = new Object();
+			var o2:Object = new Object();
+			var obj:Object = {
+				child: o1
+			};
+			
+			var parnet:ISingleTweenTarget = new ObjectTweenTarget();
+			parnet.target = obj;
+			
+			var child:ISingleTweenTarget = new ObjectTweenTarget();
+			child.target = o2;
+			
+			var ladder:SingleTweenTargetLadder = new SingleTweenTargetLadder(parnet, child, 'child');
+			ladder.update(0);
+			
+			assertSame(o2, obj.child);
+		}
 	}
 }

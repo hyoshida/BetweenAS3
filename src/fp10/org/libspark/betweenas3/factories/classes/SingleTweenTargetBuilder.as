@@ -30,6 +30,7 @@ package org.libspark.betweenas3.factories.classes
 	import flash.utils.Dictionary;
 	import org.libspark.betweenas3.easing.IEasing;
 	import org.libspark.betweenas3.registries.ClassRegistry;
+	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.single.ISingleTweenTarget;
 	
 	/**
@@ -88,6 +89,11 @@ package org.libspark.betweenas3.factories.classes
 				return t;
 			}
 			return null;
+		}
+		
+		public function addTweenTarget(target:ITweenTarget):void
+		{
+			_tweenTargets.push(target);
 		}
 		
 		public function getCreatedTweenTargets():Vector.<ISingleTweenTarget>

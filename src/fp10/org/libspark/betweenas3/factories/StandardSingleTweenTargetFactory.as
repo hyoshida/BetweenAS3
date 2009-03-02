@@ -33,6 +33,7 @@ package org.libspark.betweenas3.factories
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.single.CompositeSingleTweenTarget;
 	import org.libspark.betweenas3.targets.single.ISingleTweenTarget;
+	import org.libspark.betweenas3.targets.single.SingleTweenTargetLadder;
 	
 	/**
 	 * ISingleTweenTargetFactory の実装.
@@ -76,7 +77,7 @@ package org.libspark.betweenas3.factories
 		{
 			// TODO: Value filter
 			
-			var tweenTargetBuilder:SingleTweenTargetBuilder = _builderCacheIndex > 0 ? _builderCache[--_builderCacheIndex] : newSingleTweenTargetBuilder(), name:String, value:Object, isRelative:Boolean, tweenTargets:Vector.<ISingleTweenTarget>, tweenTarget:ISingleTweenTarget;
+			var tweenTargetBuilder:SingleTweenTargetBuilder = _builderCacheIndex > 0 ? _builderCache[--_builderCacheIndex] : newSingleTweenTargetBuilder(), name:String, value:Object, isRelative:Boolean, parentTarget:ISingleTweenTarget, childTarget:ISingleTweenTarget, tweenTargets:Vector.<ISingleTweenTarget>, tweenTarget:ISingleTweenTarget;
 			
 			tweenTargetBuilder.reset(target, time, delay, easing);
 			
@@ -90,6 +91,12 @@ package org.libspark.betweenas3.factories
 						}
 						tweenTargetBuilder.createTweenTarget(name).setSourceValue(name, Number(value), isRelative);
 					}
+					else {
+						parentTarget = tweenTargetBuilder.createTweenTarget(name);
+						childTarget = create(parentTarget.getObject(name), dest != null ? dest[name] : null, value, time, easing, delay);
+						tweenTargetBuilder.addTweenTarget(childTarget);
+						tweenTargetBuilder.addTweenTarget(new SingleTweenTargetLadder(parentTarget, childTarget, name));
+					}
 				}
 			}
 			if (dest != null) {
@@ -100,10 +107,16 @@ package org.libspark.betweenas3.factories
 						}
 						tweenTargetBuilder.createTweenTarget(name).setDestinationValue(name, Number(value), isRelative);
 					}
+					else {
+						if (!(name in source)) {
+							parentTarget = tweenTargetBuilder.createTweenTarget(name);
+							childTarget = create(parentTarget.getObject(name), value, source != null ? source[name] : null, time, easing, delay);
+							tweenTargetBuilder.addTweenTarget(childTarget);
+							tweenTargetBuilder.addTweenTarget(new SingleTweenTargetLadder(parentTarget, childTarget, name));
+						}
+					}
 				}
 			}
-			// TODO: Object tween
-			
 			
 			
 			if ((tweenTargets = tweenTargetBuilder.getCreatedTweenTargets()).length == 1) {
