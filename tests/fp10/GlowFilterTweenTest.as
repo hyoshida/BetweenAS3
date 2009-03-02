@@ -41,9 +41,9 @@ package
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class FilterTweenTest extends Sprite
+	public class GlowFilterTweenTest extends Sprite
 	{
-		public function FilterTweenTest()
+		public function GlowFilterTweenTest()
 		{
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -67,18 +67,13 @@ package
 			mc.x = 100;
 			mc.y = 100;
 			
-			// ブラーフィルターとドロップシャドウフィルターとグローフィルター
+			// グローフィルター
 			
-			_t = BetweenAS3.tween(mc, 
-				{
-					_blurFilter: {blurX: 0, blurY: 0},
-					_glowFilter: {blurX: 32, blurY: 32}
-				},
-				{
-					_blurFilter: {blurX: 32, blurY: 32},
-					_dropShadowFilter: {distance: 32}
-				},
-				2.0, Cubic.easeOut);
+			BetweenAS3.apply(mc, {_glowFilter: {color: 0x0000ff}});
+			
+			var t:ITween = BetweenAS3.tween(mc, {_glowFilter: {blurX: 32, blurY: 32}}, {_glowFilter: {blurX: 0, blurY: 0}}, 1.0, Cubic.easeOut);
+			
+			_t = BetweenAS3.repeat(BetweenAS3.serial(t, BetweenAS3.reverse(t)), 3);
 			
 			_t.play();
 			
