@@ -34,6 +34,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.factories.ISingleTweenTargetFactory;
 	import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
 	import org.libspark.betweenas3.registries.ClassRegistry;
+	import org.libspark.betweenas3.targets.extra.RemoveFromParent;
 	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.ParallelTweenTarget;
 	import org.libspark.betweenas3.targets.RepeatedTweenTarget;
@@ -165,6 +166,11 @@ package org.libspark.betweenas3
 				return new StandardTween(new ReversedTweenTarget(new SlicedTweenTarget(tween.tweenTarget, end, begin)), _ticker, 0);
 			}
 			return new StandardTween(new SlicedTweenTarget(tween.tweenTarget, begin, end), _ticker, 0);
+		}
+		
+		public static function removeFromParent(target:DisplayObject, delay:Number = 0.0):ITween
+		{
+			return new StandardTween(new RemoveFromParent(target, delay), _ticker, 0);
 		}
 	}
 }
