@@ -13,8 +13,10 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
+    <class path="libs\SWFProfiler" />
     <class path="src\fp10" />
     <class path="tests\fp10" />
+    <class path="exp\fp10" />
   </classpaths>
   <!-- Build options -->
   <build>
