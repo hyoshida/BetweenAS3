@@ -59,6 +59,16 @@ package org.libspark.betweenas3.tweens
 		 */
 		function get isPlaying():Boolean;
 		
+		/**
+		 * このトゥイーンの完了時に再生を停止するのであれば true, そうでなければ false を設定します.
+		 */
+		function get stopOnComplete():Boolean;
+		
+		/**
+		 * @private
+		 */
+		function set stopOnComplete(value:Boolean):void;
+		
 		function get onPlay():Function;
 		function set onPlay(value:Function):void;
 		function get onPlayParams():Array;

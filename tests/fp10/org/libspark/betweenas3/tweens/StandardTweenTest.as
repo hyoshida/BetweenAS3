@@ -179,6 +179,21 @@ package org.libspark.betweenas3.tweens
 			assertNull(_ticker.listener);
 			assertEquals(2500, _target.t);
 		}
+		
+		test function stopOnComplete():void
+		{
+			_tween.stopOnComplete = false;
+			
+			_tween.play();
+			var b1:Boolean = _ticker.listener.tick(2500);
+			var b2:Boolean = _ticker.listener.tick(4500);
+			
+			assertFalse(b1);
+			assertFalse(b2);
+			assertTrue(_tween.isPlaying);
+			assertEquals('play update update update complete update ', Static.log);
+			assertEquals(500, _target.t);
+		}
 	}
 }
 

@@ -56,6 +56,7 @@ package org.libspark.betweenas3.tweens
 		private var _duration:Number;
 		private var _startTime:Number;
 		private var _isPlaying:Boolean = false;
+		private var _stopOnComplete:Boolean = true;
 		private var _dispatcher:IEventDispatcher;
 		private var _willTriggerFlags:uint = 0;
 		private var _onPlay:Function;
@@ -97,6 +98,22 @@ package org.libspark.betweenas3.tweens
 		public function get isPlaying():Boolean
 		{
 			return _isPlaying;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get stopOnComplete():Boolean
+		{
+			return _stopOnComplete;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set stopOnComplete(value:Boolean):void
+		{
+			_stopOnComplete = value;
 		}
 		
 		public function get onPlay():Function
@@ -261,14 +278,27 @@ package org.libspark.betweenas3.tweens
 			
 			if (t >= _duration) {
 				_position = _tweenTarget.duration;
-				_isPlaying = false;
-				if ((_willTriggerFlags & 0x08) != 0) {
-					_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.COMPLETE));
+				if (_stopOnComplete) {
+					_isPlaying = false;
+					if ((_willTriggerFlags & 0x08) != 0) {
+						_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.COMPLETE));
+					}
+					if (_onComplete != null) {
+						_onComplete.apply(null, _onCompleteParams);
+					}
+					return true;
 				}
-				if (_onComplete != null) {
-					_onComplete.apply(null, _onCompleteParams);
+				else {
+					if ((_willTriggerFlags & 0x08) != 0) {
+						_dispatcher.dispatchEvent(new BetweenEvent(BetweenEvent.COMPLETE));
+					}
+					if (_onComplete != null) {
+						_onComplete.apply(null, _onCompleteParams);
+					}
+					_position = t - _duration;
+					_startTime = time - _position;
+					tick(time);
 				}
-				return true;
 			}
 			
 			return false;
