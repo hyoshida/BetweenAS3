@@ -28,12 +28,14 @@
 package org.libspark.betweenas3
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 	import org.libspark.betweenas3.easing.IEasing;
 	import org.libspark.betweenas3.easing.Linear;
 	import org.libspark.betweenas3.factories.ISingleTweenTargetFactory;
 	import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
 	import org.libspark.betweenas3.registries.ClassRegistry;
+	import org.libspark.betweenas3.targets.extra.AddChild;
 	import org.libspark.betweenas3.targets.extra.RemoveFromParent;
 	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.ParallelTweenTarget;
@@ -166,6 +168,11 @@ package org.libspark.betweenas3
 				return new StandardTween(new ReversedTweenTarget(new SlicedTweenTarget(tween.tweenTarget, end, begin)), _ticker, 0);
 			}
 			return new StandardTween(new SlicedTweenTarget(tween.tweenTarget, begin, end), _ticker, 0);
+		}
+		
+		public static function addChild(target:DisplayObject, parent:DisplayObjectContainer, delay:Number = 0.0):ITween
+		{
+			return new StandardTween(new AddChild(target, parent, delay), _ticker, 0);
 		}
 		
 		public static function removeFromParent(target:DisplayObject, delay:Number = 0.0):ITween
