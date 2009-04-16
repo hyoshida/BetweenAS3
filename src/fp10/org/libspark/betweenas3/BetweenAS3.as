@@ -28,6 +28,7 @@
 package org.libspark.betweenas3
 {
 	import flash.display.DisplayObject;
+	import flash.geom.Point;
 	import org.libspark.betweenas3.easing.IEasing;
 	import org.libspark.betweenas3.easing.Linear;
 	import org.libspark.betweenas3.factories.ISingleTweenTargetFactory;
@@ -40,6 +41,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.targets.ScaledTweenTarget;
 	import org.libspark.betweenas3.targets.SerialTweenTarget;
 	import org.libspark.betweenas3.targets.single.display.DisplayObjectTweenTarget;
+	import org.libspark.betweenas3.targets.single.geom.PointTweenTarget;
 	import org.libspark.betweenas3.targets.single.ObjectTweenTarget;
 	import org.libspark.betweenas3.targets.SlicedTweenTarget;
 	import org.libspark.betweenas3.tickers.EnterFrameTicker;
@@ -75,6 +77,7 @@ package org.libspark.betweenas3
 			
 			registerTweenTarget(Object, ['*'], ObjectTweenTarget);
 			registerTweenTarget(DisplayObject, DisplayObjectTweenTarget.TARGET_PROPERTIES, DisplayObjectTweenTarget);
+			registerTweenTarget(Point, PointTweenTarget.TARGET_PROPERTIES, PointTweenTarget);
 		}
 		
 		public static function registerTweenTarget(targetClass:Class, properties:Array, tweenTargetClass:Class):void
