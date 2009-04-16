@@ -27,45 +27,71 @@
  */
 package org.libspark.betweenas3.targets.extra
 {
-	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
-	
 	/**
-	 * 指定された DisplayObject を親から削除する動作を行うトゥイーンターゲットです.
+	 * IActionTweenTarget を実装するための抽象クラスです.
 	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class RemoveFromParent extends AbstractActionTweenTarget
+	public class AbstractActionTweenTarget implements IActionTweenTarget
 	{
-		public function RemoveFromParent(target:DisplayObject, delay:Number = 0)
+		public function AbstractActionTweenTarget(delay:Number = 0)
 		{
-			super(delay);
+			_delay = delay;
+		}
+		
+		private var _delay:Number;
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get delay():Number
+		{
+			return _delay;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set delay(value:Number):void
+		{
+			_delay = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get duration():Number
+		{
+			return _delay + 0.01;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function update(time:Number):void
+		{
+			if (time >= (_delay + 0.01)) {
+				action();
+			}
+			else if (time <= _delay) {
+				rollback();
+			}
+		}
+		
+		/**
+		 * このメソッドをオーバーライドして実行する動作を記述します.
+		 */
+		protected function action():void
+		{
 			
-			_target = target;
 		}
 		
-		private var _target:DisplayObject;
-		private var _parent:DisplayObjectContainer;
-		
-		public function get target():DisplayObject
+		/**
+		 * このメソッドをオーバーライドして実行した動作を元に戻す処理を記述します.
+		 */
+		protected function rollback():void
 		{
-			return _target;
-		}
-		
-		override protected function action():void 
-		{
-			if (_target != null && _target.parent != null) {
-				_parent = _target.parent;
-				_parent.removeChild(_target);
-			}
-		}
-		
-		override protected function rollback():void 
-		{
-			if (_target != null && _parent != null) {
-				_parent.addChild(_target);
-				_parent = null;
-			}
+			
 		}
 	}
 }

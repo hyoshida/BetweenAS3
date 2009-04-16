@@ -27,45 +27,24 @@
  */
 package org.libspark.betweenas3.targets.extra
 {
-	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
+	import org.libspark.betweenas3.easing.IEasing;
+	import org.libspark.betweenas3.targets.ITweenTarget;
 	
 	/**
-	 * 指定された DisplayObject を親から削除する動作を行うトゥイーンターゲットです.
+	 * 例外的に何かの動作を行うトゥイーンターゲットです.
 	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class RemoveFromParent extends AbstractActionTweenTarget
+	public interface IActionTweenTarget extends ITweenTarget
 	{
-		public function RemoveFromParent(target:DisplayObject, delay:Number = 0)
-		{
-			super(delay);
-			
-			_target = target;
-		}
+		/**
+		 * 動作が開始されるまでに掛ける時間 (秒) を設定します.
+		 */
+		function get delay():Number;
 		
-		private var _target:DisplayObject;
-		private var _parent:DisplayObjectContainer;
-		
-		public function get target():DisplayObject
-		{
-			return _target;
-		}
-		
-		override protected function action():void 
-		{
-			if (_target != null && _target.parent != null) {
-				_parent = _target.parent;
-				_parent.removeChild(_target);
-			}
-		}
-		
-		override protected function rollback():void 
-		{
-			if (_target != null && _parent != null) {
-				_parent.addChild(_target);
-				_parent = null;
-			}
-		}
+		/**
+		 * @private
+		 */
+		function set delay(value:Number):void;
 	}
 }
