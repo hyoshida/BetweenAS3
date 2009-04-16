@@ -116,17 +116,19 @@ package
 		
 		private function enterFrameHandler(e:Event):void
 		{
-			_bitmapData.lock();
-			_bitmapData.colorTransform(_bitmapData.rect, FADE);
+			var bitmapData:BitmapData = _bitmapData;
+			
+			bitmapData.lock();
+			bitmapData.colorTransform(_bitmapData.rect, FADE);
 			
 			var p:Particle = _particles;
 			var pos:Point;
 			while ((p = p.next) != null) {
 				pos = p.p;
-				_bitmapData.setPixel(pos.x >> 0, pos.y >> 0, 0xffffff);
+				bitmapData.setPixel(pos.x >> 0, pos.y >> 0, 0xffffff);
 			}
 			
-			_bitmapData.unlock();
+			bitmapData.unlock();
 		}
 	}
 }
