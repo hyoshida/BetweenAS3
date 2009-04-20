@@ -181,7 +181,7 @@ package org.libspark.betweenas3
 			return new StandardTween(new RemoveFromParent(target, delay), _ticker, 0);
 		}
 		
-		public static function func(func:Function, params:Array, delay:Number = 0.0, useFunc2:Boolean = false, func2:Function = null, params2:Array = null):ITween
+		public static function func(func:Function, params:Array = null, delay:Number = 0.0, useFunc2:Boolean = false, func2:Function = null, params2:Array = null):ITween
 		{
 			return new StandardTween(new Func(func, params, delay, useFunc2, func2, params2), _ticker, 0);
 		}
