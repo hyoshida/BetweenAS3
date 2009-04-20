@@ -36,6 +36,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
 	import org.libspark.betweenas3.registries.ClassRegistry;
 	import org.libspark.betweenas3.targets.extra.AddChild;
+	import org.libspark.betweenas3.targets.extra.Func;
 	import org.libspark.betweenas3.targets.extra.RemoveFromParent;
 	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.ParallelTweenTarget;
@@ -178,6 +179,11 @@ package org.libspark.betweenas3
 		public static function removeFromParent(target:DisplayObject, delay:Number = 0.0):ITween
 		{
 			return new StandardTween(new RemoveFromParent(target, delay), _ticker, 0);
+		}
+		
+		public static function func(func:Function, params:Array, delay:Number = 0.0, useFunc2:Boolean = false, func2:Function = null, params2:Array = null):ITween
+		{
+			return new StandardTween(new Func(func, params, delay, useFunc2, func2, params2), _ticker, 0);
 		}
 	}
 }
