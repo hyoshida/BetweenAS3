@@ -120,6 +120,14 @@ package org.libspark.betweenas3.registries
 			_r.registerClassWithTargetClassAndPropertyName(F, ClassA, 'c');
 			assertSame(F, _r.getClassByTargetClassAndPropertyName(ClassB, 'c'));
 		}
+		
+		test function issue20090509():void
+		{
+			var r:ClassRegistry = new ClassRegistry();
+			r.registerClassWithTargetClassAndPropertyName(A, Object, '*');
+			r.registerClassWithTargetClassAndPropertyName(B, ClassC, 'a');
+			assertSame(A, r.getClassByTargetClassAndPropertyName(ClassE, 'a'));
+		}
 	}
 }
 

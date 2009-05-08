@@ -116,7 +116,11 @@ package org.libspark.betweenas3.registries
 					dict = newDict;
 				}
 				else {
-					classes[c] = dict;
+					var dictClone:Dictionary = new Dictionary();
+					for (p in dict) {
+						dictClone[p] = dict[p];
+					}
+					classes[c] = dictClone;
 				}
 				
 				// このクラス (c) のサブクラスのリストを保存
