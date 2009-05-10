@@ -1,0 +1,7 @@
+﻿BetweenAS3 Change Log
+========================================
+
+Alpha r2505 -> HEAD
+--------------------
+
+ * [r2600] Fix: Sometimes ReferenceError has occured while creating a tween.
