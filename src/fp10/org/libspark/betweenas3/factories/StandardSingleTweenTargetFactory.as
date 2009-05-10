@@ -73,13 +73,13 @@ package org.libspark.betweenas3.factories
 		/**
 		 * @inheritDoc
 		 */
-		public function create(target:Object, dest:Object, source:Object, time:Number, easing:IEasing, delay:Number):ISingleTweenTarget
+		public function create(target:Object, dest:Object, source:Object, time:Number, easing:IEasing):ISingleTweenTarget
 		{
 			// TODO: Value filter
 			
 			var tweenTargetBuilder:SingleTweenTargetBuilder = _builderCacheIndex > 0 ? _builderCache[--_builderCacheIndex] : newSingleTweenTargetBuilder(), name:String, value:Object, isRelative:Boolean, parentTarget:ISingleTweenTarget, childTarget:ISingleTweenTarget, tweenTargets:Vector.<ISingleTweenTarget>, tweenTarget:ISingleTweenTarget;
 			
-			tweenTargetBuilder.reset(target, time, delay, easing);
+			tweenTargetBuilder.reset(target, time, easing);
 			
 			// TODO: Tween targets with factory
 			
@@ -93,7 +93,7 @@ package org.libspark.betweenas3.factories
 					}
 					else {
 						parentTarget = tweenTargetBuilder.createTweenTarget(name, false);
-						childTarget = create(parentTarget.getObject(name), dest != null ? dest[name] : null, value, time, easing, delay);
+						childTarget = create(parentTarget.getObject(name), dest != null ? dest[name] : null, value, time, easing);
 						tweenTargetBuilder.addTweenTarget(new SingleTweenTargetLadder(parentTarget, childTarget, name));
 					}
 				}
@@ -109,7 +109,7 @@ package org.libspark.betweenas3.factories
 					else {
 						if (!(source != null && name in source)) {
 							parentTarget = tweenTargetBuilder.createTweenTarget(name, false);
-							childTarget = create(parentTarget.getObject(name), value, source != null ? source[name] : null, time, easing, delay);
+							childTarget = create(parentTarget.getObject(name), value, source != null ? source[name] : null, time, easing);
 							tweenTargetBuilder.addTweenTarget(new SingleTweenTargetLadder(parentTarget, childTarget, name));
 						}
 					}
@@ -121,10 +121,10 @@ package org.libspark.betweenas3.factories
 				tweenTarget = tweenTargets[0];
 			}
 			else if (tweenTargets.length > 1) {
-				tweenTarget = new CompositeSingleTweenTarget(target, time, delay, easing, tweenTargets);
+				tweenTarget = new CompositeSingleTweenTarget(target, time, easing, tweenTargets);
 			}
 			
-			tweenTargetBuilder.reset(null, 0, 0, null);
+			tweenTargetBuilder.reset(null, 0, null);
 			
 			_builderCache[_builderCacheIndex++] = tweenTargetBuilder;
 			

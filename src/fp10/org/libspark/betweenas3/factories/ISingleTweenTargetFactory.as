@@ -55,9 +55,8 @@ package org.libspark.betweenas3.factories
 		 * @param	from
 		 * @param	time
 		 * @param	easing
-		 * @param	delay
 		 * @return
 		 */
-		function create(target:Object, to:Object, from:Object, time:Number, easing:IEasing, delay:Number):ISingleTweenTarget;
+		function create(target:Object, to:Object, from:Object, time:Number, easing:IEasing):ISingleTweenTarget;
 	}
 }

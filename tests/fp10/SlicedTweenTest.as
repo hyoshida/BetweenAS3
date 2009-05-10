@@ -69,7 +69,7 @@ package
 			
 			// 一部分だけタイムスケールする
 			
-			var t:ITween = BetweenAS3.tween(mc, {x: 500}, null, 1.0, Cubic.easeIn, 0.5);
+			var t:ITween = BetweenAS3.delay(BetweenAS3.tween(mc, {x: 500}, null, 1.0, Cubic.easeIn), 0.5);
 			
 			_t = BetweenAS3.serial(
 				BetweenAS3.slice(t, 0, 1.3),

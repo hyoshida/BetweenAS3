@@ -69,10 +69,9 @@ package org.libspark.betweenas3.factories
 			
 			var obj:Object = new Object();
 			var easing:IEasing = new EaseNone();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, null, 3000, easing, 2000);
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, null, 3000, easing);
 			
 			assertSame(t, result);
-			assertEquals(2000, t.delay);
 			assertEquals(3000, t.time);
 			assertSame(easing, t.easing);
 			
@@ -100,10 +99,9 @@ package org.libspark.betweenas3.factories
 			
 			var obj:Object = new Object();
 			var easing:IEasing = new EaseNone();
-			var result:ISingleTweenTarget = _f.create(obj, null, {a: 10, $b: 20}, 3000, easing, 2000);
+			var result:ISingleTweenTarget = _f.create(obj, null, {a: 10, $b: 20}, 3000, easing);
 			
 			assertSame(t, result);
-			assertEquals(2000, t.delay);
 			assertEquals(3000, t.time);
 			assertSame(easing, t.easing);
 			
@@ -131,10 +129,9 @@ package org.libspark.betweenas3.factories
 			
 			var obj:Object = new Object();
 			var easing:IEasing = new EaseNone();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, {b: 30, $c: 40}, 3000, easing, 2000);
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, {b: 30, $c: 40}, 3000, easing);
 			
 			assertSame(t, result);
-			assertEquals(2000, t.delay);
 			assertEquals(3000, t.time);
 			assertSame(easing, t.easing);
 			
@@ -172,13 +169,12 @@ package org.libspark.betweenas3.factories
 			
 			var obj:Object = new Object();
 			var easing:IEasing = new EaseNone();
-			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, null, 3000, easing, 2000);
+			var result:ISingleTweenTarget = _f.create(obj, {a: 10, $b: 20}, null, 3000, easing);
 			
 			assertTrue(result is CompositeSingleTweenTarget);
 			
 			var r:CompositeSingleTweenTarget = result as CompositeSingleTweenTarget;
 			
-			assertEquals(2000, r.delay);
 			assertEquals(3000, r.time);
 			assertSame(easing, r.easing);
 			
@@ -250,20 +246,17 @@ internal class TestSingleTweenTargetBuilder extends SingleTweenTargetBuilder
 	public var targets:Vector.<ISingleTweenTarget> = new Vector.<ISingleTweenTarget>();
 	
 	private var _time:Number;
-	private var _delay:Number;
 	private var _easing:IEasing;
 	
-	override public function reset(t:Object, time:Number, delay:Number, easing:IEasing):void
+	override public function reset(t:Object, time:Number, easing:IEasing):void
 	{
 		_time = time;
-		_delay = delay;
 		_easing = easing;
 	}
 	
 	override public function createTweenTarget(propertyName:String, willAdd:Boolean = true):ISingleTweenTarget
 	{
 		target.time = _time;
-		target.delay = _delay;
 		target.easing = _easing;
 		return target;
 	}

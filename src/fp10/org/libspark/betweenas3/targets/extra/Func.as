@@ -34,10 +34,8 @@ package org.libspark.betweenas3.targets.extra
 	 */
 	public class Func extends AbstractActionTweenTarget
 	{
-		public function Func(func:Function, params:Array = null, delay:Number = 0, useFunc2:Boolean = false, func2:Function = null, params2:Array = null)
+		public function Func(func:Function, params:Array = null, useFunc2:Boolean = false, func2:Function = null, params2:Array = null)
 		{
-			super(delay);
-			
 			_func = func;
 			_params = params;
 			

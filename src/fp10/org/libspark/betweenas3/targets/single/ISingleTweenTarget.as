@@ -43,8 +43,6 @@ package org.libspark.betweenas3.targets.single
 	 */
 	public interface ISingleTweenTarget extends ITweenTarget
 	{
-		// duration は time + delay
-		
 		/**
 		 * このトゥイーンに掛ける時間 (秒) を設定します.
 		 */
@@ -54,16 +52,6 @@ package org.libspark.betweenas3.targets.single
 		 * @private
 		 */
 		function set time(value:Number):void;
-		
-		/**
-		 * このトゥイーンが開始されるまでに掛ける時間 (秒) を設定します.
-		 */
-		function get delay():Number;
-		
-		/**
-		 * @private
-		 */
-		function set delay(value:Number):void;
 		
 		/**
 		 * このトゥイーンで使用するイージングを設定します.

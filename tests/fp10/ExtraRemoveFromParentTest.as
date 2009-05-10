@@ -60,7 +60,7 @@ package
 			// removeChild された後でも、もう一度 gotoAndPlay(0) とかすればちゃんと復活して表示される。
 			_t = BetweenAS3.serial(
 				BetweenAS3.tween(box, {x: 700}, null, 1.8, Bounce.easeOut),
-				BetweenAS3.removeFromParent(box, 1.0)
+				BetweenAS3.delay(BetweenAS3.removeFromParent(box), 1.0)
 			);
 			
 			_t.play();

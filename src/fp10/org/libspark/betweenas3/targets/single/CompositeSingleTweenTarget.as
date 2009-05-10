@@ -37,11 +37,10 @@ package org.libspark.betweenas3.targets.single
 	 */
 	public class CompositeSingleTweenTarget extends AbstractSingleTweenTarget
 	{
-		public function CompositeSingleTweenTarget(target:Object, time:Number, delay:Number, easing:IEasing, targets:Vector.<ISingleTweenTarget>)
+		public function CompositeSingleTweenTarget(target:Object, time:Number, easing:IEasing, targets:Vector.<ISingleTweenTarget>)
 		{
 			_target = target;
 			this.time = time;
-			this.delay = delay;
 			this.easing = easing;
 			
 			var l:uint = targets.length;
@@ -158,7 +157,7 @@ package org.libspark.betweenas3.targets.single
 					targets.push(t[i].clone() as ISingleTweenTarget);
 				}
 			}
-			return new CompositeSingleTweenTarget(_target, _time, _delay, _easing, targets);
+			return new CompositeSingleTweenTarget(_target, time, easing, targets);
 		}
 	}
 }

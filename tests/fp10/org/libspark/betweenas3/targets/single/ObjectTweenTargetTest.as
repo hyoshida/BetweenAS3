@@ -53,17 +53,6 @@ package org.libspark.betweenas3.targets.single
 		}
 		
 		/**
-		 * delay の設定
-		 */
-		test function delay():void
-		{
-			var t:ISingleTweenTarget = new ObjectTweenTarget();
-			assertEquals(0, t.delay);
-			t.delay = 3000;
-			assertEquals(3000, t.delay);
-		}
-		
-		/**
 		 * duration の値
 		 */
 		test function duration():void
@@ -72,8 +61,6 @@ package org.libspark.betweenas3.targets.single
 			assertEquals(0, t.duration);
 			t.time = 3000;
 			assertEquals(3000, t.duration);
-			t.delay = 2000;
-			assertEquals(5000, t.duration);
 		}
 		
 		/**
@@ -170,92 +157,6 @@ package org.libspark.betweenas3.targets.single
 		}
 		
 		/**
-		 * 終了値のみと delay を設定しての update
-		 */
-		test function updateWithDestinationAndDelay():void
-		{
-			var o:Object = {
-				a1: 1.0,
-				a2: 1.0,
-				b1: 8.0,
-				b2: 8.0,
-				c: 3.0
-			};
-			
-			var t:ISingleTweenTarget = new ObjectTweenTarget();
-			t.target = o;
-			t.easing = new EaseNone();
-			t.delay = 2000;
-			t.time = 4000;
-			t.setDestinationValue('a1', 6.0, false);
-			t.setDestinationValue('a2', 5.0, true);
-			t.setDestinationValue('b1', 2.0, false);
-			t.setDestinationValue('b2', -6.0, true);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(0);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(1000);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(2000);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(3000);
-			
-			assertEquals(2.25, o.a1);
-			assertEquals(2.25, o.a2);
-			assertEquals(6.5, o.b1);
-			assertEquals(6.5, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(4000);
-			
-			assertEquals(3.5, o.a1);
-			assertEquals(3.5, o.a2);
-			assertEquals(5.0, o.b1);
-			assertEquals(5.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(6000);
-			
-			assertEquals(6.0, o.a1);
-			assertEquals(6.0, o.a2);
-			assertEquals(2.0, o.b1);
-			assertEquals(2.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(8000);
-			
-			assertEquals(6.0, o.a1);
-			assertEquals(6.0, o.a2);
-			assertEquals(2.0, o.b1);
-			assertEquals(2.0, o.b2);
-			assertEquals(3.0, o.c);
-		}
-		
-		/**
 		 * 開始値のみを設定しての update
 		 */
 		test function updateWithSource():void
@@ -316,92 +217,6 @@ package org.libspark.betweenas3.targets.single
 			assertEquals(3.0, o.c);
 			
 			t.update(6000);
-			
-			assertEquals(6.0, o.a1);
-			assertEquals(6.0, o.a2);
-			assertEquals(2.0, o.b1);
-			assertEquals(2.0, o.b2);
-			assertEquals(3.0, o.c);
-		}
-		
-		/**
-		 * 開始値のみと delay を設定しての update
-		 */
-		test function updateWithSourceAndDelay():void
-		{
-			var o:Object = {
-				a1: 6.0,
-				a2: 6.0,
-				b1: 2.0,
-				b2: 2.0,
-				c: 3.0
-			};
-			
-			var t:ISingleTweenTarget = new ObjectTweenTarget();
-			t.target = o;
-			t.easing = new EaseNone();
-			t.delay = 2000;
-			t.time = 4000;
-			t.setSourceValue('a1', 1.0, false);
-			t.setSourceValue('a2', -5.0, true);
-			t.setSourceValue('b1', 8.0, false);
-			t.setSourceValue('b2', 6.0, true);
-			
-			assertEquals(6.0, o.a1);
-			assertEquals(6.0, o.a2);
-			assertEquals(2.0, o.b1);
-			assertEquals(2.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(0);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(1000);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(2000);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(3000);
-			
-			assertEquals(2.25, o.a1);
-			assertEquals(2.25, o.a2);
-			assertEquals(6.5, o.b1);
-			assertEquals(6.5, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(4000);
-			
-			assertEquals(3.5, o.a1);
-			assertEquals(3.5, o.a2);
-			assertEquals(5.0, o.b1);
-			assertEquals(5.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(6000);
-			
-			assertEquals(6.0, o.a1);
-			assertEquals(6.0, o.a2);
-			assertEquals(2.0, o.b1);
-			assertEquals(2.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(8000);
 			
 			assertEquals(6.0, o.a1);
 			assertEquals(6.0, o.a2);
@@ -475,96 +290,6 @@ package org.libspark.betweenas3.targets.single
 			assertEquals(3.0, o.c);
 			
 			t.update(6000);
-			
-			assertEquals(6.0, o.a1);
-			assertEquals(6.0, o.a2);
-			assertEquals(2.0, o.b1);
-			assertEquals(2.0, o.b2);
-			assertEquals(3.0, o.c);
-		}
-		
-		/**
-		 * 開始値と終了値と delay を設定しての update
-		 */
-		test function updateWithSourceAndDestinationAndDelay():void
-		{
-			var o:Object = {
-				a1: 5.0,
-				a2: 5.0,
-				b1: 4.0,
-				b2: 4.0,
-				c: 3.0
-			};
-			
-			var t:ISingleTweenTarget = new ObjectTweenTarget();
-			t.target = o;
-			t.easing = new EaseNone();
-			t.delay = 2000;
-			t.time = 4000;
-			t.setSourceValue('a1', 1.0, false);
-			t.setSourceValue('a2', -4.0, true);
-			t.setSourceValue('b1', 8.0, false);
-			t.setSourceValue('b2', 4.0, true);
-			t.setDestinationValue('a1', 6.0, false);
-			t.setDestinationValue('a2', 1.0, true);
-			t.setDestinationValue('b1', 2.0, false);
-			t.setDestinationValue('b2', -2.0, true);
-			
-			assertEquals(5.0, o.a1);
-			assertEquals(5.0, o.a2);
-			assertEquals(4.0, o.b1);
-			assertEquals(4.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(0);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(1000);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(2000);
-			
-			assertEquals(1.0, o.a1);
-			assertEquals(1.0, o.a2);
-			assertEquals(8.0, o.b1);
-			assertEquals(8.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(3000);
-			
-			assertEquals(2.25, o.a1);
-			assertEquals(2.25, o.a2);
-			assertEquals(6.5, o.b1);
-			assertEquals(6.5, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(4000);
-			
-			assertEquals(3.5, o.a1);
-			assertEquals(3.5, o.a2);
-			assertEquals(5.0, o.b1);
-			assertEquals(5.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(6000);
-			
-			assertEquals(6.0, o.a1);
-			assertEquals(6.0, o.a2);
-			assertEquals(2.0, o.b1);
-			assertEquals(2.0, o.b2);
-			assertEquals(3.0, o.c);
-			
-			t.update(8000);
 			
 			assertEquals(6.0, o.a1);
 			assertEquals(6.0, o.a2);

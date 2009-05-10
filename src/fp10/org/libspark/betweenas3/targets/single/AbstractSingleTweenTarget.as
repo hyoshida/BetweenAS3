@@ -39,7 +39,6 @@ package org.libspark.betweenas3.targets.single
 	public class AbstractSingleTweenTarget implements ISingleTweenTarget
 	{
 		protected var _time:Number = 0;
-		protected var _delay:Number = 0;
 		protected var _easing:IEasing = null;
 		
 		/**
@@ -47,7 +46,7 @@ package org.libspark.betweenas3.targets.single
 		 */
 		public function get duration():Number
 		{
-			return _time + _delay;
+			return _time;
 		}
 		
 		/**
@@ -64,22 +63,6 @@ package org.libspark.betweenas3.targets.single
 		public function set time(value:Number):void
 		{
 			_time = value;
-		}
-		
-		/**
-		 * このトゥイーンが開始されるまでに掛ける時間 (秒) を設定します.
-		 */
-		public function get delay():Number
-		{
-			return _delay;
-		}
-		
-		/**
-		 * @private
-		 */
-		public function set delay(value:Number):void
-		{
-			_delay = value;
 		}
 		
 		/**
@@ -173,7 +156,6 @@ package org.libspark.betweenas3.targets.single
 		public function setFrom(obj:AbstractSingleTweenTarget):void
 		{
 			_time = obj._time;
-			_delay = obj._delay;
 			_easing = obj._easing;
 		}
 		

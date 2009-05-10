@@ -35,6 +35,7 @@ package org.libspark.betweenas3
 	import org.libspark.betweenas3.factories.ISingleTweenTargetFactory;
 	import org.libspark.betweenas3.factories.StandardSingleTweenTargetFactory;
 	import org.libspark.betweenas3.registries.ClassRegistry;
+	import org.libspark.betweenas3.targets.DelayedTweenTarget;
 	import org.libspark.betweenas3.targets.extra.AddChild;
 	import org.libspark.betweenas3.targets.extra.Func;
 	import org.libspark.betweenas3.targets.extra.RemoveFromParent;
@@ -101,14 +102,14 @@ package org.libspark.betweenas3
 		 * @param	from	トゥイーンのパラメータ (開始値)
 		 * @return
 		 */
-		public static function tween(target:Object, to:Object, from:Object = null, time:Number = 1.0, easing:IEasing = null, delay:Number = 0.0):ITween
+		public static function tween(target:Object, to:Object, from:Object = null, time:Number = 1.0, easing:IEasing = null):ITween
 		{
-			return new StandardTween(_singleTweenTargetFactory.create(target, to, from, time, easing || Linear.easeNone, delay), _ticker, 0);
+			return new StandardTween(_singleTweenTargetFactory.create(target, to, from, time, easing || Linear.easeNone), _ticker, 0);
 		}
 		
 		public static function apply(target:Object, to:Object, from:Object = null, time:Number = 1.0, applyTime:Number = 1.0, easing:IEasing = null):void
 		{
-			_singleTweenTargetFactory.create(target, to, from, time, easing || Linear.easeNone, 0.0).update(applyTime);
+			_singleTweenTargetFactory.create(target, to, from, time, easing || Linear.easeNone).update(applyTime);
 		}
 		
 		public static function parallel(...tweens:Array):ITween
@@ -171,19 +172,24 @@ package org.libspark.betweenas3
 			return new StandardTween(new SlicedTweenTarget(tween.tweenTarget.clone(), begin, end), _ticker, 0);
 		}
 		
-		public static function addChild(target:DisplayObject, parent:DisplayObjectContainer, delay:Number = 0.0):ITween
+		public static function delay(tween:ITween, delay:Number, postDelay:Number = 0.0):ITween
 		{
-			return new StandardTween(new AddChild(target, parent, delay), _ticker, 0);
+			return new StandardTween(new DelayedTweenTarget(tween.tweenTarget.clone(), delay, postDelay), _ticker, 0);
 		}
 		
-		public static function removeFromParent(target:DisplayObject, delay:Number = 0.0):ITween
+		public static function addChild(target:DisplayObject, parent:DisplayObjectContainer):ITween
 		{
-			return new StandardTween(new RemoveFromParent(target, delay), _ticker, 0);
+			return new StandardTween(new AddChild(target, parent), _ticker, 0);
 		}
 		
-		public static function func(func:Function, params:Array = null, delay:Number = 0.0, useFunc2:Boolean = false, func2:Function = null, params2:Array = null):ITween
+		public static function removeFromParent(target:DisplayObject):ITween
 		{
-			return new StandardTween(new Func(func, params, delay, useFunc2, func2, params2), _ticker, 0);
+			return new StandardTween(new RemoveFromParent(target), _ticker, 0);
+		}
+		
+		public static function func(func:Function, params:Array = null, useFunc2:Boolean = false, func2:Function = null, params2:Array = null):ITween
+		{
+			return new StandardTween(new Func(func, params, useFunc2, func2, params2), _ticker, 0);
 		}
 	}
 }

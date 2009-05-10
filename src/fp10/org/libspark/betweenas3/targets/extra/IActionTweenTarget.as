@@ -37,14 +37,5 @@ package org.libspark.betweenas3.targets.extra
 	 */
 	public interface IActionTweenTarget extends ITweenTarget
 	{
-		/**
-		 * 動作が開始されるまでに掛ける時間 (秒) を設定します.
-		 */
-		function get delay():Number;
-		
-		/**
-		 * @private
-		 */
-		function set delay(value:Number):void;
 	}
 }

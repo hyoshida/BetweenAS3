@@ -69,7 +69,7 @@ package org.libspark.betweenas3.factories.classes
 		{
 			var obj:Object = new ClassA();
 			var easing:IEasing = new EaseNone();
-			_b.reset(obj, 100, 200, easing);
+			_b.reset(obj, 100, easing);
 			var t1:ISingleTweenTarget = _b.createTweenTarget('a1');
 			var t2:ISingleTweenTarget = _b.createTweenTarget('a1');
 			var t3:ISingleTweenTarget = _b.createTweenTarget('a2');
@@ -78,7 +78,6 @@ package org.libspark.betweenas3.factories.classes
 			assertTrue(t1 is TestTweenTargetA);
 			assertSame(obj, t1.target);
 			assertEquals(100, t1.time);
-			assertEquals(200, t1.delay);
 			assertSame(easing, t1.easing);
 			assertSame(t1, t2);
 			assertSame(t1, t3);
@@ -91,7 +90,7 @@ package org.libspark.betweenas3.factories.classes
 		{
 			var obj:Object = new ClassB();
 			var easing:IEasing = new EaseNone();
-			_b.reset(obj, 100, 200, easing);
+			_b.reset(obj, 100, easing);
 			var t1:ISingleTweenTarget = _b.createTweenTarget('a1');
 			var t2:ISingleTweenTarget = _b.createTweenTarget('a1');
 			var t3:ISingleTweenTarget = _b.createTweenTarget('a2');
@@ -100,13 +99,11 @@ package org.libspark.betweenas3.factories.classes
 			assertTrue(t1 is TestTweenTargetB);
 			assertSame(obj, t1.target);
 			assertEquals(100, t1.time);
-			assertEquals(200, t1.delay);
 			assertSame(easing, t1.easing);
 			assertSame(t1, t2);
 			assertTrue(t3 is TestTweenTargetA);
 			assertSame(obj, t3.target);
 			assertEquals(100, t3.time);
-			assertEquals(200, t3.delay);
 			assertSame(easing, t3.easing);
 			assertSame(t1, t4);
 			assertEquals(2, t.length);

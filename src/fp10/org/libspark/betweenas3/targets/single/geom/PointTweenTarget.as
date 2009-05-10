@@ -148,8 +148,8 @@ package org.libspark.betweenas3.targets.single.geom
 				_flags |= 0x80000000;
 			}
 			
-			if (time >= _delay) {
-				if ((time -= _delay) < _time) {
+			if (time > 0) {
+				if (time < _time) {
 					factor = _easing.calculate(time, 0.0, 1.0, _time);
 				}
 				else {

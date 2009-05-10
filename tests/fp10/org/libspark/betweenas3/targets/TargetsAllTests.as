@@ -43,7 +43,8 @@ package org.libspark.betweenas3.targets
 			ReversedTweenTargetTest,
 			RepeatedTweenTargetTest,
 			ScaledTweenTargetTest,
-			SlicedTweenTargetTest
+			SlicedTweenTargetTest,
+			DelayedTweenTargetTest
 		];
 	}
 }

@@ -25,60 +25,52 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3.targets.extra
+package org.libspark.betweenas3.targets
 {
-	import org.libspark.betweenas3.targets.ITweenTarget;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.test;
+	
+	use namespace test;
 	
 	/**
-	 * IActionTweenTarget を実装するための抽象クラスです.
-	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class AbstractActionTweenTarget implements IActionTweenTarget
+	public class DelayedTweenTargetTest
 	{
-		/**
-		 * @inheritDoc
-		 */
-		public function get duration():Number
+		test function delay():void
 		{
-			return 0.01;
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function update(time:Number):void
-		{
-			if (time >= 0.01) {
-				action();
-			}
-			else if (time <= 0) {
-				rollback();
-			}
-		}
-		
-		/**
-		 * このメソッドをオーバーライドして実行する動作を記述します.
-		 */
-		protected function action():void
-		{
+			var t:TestTweenTarget = new TestTweenTarget(2);
+			var d:DelayedTweenTarget = new DelayedTweenTarget(t, 1, 3);
 			
-		}
-		
-		/**
-		 * このメソッドをオーバーライドして実行した動作を元に戻す処理を記述します.
-		 */
-		protected function rollback():void
-		{
+			assertEquals(6, d.duration);
 			
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function clone():ITweenTarget
-		{
-			return this;
+			d.update(0);
+			
+			assertEquals(-1, t.t);
+			
+			d.update(1);
+			
+			assertEquals(0, t.t);
+			
+			d.update(2);
+			
+			assertEquals(1, t.t);
+			
+			d.update(3);
+			
+			assertEquals(2, t.t);
+			
+			d.update(4);
+			
+			assertEquals(3, t.t);
+			
+			d.update(6);
+			
+			assertEquals(5, t.t);
+			
+			d.update(8);
+			
+			assertEquals(7, t.t);
 		}
 	}
 }

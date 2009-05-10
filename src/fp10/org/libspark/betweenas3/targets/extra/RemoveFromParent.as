@@ -37,10 +37,8 @@ package org.libspark.betweenas3.targets.extra
 	 */
 	public class RemoveFromParent extends AbstractActionTweenTarget
 	{
-		public function RemoveFromParent(target:DisplayObject, delay:Number = 0)
+		public function RemoveFromParent(target:DisplayObject)
 		{
-			super(delay);
-			
 			_target = target;
 		}
 		

@@ -37,10 +37,8 @@ package org.libspark.betweenas3.targets.extra
 	 */
 	public class AddChild extends AbstractActionTweenTarget
 	{
-		public function AddChild(target:DisplayObject, parent:DisplayObjectContainer, delay:Number = 0)
+		public function AddChild(target:DisplayObject, parent:DisplayObjectContainer)
 		{
-			super(delay);
-			
 			_target = target;
 			_parent = parent;
 		}

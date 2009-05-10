@@ -4,6 +4,8 @@
 Alpha r2505 -> HEAD
 --------------------
 
+ * [r2618] Moved a delay setting to the BetweenAS3.delay method for more flexibility.
+
  * [r2617] Changed the timing of calculating tween parameters to the first time of start playing the tween.
  
     Notice: By this change, following two tweens are NOT same.

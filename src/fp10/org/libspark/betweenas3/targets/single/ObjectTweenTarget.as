@@ -126,14 +126,17 @@ package org.libspark.betweenas3.targets.single
 				_isInitialized = true;
 			}
 			
-			if (time < _delay) {
-				time = 0;
-			}
-			else {
-				time -= _delay;
+			var factor:Number = 0;
+			
+			if (time > 0) {
+				if (time < _time) {
+					factor = _easing.calculate(time, 0.0, 1.0, _time);
+				}
+				else {
+					factor = 1.0;
+				}
 			}
 			
-			var factor:Number = _easing.calculate(time < _time ? time : _time, 0.0, 1.0, _time);
 			var invert:Number = 1.0 - factor;
 			var t:Object = _target;
 			var d:Object = _destination;

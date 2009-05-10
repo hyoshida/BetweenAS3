@@ -67,15 +67,15 @@ package
 			
 			_t = BetweenAS3.serial(
 				BetweenAS3.addChild(box1, this),
-				BetweenAS3.addChild(box2, this, 0.5),
-				BetweenAS3.addChild(box3, this, 0.5),
-				BetweenAS3.addChild(box4, this, 0.5),
-				BetweenAS3.parallel(
-					BetweenAS3.tween(box1, {x: 350, y: 250}, null, 1.2, Bounce.easeOut, 0.5),
-					BetweenAS3.tween(box2, {x: 450, y: 250}, null, 1.2, Bounce.easeOut, 0.5),
-					BetweenAS3.tween(box3, {x: 350, y: 350}, null, 1.2, Bounce.easeOut, 0.5),
-					BetweenAS3.tween(box4, {x: 450, y: 350}, null, 1.2, Bounce.easeOut, 0.5)
-				)
+				BetweenAS3.delay(BetweenAS3.addChild(box2, this), 0.5),
+				BetweenAS3.delay(BetweenAS3.addChild(box3, this), 0.5),
+				BetweenAS3.delay(BetweenAS3.addChild(box4, this), 0.5),
+				BetweenAS3.delay(BetweenAS3.parallel(
+					BetweenAS3.tween(box1, {x: 350, y: 250}, null, 1.2, Bounce.easeOut),
+					BetweenAS3.tween(box2, {x: 450, y: 250}, null, 1.2, Bounce.easeOut),
+					BetweenAS3.tween(box3, {x: 350, y: 350}, null, 1.2, Bounce.easeOut),
+					BetweenAS3.tween(box4, {x: 450, y: 350}, null, 1.2, Bounce.easeOut)
+				), 0.5)
 			);
 			
 			_t.play();

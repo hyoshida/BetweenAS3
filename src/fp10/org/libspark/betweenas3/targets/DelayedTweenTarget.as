@@ -25,23 +25,49 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3.targets.extra
+package org.libspark.betweenas3.targets
 {
-	import org.libspark.betweenas3.targets.ITweenTarget;
-	
 	/**
-	 * IActionTweenTarget を実装するための抽象クラスです.
+	 * ITweenTarget に遅延を加えて実行.
 	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class AbstractActionTweenTarget implements IActionTweenTarget
+	public class DelayedTweenTarget implements ITweenTarget
 	{
+		public function DelayedTweenTarget(baseTweenTarget:ITweenTarget, preDelay:Number, postDelay:Number)
+		{
+			_baseTweenTarget = baseTweenTarget;
+			_duration = preDelay + baseTweenTarget.duration + postDelay;
+			_preDelay = preDelay;
+			_postDelay = postDelay;
+		}
+		
+		private var _baseTweenTarget:ITweenTarget;
+		private var _duration:Number;
+		private var _preDelay:Number;
+		private var _postDelay:Number;
+		
+		public function get baseTweenTarget():ITweenTarget
+		{
+			return _baseTweenTarget;
+		}
+		
+		public function get preDelay():Number
+		{
+			return _preDelay;
+		}
+		
+		public function get postDelay():Number
+		{
+			return _postDelay;
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
 		public function get duration():Number
 		{
-			return 0.01;
+			return _duration;
 		}
 		
 		/**
@@ -49,28 +75,7 @@ package org.libspark.betweenas3.targets.extra
 		 */
 		public function update(time:Number):void
 		{
-			if (time >= 0.01) {
-				action();
-			}
-			else if (time <= 0) {
-				rollback();
-			}
-		}
-		
-		/**
-		 * このメソッドをオーバーライドして実行する動作を記述します.
-		 */
-		protected function action():void
-		{
-			
-		}
-		
-		/**
-		 * このメソッドをオーバーライドして実行した動作を元に戻す処理を記述します.
-		 */
-		protected function rollback():void
-		{
-			
+			_baseTweenTarget.update(time - _preDelay);
 		}
 		
 		/**
@@ -78,7 +83,7 @@ package org.libspark.betweenas3.targets.extra
 		 */
 		public function clone():ITweenTarget
 		{
-			return this;
+			return new DelayedTweenTarget(_baseTweenTarget.clone(), _preDelay, _postDelay);
 		}
 	}
 }
