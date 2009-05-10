@@ -70,5 +70,13 @@ package org.libspark.betweenas3.targets
 		{
 			_baseTweenTarget.update(time / _scale);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function clone():ITweenTarget
+		{
+			return new ScaledTweenTarget(_baseTweenTarget.clone(), _scale);
+		}
 	}
 }

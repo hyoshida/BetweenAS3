@@ -27,6 +27,7 @@
  */
 package org.libspark.betweenas3.targets.extra
 {
+	import org.libspark.betweenas3.targets.ITweenTarget;
 	/**
 	 * IActionTweenTarget を実装するための抽象クラスです.
 	 * 
@@ -92,6 +93,14 @@ package org.libspark.betweenas3.targets.extra
 		protected function rollback():void
 		{
 			
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function clone():ITweenTarget
+		{
+			return this;
 		}
 	}
 }

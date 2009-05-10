@@ -105,5 +105,33 @@ package org.libspark.betweenas3.targets
 				}
 			}
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function clone():ITweenTarget
+		{
+			var targets:Vector.<ITweenTarget> = new Vector.<ITweenTarget>();
+			if (_a != null) {
+				targets.push(_a.clone());
+			}
+			if (_b != null) {
+				targets.push(_b.clone());
+			}
+			if (_c != null) {
+				targets.push(_c.clone());
+			}
+			if (_d != null) {
+				targets.push(_d.clone());
+			}
+			if (_targets != null) {
+				var t:Vector.<ITweenTarget> = _targets;
+				var l:uint = t.length;
+				for (var i:uint = 0; i < l; ++i) {
+					targets.push(t[i].clone());
+				}
+			}
+			return new ParallelTweenTarget(targets);
+		}
 	}
 }

@@ -116,7 +116,7 @@ package org.libspark.betweenas3
 			var l:uint = tweens.length;
 			var targets:Vector.<ITweenTarget> = new Vector.<ITweenTarget>(l, true);
 			for (var i:uint = 0; i < l; ++i) {
-				targets[i] = (tweens[i] as ITween).tweenTarget;
+				targets[i] = (tweens[i] as ITween).tweenTarget.clone();
 			}
 			return new StandardTween(new ParallelTweenTarget(targets), _ticker, 0);
 		}
@@ -126,7 +126,7 @@ package org.libspark.betweenas3
 			var l:uint = tweens.length;
 			var targets:Vector.<ITweenTarget> = new Vector.<ITweenTarget>(l, true);
 			for (var i:uint = 0; i < l; ++i) {
-				targets[i] = (tweens[i] as ITween).tweenTarget;
+				targets[i] = (tweens[i] as ITween).tweenTarget.clone();
 			}
 			return new StandardTween(new SerialTweenTarget(targets), _ticker, 0);
 		}
@@ -135,10 +135,10 @@ package org.libspark.betweenas3
 		{
 			var target:ITweenTarget = tween.tweenTarget;
 			if (target is ReversedTweenTarget) {
-				target = (target as ReversedTweenTarget).baseTweenTarget;
+				target = (target as ReversedTweenTarget).baseTweenTarget.clone();
 			}
 			else {
-				target = new ReversedTweenTarget(target);
+				target = new ReversedTweenTarget(target.clone());
 			}
 			var p:Number = 0;
 			if (reversePosition) {
@@ -151,12 +151,12 @@ package org.libspark.betweenas3
 		
 		public static function repeat(tween:ITween, repeatCount:uint):ITween
 		{
-			return new StandardTween(new RepeatedTweenTarget(tween.tweenTarget, repeatCount), _ticker, 0);
+			return new StandardTween(new RepeatedTweenTarget(tween.tweenTarget.clone(), repeatCount), _ticker, 0);
 		}
 		
 		public static function scale(tween:ITween, scale:Number):ITween
 		{
-			return new StandardTween(new ScaledTweenTarget(tween.tweenTarget, scale), _ticker, 0);
+			return new StandardTween(new ScaledTweenTarget(tween.tweenTarget.clone(), scale), _ticker, 0);
 		}
 		
 		public static function slice(tween:ITween, begin:Number, end:Number, isPercent:Boolean = false):ITween
@@ -166,9 +166,9 @@ package org.libspark.betweenas3
 				end = tween.duration * end;
 			}
 			if (begin > end) {
-				return new StandardTween(new ReversedTweenTarget(new SlicedTweenTarget(tween.tweenTarget, end, begin)), _ticker, 0);
+				return new StandardTween(new ReversedTweenTarget(new SlicedTweenTarget(tween.tweenTarget.clone(), end, begin)), _ticker, 0);
 			}
-			return new StandardTween(new SlicedTweenTarget(tween.tweenTarget, begin, end), _ticker, 0);
+			return new StandardTween(new SlicedTweenTarget(tween.tweenTarget.clone(), begin, end), _ticker, 0);
 		}
 		
 		public static function addChild(target:DisplayObject, parent:DisplayObjectContainer, delay:Number = 0.0):ITween

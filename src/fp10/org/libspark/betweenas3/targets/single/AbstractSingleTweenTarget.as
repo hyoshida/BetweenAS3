@@ -27,7 +27,9 @@
  */
 package org.libspark.betweenas3.targets.single
 {
+	import flash.errors.IllegalOperationError;
 	import org.libspark.betweenas3.easing.IEasing;
+	import org.libspark.betweenas3.targets.ITweenTarget;
 	
 	/**
 	 * ISingleTweenTarget を実装するための抽象クラスです.
@@ -166,6 +168,22 @@ package org.libspark.betweenas3.targets.single
 		public function update(time:Number):void
 		{
 			
+		}
+		
+		public function setFrom(obj:AbstractSingleTweenTarget):void
+		{
+			_time = obj._time;
+			_delay = obj._delay;
+			_easing = obj._easing;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function clone():ITweenTarget
+		{
+			throw new IllegalOperationError('Must implement ITweenTarget#clone.');
+			return null;
 		}
 	}
 }

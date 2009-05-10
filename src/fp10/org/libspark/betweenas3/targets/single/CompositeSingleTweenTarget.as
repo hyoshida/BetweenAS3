@@ -28,6 +28,8 @@
 package org.libspark.betweenas3.targets.single
 {
 	import org.libspark.betweenas3.easing.IEasing;
+	import org.libspark.betweenas3.targets.ITweenTarget;
+	import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
 	/**
 	 * .
 	 * 
@@ -132,6 +134,31 @@ package org.libspark.betweenas3.targets.single
 					}
 				}
 			}
+		}
+		
+		override public function clone():ITweenTarget 
+		{
+			var targets:Vector.<ISingleTweenTarget> = new Vector.<ISingleTweenTarget>();
+			if (_a != null) {
+				targets.push(_a.clone() as ISingleTweenTarget);
+			}
+			if (_b != null) {
+				targets.push(_b.clone() as ISingleTweenTarget);
+			}
+			if (_c != null) {
+				targets.push(_c.clone() as ISingleTweenTarget);
+			}
+			if (_d != null) {
+				targets.push(_d.clone() as ISingleTweenTarget);
+			}
+			if (_targets != null) {
+				var t:Vector.<ISingleTweenTarget> = _targets;
+				var l:uint = t.length;
+				for (var i:uint = 0; i < l; ++i) {
+					targets.push(t[i].clone() as ISingleTweenTarget);
+				}
+			}
+			return new CompositeSingleTweenTarget(_target, _time, _delay, _easing, targets);
 		}
 	}
 }

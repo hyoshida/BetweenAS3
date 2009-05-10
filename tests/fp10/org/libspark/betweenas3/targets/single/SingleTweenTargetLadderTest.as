@@ -29,6 +29,7 @@ package org.libspark.betweenas3.targets.single
 {
 	import org.libspark.as3unit.assert.*;
 	import org.libspark.as3unit.test;
+	import org.libspark.betweenas3.easing.Linear;
 	
 	use namespace test;
 	
@@ -45,13 +46,15 @@ package org.libspark.betweenas3.targets.single
 				child: o1
 			};
 			
-			var parnet:ISingleTweenTarget = new ObjectTweenTarget();
-			parnet.target = obj;
+			var parent:ISingleTweenTarget = new ObjectTweenTarget();
+			parent.easing = Linear.easeNone;
+			parent.target = obj;
 			
 			var child:ISingleTweenTarget = new ObjectTweenTarget();
+			child.easing = Linear.easeNone;
 			child.target = o2;
 			
-			var ladder:SingleTweenTargetLadder = new SingleTweenTargetLadder(parnet, child, 'child');
+			var ladder:SingleTweenTargetLadder = new SingleTweenTargetLadder(parent, child, 'child');
 			ladder.update(0);
 			
 			assertSame(o2, obj.child);

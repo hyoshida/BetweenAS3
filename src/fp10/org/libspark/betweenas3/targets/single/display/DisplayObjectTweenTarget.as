@@ -39,6 +39,7 @@ package org.libspark.betweenas3.targets.single.display
 	import flash.filters.GradientBevelFilter;
 	import flash.filters.GradientGlowFilter;
 	import flash.filters.ShaderFilter;
+	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
 	
 	/**
@@ -101,95 +102,69 @@ package org.libspark.betweenas3.targets.single.display
 		override public function setSourceValue(propertyName:String, value:Number, isRelative:Boolean = false):void
 		{
 			if (propertyName == 'x') {
-				if ((_flags & 0x0001) == 0) {
-					_destination.x = _target.x;
-					_flags |= 0x0001;
-				}
-				_source.x = isRelative ? _target.x + value : value;
+				_flags |= 0x0001;
+				_source.relativeFlags |= isRelative ? 0x0001 : 0;
+				_source.x = value;
 			}
 			else if (propertyName == 'y') {
-				if ((_flags & 0x0002) == 0) {
-					_destination.y = _target.y;
-					_flags |= 0x0002;
-				}
-				_source.y = isRelative ? _target.y + value : value;
+				_flags |= 0x0002;
+				_source.relativeFlags |= isRelative ? 0x0002 : 0;
+				_source.y = value;
 			}
 			else if (propertyName == 'z') {
-				if ((_flags & 0x0004) == 0) {
-					_destination.z = _target.z;
-					_flags |= 0x0004;
-				}
-				_source.z = isRelative ? _target.z + value : value;
+				_flags |= 0x0004;
+				_source.relativeFlags |= isRelative ? 0x0004 : 0;
+				_source.z = value;
 			}
 			else if (propertyName == 'scaleX') {
-				if ((_flags & 0x0008) == 0) {
-					_destination.scaleX = _target.scaleX;
-					_flags |= 0x0008;
-				}
-				_source.scaleX = isRelative ? _target.scaleX + value : value;
+				_flags |= 0x0008;
+				_source.relativeFlags |= isRelative ? 0x0008 : 0;
+				_source.scaleX = value;
 			}
 			else if (propertyName == 'scaleY') {
-				if ((_flags & 0x0010) == 0) {
-					_destination.scaleY = _target.scaleY;
-					_flags |= 0x0010;
-				}
-				_source.scaleY = isRelative ? _target.scaleY + value : value;
+				_flags |= 0x0010;
+				_source.relativeFlags |= isRelative ? 0x0010 : 0;
+				_source.scaleY = value;
 			}
 			else if (propertyName == 'scaleZ') {
-				if ((_flags & 0x0020) == 0) {
-					_destination.scaleZ = _target.scaleZ;
-					_flags |= 0x0020;
-				}
-				_source.scaleZ = isRelative ? _target.scaleZ + value : value;
+				_flags |= 0x0020;
+				_source.relativeFlags |= isRelative ? 0x0020 : 0;
+				_source.scaleZ = value;
 			}
 			else if (propertyName == 'rotation') {
-				if ((_flags & 0x0040) == 0) {
-					_destination.rotation = _target.rotation;
-					_flags |= 0x0040;
-				}
-				_source.rotation = isRelative ? _target.rotation + value : value;
+				_flags |= 0x0040;
+				_source.relativeFlags |= isRelative ? 0x0040 : 0;
+				_source.rotation = value;
 			}
 			else if (propertyName == 'rotationX') {
-				if ((_flags & 0x0080) == 0) {
-					_destination.rotationX = _target.rotationX;
-					_flags |= 0x0080;
-				}
-				_source.rotationX = isRelative ? _target.rotationX + value : value;
+				_flags |= 0x0080;
+				_source.relativeFlags |= isRelative ? 0x0080 : 0;
+				_source.rotationX = value;
 			}
 			else if (propertyName == 'rotationY') {
-				if ((_flags & 0x0100) == 0) {
-					_destination.rotationY = _target.rotationY;
-					_flags |= 0x0100;
-				}
-				_source.rotationY = isRelative ? _target.rotationY + value : value;
+				_flags |= 0x0100;
+				_source.relativeFlags |= isRelative ? 0x0100 : 0;
+				_source.rotationY = value;
 			}
 			else if (propertyName == 'rotationZ') {
-				if ((_flags & 0x0200) == 0) {
-					_destination.rotationZ = _target.rotationZ;
-					_flags |= 0x0200;
-				}
-				_source.rotationZ = isRelative ? _target.rotationZ + value : value;
+				_flags |= 0x0200;
+				_source.relativeFlags |= isRelative ? 0x0200 : 0;
+				_source.rotationZ = value;
 			}
 			else if (propertyName == 'alpha') {
-				if ((_flags & 0x0400) == 0) {
-					_destination.alpha = _target.alpha;
-					_flags |= 0x0400;
-				}
-				_source.alpha = isRelative ? _target.alpha + value : value;
+				_flags |= 0x0400;
+				_source.relativeFlags |= isRelative ? 0x0400 : 0;
+				_source.alpha = value;
 			}
 			else if (propertyName == 'width') {
-				if ((_flags & 0x0800) == 0) {
-					_destination.width = _target.width;
-					_flags |= 0x0800;
-				}
-				_source.width = isRelative ? _target.width + value : value;
+				_flags |= 0x0800;
+				_source.relativeFlags |= isRelative ? 0x0800 : 0;
+				_source.width = value;
 			}
 			else if (propertyName == 'height') {
-				if ((_flags & 0x1000) == 0) {
-					_destination.height = _target.height;
-					_flags |= 0x1000;
-				}
-				_source.height = isRelative ? _target.height + value : value;
+				_flags |= 0x1000;
+				_source.relativeFlags |= isRelative ? 0x1000 : 0;
+				_source.height = value;
 			}
 		}
 		
@@ -199,95 +174,69 @@ package org.libspark.betweenas3.targets.single.display
 		override public function setDestinationValue(propertyName:String, value:Number, isRelative:Boolean = false):void
 		{
 			if (propertyName == 'x') {
-				if ((_flags & 0x0001) == 0) {
-					_source.x = _target.x;
-					_flags |= 0x0001;
-				}
-				_destination.x = isRelative ? _target.x + value : value;
+				_flags |= 0x0001;
+				_destination.relativeFlags |= isRelative ? 0x0001 : 0;
+				_destination.x = value;
 			}
 			else if (propertyName == 'y') {
-				if ((_flags & 0x0002) == 0) {
-					_source.y = _target.y;
-					_flags |= 0x0002;
-				}
-				_destination.y = isRelative ? _target.y + value : value;
+				_flags |= 0x0002;
+				_destination.relativeFlags |= isRelative ? 0x0002 : 0;
+				_destination.y = value;
 			}
 			else if (propertyName == 'z') {
-				if ((_flags & 0x0004) == 0) {
-					_source.z = _target.z;
-					_flags |= 0x0004;
-				}
-				_destination.z = isRelative ? _target.z + value : value;
+				_flags |= 0x0004;
+				_destination.relativeFlags |= isRelative ? 0x0004 : 0;
+				_destination.z = value;
 			}
 			else if (propertyName == 'scaleX') {
-				if ((_flags & 0x0008) == 0) {
-					_source.scaleX = _target.scaleX;
-					_flags |= 0x0008;
-				}
-				_destination.scaleX = isRelative ? _target.scaleX + value : value;
+				_flags |= 0x0008;
+				_destination.relativeFlags |= isRelative ? 0x0008 : 0;
+				_destination.scaleX = value;
 			}
 			else if (propertyName == 'scaleY') {
-				if ((_flags & 0x0010) == 0) {
-					_source.scaleY = _target.scaleY;
-					_flags |= 0x0010;
-				}
-				_destination.scaleY = isRelative ? _target.scaleY + value : value;
+				_flags |= 0x0010;
+				_destination.relativeFlags |= isRelative ? 0x0010 : 0;
+				_destination.scaleY = value;
 			}
 			else if (propertyName == 'scaleZ') {
-				if ((_flags & 0x0020) == 0) {
-					_source.scaleZ = _target.scaleZ;
-					_flags |= 0x0020;
-				}
-				_destination.scaleZ = isRelative ? _target.scaleZ + value : value;
+				_flags |= 0x0020;
+				_destination.relativeFlags |= isRelative ? 0x0020 : 0;
+				_destination.scaleZ = value;
 			}
 			else if (propertyName == 'rotation') {
-				if ((_flags & 0x0040) == 0) {
-					_source.rotation = _target.rotation;
-					_flags |= 0x0040;
-				}
-				_destination.rotation = isRelative ? _target.rotation + value : value;
+				_flags |= 0x0040;
+				_destination.relativeFlags |= isRelative ? 0x0040 : 0;
+				_destination.rotation = value;
 			}
 			else if (propertyName == 'rotationX') {
-				if ((_flags & 0x0080) == 0) {
-					_source.rotationX = _target.rotationX;
-					_flags |= 0x0080;
-				}
-				_destination.rotationX = isRelative ? _target.rotationX + value : value;
+				_flags |= 0x0080;
+				_destination.relativeFlags |= isRelative ? 0x0080 : 0;
+				_destination.rotationX = value;
 			}
 			else if (propertyName == 'rotationY') {
-				if ((_flags & 0x0100) == 0) {
-					_source.rotationY = _target.rotationY;
-					_flags |= 0x0100;
-				}
-				_destination.rotationY = isRelative ? _target.rotationY + value : value;
+				_flags |= 0x0100;
+				_destination.relativeFlags |= isRelative ? 0x0100 : 0;
+				_destination.rotationY = value;
 			}
 			else if (propertyName == 'rotationZ') {
-				if ((_flags & 0x0200) == 0) {
-					_source.rotationZ = _target.rotationZ;
-					_flags |= 0x0200;
-				}
-				_destination.rotationZ = isRelative ? _target.rotationZ + value : value;
+				_flags |= 0x0200;
+				_destination.relativeFlags |= isRelative ? 0x0200 : 0;
+				_destination.rotationZ = value;
 			}
 			else if (propertyName == 'alpha') {
-				if ((_flags & 0x0400) == 0) {
-					_source.alpha = _target.alpha;
-					_flags |= 0x0400;
-				}
-				_destination.alpha = isRelative ? _target.alpha + value : value;
+				_flags |= 0x0400;
+				_destination.relativeFlags |= isRelative ? 0x0400 : 0;
+				_destination.alpha = value;
 			}
 			else if (propertyName == 'width') {
-				if ((_flags & 0x0800) == 0) {
-					_source.width = _target.width;
-					_flags |= 0x0800;
-				}
-				_destination.width = isRelative ? _target.width + value : value;
+				_flags |= 0x0800;
+				_destination.relativeFlags |= isRelative ? 0x0800 : 0;
+				_destination.width = value;
 			}
 			else if (propertyName == 'height') {
-				if ((_flags & 0x1000) == 0) {
-					_source.height = _target.height;
-					_flags |= 0x1000;
-				}
-				_destination.height = isRelative ? _target.height + value : value;
+				_flags |= 0x1000;
+				_destination.relativeFlags |= isRelative ? 0x1000 : 0;
+				_destination.height = value;
 			}
 		}
 		
@@ -407,12 +356,205 @@ package org.libspark.betweenas3.targets.single.display
 			_target.filters = filters;
 		}
 		
+		protected function initialize():void
+		{
+			var t:DisplayObject = _target, d:DisplayObjectParameter = _destination, s:DisplayObjectParameter = _source, f:uint = _flags;
+			
+			if ((f & 0x0001) != 0) {
+				if (isNaN(s.x)) {
+					s.x = t.x;
+				}
+				else if ((s.relativeFlags & 0x0001) != 0) {
+					s.x += t.x;
+				}
+				if (isNaN(d.x)) {
+					d.x = t.x;
+				}
+				else if ((d.relativeFlags & 0x0001) != 0) {
+					d.x += t.x;
+				}
+			}
+			if ((f & 0x0002) != 0) {
+				if (isNaN(s.y)) {
+					s.y = t.y;
+				}
+				else if ((s.relativeFlags & 0x0002) != 0) {
+					s.y += t.y;
+				}
+				if (isNaN(d.y)) {
+					d.y = t.y;
+				}
+				else if ((d.relativeFlags & 0x0002) != 0) {
+					d.y += t.y;
+				}
+			}
+			if ((f & 0x0004) != 0) {
+				if (isNaN(s.z)) {
+					s.z = t.z;
+				}
+				else if ((s.relativeFlags & 0x0004) != 0) {
+					s.z += t.z;
+				}
+				if (isNaN(d.z)) {
+					d.z = t.z;
+				}
+				else if ((d.relativeFlags & 0x0004) != 0) {
+					d.z += t.z;
+				}
+			}
+			if ((f & 0x0008) != 0) {
+				if (isNaN(s.scaleX)) {
+					s.scaleX = t.scaleX;
+				}
+				else if ((s.relativeFlags & 0x0008) != 0) {
+					s.scaleX += t.scaleX;
+				}
+				if (isNaN(d.scaleX)) {
+					d.scaleX = t.scaleX;
+				}
+				else if ((d.relativeFlags & 0x0008) != 0) {
+					d.scaleX += t.scaleX;
+				}
+			}
+			if ((f & 0x0010) != 0) {
+				if (isNaN(s.scaleY)) {
+					s.scaleY = t.scaleY;
+				}
+				else if ((s.relativeFlags & 0x0010) != 0) {
+					s.scaleY += t.scaleY;
+				}
+				if (isNaN(d.scaleY)) {
+					d.scaleY = t.scaleY;
+				}
+				else if ((d.relativeFlags & 0x0010) != 0) {
+					d.scaleY += t.scaleY;
+				}
+			}
+			if ((f & 0x0020) != 0) {
+				if (isNaN(s.scaleZ)) {
+					s.scaleZ = t.scaleZ;
+				}
+				else if ((s.relativeFlags & 0x0020) != 0) {
+					s.scaleZ += t.scaleZ;
+				}
+				if (isNaN(d.scaleZ)) {
+					d.scaleZ = t.scaleZ;
+				}
+				else if ((d.relativeFlags & 0x0020) != 0) {
+					d.scaleZ += t.scaleZ;
+				}
+			}
+			if ((f & 0x0040) != 0) {
+				if (isNaN(s.rotation)) {
+					s.rotation = t.rotation;
+				}
+				else if ((s.relativeFlags & 0x0040) != 0) {
+					s.rotation += t.rotation;
+				}
+				if (isNaN(d.rotation)) {
+					d.rotation = t.rotation;
+				}
+				else if ((d.relativeFlags & 0x0040) != 0) {
+					d.rotation += t.rotation;
+				}
+			}
+			if ((f & 0x0080) != 0) {
+				if (isNaN(s.rotationX)) {
+					s.rotationX = t.rotationX;
+				}
+				else if ((s.relativeFlags & 0x0080) != 0) {
+					s.rotationX += t.rotationX;
+				}
+				if (isNaN(d.rotationX)) {
+					d.rotationX = t.rotationX;
+				}
+				else if ((d.relativeFlags & 0x0080) != 0) {
+					d.rotationX += t.rotationX;
+				}
+			}
+			if ((f & 0x0100) != 0) {
+				if (isNaN(s.rotationY)) {
+					s.rotationY = t.rotationY;
+				}
+				else if ((s.relativeFlags & 0x0100) != 0) {
+					s.rotationY += t.rotationY;
+				}
+				if (isNaN(d.rotationY)) {
+					d.rotationY = t.rotationY;
+				}
+				else if ((d.relativeFlags & 0x0100) != 0) {
+					d.rotationY += t.rotationY;
+				}
+			}
+			if ((f & 0x0200) != 0) {
+				if (isNaN(s.rotationZ)) {
+					s.rotationZ = t.rotationZ;
+				}
+				else if ((s.relativeFlags & 0x0200) != 0) {
+					s.rotationZ += t.rotationZ;
+				}
+				if (isNaN(d.rotationZ)) {
+					d.rotationZ = t.rotationZ;
+				}
+				else if ((d.relativeFlags & 0x0200) != 0) {
+					d.rotationZ += t.rotationZ;
+				}
+			}
+			if ((f & 0x0400) != 0) {
+				if (isNaN(s.alpha)) {
+					s.alpha = t.alpha;
+				}
+				else if ((s.relativeFlags & 0x0400) != 0) {
+					s.alpha += t.alpha;
+				}
+				if (isNaN(d.alpha)) {
+					d.alpha = t.alpha;
+				}
+				else if ((d.relativeFlags & 0x0400) != 0) {
+					d.alpha += t.alpha;
+				}
+			}
+			if ((f & 0x0800) != 0) {
+				if (isNaN(s.width)) {
+					s.width = t.width;
+				}
+				else if ((s.relativeFlags & 0x0800) != 0) {
+					s.width += t.width;
+				}
+				if (isNaN(d.width)) {
+					d.width = t.width;
+				}
+				else if ((d.relativeFlags & 0x0800) != 0) {
+					d.width += t.width;
+				}
+			}
+			if ((f & 0x1000) != 0) {
+				if (isNaN(s.height)) {
+					s.height = t.height;
+				}
+				else if ((s.relativeFlags & 0x1000) != 0) {
+					s.height += t.height;
+				}
+				if (isNaN(d.height)) {
+					d.height = t.height;
+				}
+				else if ((d.relativeFlags & 0x1000) != 0) {
+					d.height += t.height;
+				}
+			}
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
 		override public function update(time:Number):void
 		{
 			var factor:Number = 0, t:DisplayObject = _target, d:DisplayObjectParameter = _destination, s:DisplayObjectParameter = _source, f:uint = _flags;
+			
+			if ((f & 0x80000000) == 0) {
+				initialize();
+				_flags |= 0x80000000;
+			}
 			
 			if (time >= _delay) {
 				if ((time -= _delay) < _time) {
@@ -471,11 +613,31 @@ package org.libspark.betweenas3.targets.single.display
 				}
 			}
 		}
+		
+		override public function setFrom(o:AbstractSingleTweenTarget):void
+		{
+			super.setFrom(o);
+			
+			var obj:DisplayObjectTweenTarget = o as DisplayObjectTweenTarget;
+			
+			_target = obj._target;
+			_source.setFrom(obj._source);
+			_destination.setFrom(obj._destination);
+			_flags = obj._flags;
+		}
+		
+		override public function clone():ITweenTarget
+		{
+			var obj:DisplayObjectTweenTarget = new DisplayObjectTweenTarget();
+			obj.setFrom(this);
+			return obj;
+		}
 	}
 }
 
 internal class DisplayObjectParameter
 {
+	public var relativeFlags:uint = 0;
 	public var x:Number;
 	public var y:Number;
 	public var z:Number;
@@ -489,4 +651,22 @@ internal class DisplayObjectParameter
 	public var alpha:Number;
 	public var width:Number;
 	public var height:Number;
+	
+	public function setFrom(obj:DisplayObjectParameter):void
+	{
+		relativeFlags = obj.relativeFlags;
+		x = obj.x;
+		y = obj.y;
+		z = obj.z;
+		scaleX = obj.scaleX;
+		scaleY = obj.scaleY;
+		scaleZ = obj.scaleZ;
+		rotation = obj.rotation;
+		rotationX = obj.rotationX;
+		rotationY = obj.rotationY;
+		rotationZ = obj.rotationZ;
+		alpha = obj.alpha;
+		width = obj.width;
+		height = obj.height;
+	}
 }

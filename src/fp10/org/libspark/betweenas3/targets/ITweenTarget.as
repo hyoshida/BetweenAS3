@@ -49,5 +49,12 @@ package org.libspark.betweenas3.targets
 		 * @param	time	時間 (秒)
 		 */
 		function update(time:Number):void;
+		
+		/**
+		 * この ITweenTarget のクローンを生成して返します.
+		 * 
+		 * @return	この ITweenTarget のクローン
+		 */
+		function clone():ITweenTarget;
 	}
 }

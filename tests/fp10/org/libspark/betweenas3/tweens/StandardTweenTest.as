@@ -253,4 +253,9 @@ internal class TestTweenTarget implements ITweenTarget
 	{
 		t = time;
 	}
+	
+	public function clone():ITweenTarget
+	{
+		return null;
+	}
 }

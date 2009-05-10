@@ -63,5 +63,13 @@ package org.libspark.betweenas3.targets
 		{
 			_baseTweenTarget.update(_duration - time);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function clone():ITweenTarget
+		{
+			return new ReversedTweenTarget(_baseTweenTarget.clone());
+		}
 	}
 }

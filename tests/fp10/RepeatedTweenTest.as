@@ -72,8 +72,8 @@ package
 			var around:ITween = BetweenAS3.repeat(BetweenAS3.serial(
 				BetweenAS3.tween(mc, {$x: 100}, null, 0.5),
 				BetweenAS3.tween(mc, {$y: 100}, null, 0.5),
-				BetweenAS3.tween(mc, {$x: 0}, {$x: 100}, 0.5),
-				BetweenAS3.tween(mc, {$y: 0}, {$y: 100}, 0.5)
+				BetweenAS3.tween(mc, {$x: -100}, null, 0.5),
+				BetweenAS3.tween(mc, {$y: -100}, null, 0.5)
 			), 3);
 			
 			_t = BetweenAS3.serial(

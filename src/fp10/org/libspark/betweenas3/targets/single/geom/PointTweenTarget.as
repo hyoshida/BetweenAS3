@@ -28,6 +28,7 @@
 package org.libspark.betweenas3.targets.single.geom
 {
 	import flash.geom.Point;
+	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
 	
 	/**
@@ -49,6 +50,7 @@ package org.libspark.betweenas3.targets.single.geom
 		protected var _fy:Boolean = false;
 		protected var _sy:Number;
 		protected var _dy:Number;
+		protected var _flags:uint = 0;
 		
 		/**
 		 * @inheritDoc
@@ -72,18 +74,14 @@ package org.libspark.betweenas3.targets.single.geom
 		override public function setSourceValue(propertyName:String, value:Number, isRelative:Boolean = false):void
 		{
 			if (propertyName == 'x') {
-				if (!_fx) {
-					_dx = _target.x;
-					_fx = true;
-				}
-				_sx = isRelative ? _target.x + value : value;
+				_fx = true;
+				_sx = value;
+				_flags |= isRelative ? 0x001 : 0;
 			}
 			else if (propertyName == 'y') {
-				if (!_fy) {
-					_dy = _target.y;
-					_fy = true;
-				}
-				_sy = isRelative ? _target.y + value : value;
+				_fy = true;
+				_sy = value;
+				_flags |= isRelative ? 0x004 : 0;
 			}
 		}
 		
@@ -93,18 +91,48 @@ package org.libspark.betweenas3.targets.single.geom
 		override public function setDestinationValue(propertyName:String, value:Number, isRelative:Boolean = false):void
 		{
 			if (propertyName == 'x') {
-				if (!_fx) {
-					_sx = _target.x;
-					_fx = true;
-				}
-				_dx = isRelative ? _target.x + value : value;
+				_fx = true;
+				_dx = value;
+				_flags |= isRelative ? 0x002 : 0;
 			}
 			else if (propertyName == 'y') {
-				if (!_fy) {
-					_sy = _target.y;
-					_fy = true;
+				_fy = true;
+				_dy = value;
+				_flags |= isRelative ? 0x008 : 0;
+			}
+		}
+		
+		protected function initialize():void
+		{
+			var t:Point = _target;
+			
+			if (_fx) {
+				if (isNaN(_sx)) {
+					_sx = t.x;
 				}
-				_dy = isRelative ? _target.y + value : value;
+				else if ((_flags & 0x001) != 0) {
+					_sx += t.x;
+				}
+				if (isNaN(_dx)) {
+					_dx = t.x;
+				}
+				else if ((_flags & 0x002) != 0) {
+					_dx += t.x;
+				}
+			}
+			if (_fy) {
+				if (isNaN(_sy)) {
+					_sy = t.y;
+				}
+				else if ((_flags & 0x004) != 0) {
+					_sy += t.y;
+				}
+				if (isNaN(_dy)) {
+					_dy = t.y;
+				}
+				else if ((_flags & 0x008) != 0) {
+					_dy += t.y;
+				}
 			}
 		}
 		
@@ -114,6 +142,11 @@ package org.libspark.betweenas3.targets.single.geom
 		override public function update(time:Number):void
 		{
 			var factor:Number = 0, t:Point = _target;
+			
+			if ((_flags & 0x80000000) == 0) {
+				initialize();
+				_flags |= 0x80000000;
+			}
 			
 			if (time >= _delay) {
 				if ((time -= _delay) < _time) {
@@ -132,6 +165,28 @@ package org.libspark.betweenas3.targets.single.geom
 			if (_fy) {
 				t.y = _sy * invert + _dy * factor;
 			}
+		}
+		
+		override public function setFrom(o:AbstractSingleTweenTarget):void 
+		{
+			super.setFrom(o);
+			
+			var obj:PointTweenTarget = o as PointTweenTarget;
+			
+			_target = obj._target;
+			_sx = obj._sx;
+			_sy = obj._sy;
+			_dx = obj._dx;
+			_dy = obj._dy;
+			_fx = obj._fx;
+			_fy = obj._fy;
+		}
+		
+		override public function clone():ITweenTarget 
+		{
+			var obj:PointTweenTarget = new PointTweenTarget();
+			obj.setFrom(this);
+			return obj;
 		}
 	}
 }

@@ -4,4 +4,28 @@
 Alpha r2505 -> HEAD
 --------------------
 
+ * [r2617] Changed the timing of calculating tween parameters to the first time of start playing the tween.
+ 
+    Notice: By this change, following two tweens are NOT same.
+ 
+     1. BetweenAS3.tween(mc, {x: 100})
+	 2. BetweenAS3.tween(mc, {x: 100}, {x: mc.x})
+	
+	It seems both tweens will tween from current MovieClip position to
+	x=10, but tween1 will start from x position on the first time of
+	start playing tween and tween2 will start from x position on the
+	time of create it. For example, if you set mc.x=10, create the tweens,
+	set mc.x=20, and start both tweens, tween1 will be tweened from
+	x=20 to x=100 and tween2 will be tweened from x=10 to x=100.
+	
+	Note: In the old version, both tweens were same as tween2.
+	
+	It is important to create a round trip tween by using serial and parallel.
+	In this case, you have to use a tween created by type2.
+	
+	 t = BetweenAS3.tween(mc, {x: 100}, {x: mc.x});
+	 BetweenAS3.serial(t, BetweenAS3.reverse(t));
+	
+	Or a reversed tween will not be tweened correctly.
+
  * [r2600] Fix: Sometimes ReferenceError has occured while creating a tween.

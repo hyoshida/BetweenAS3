@@ -49,5 +49,10 @@ package org.libspark.betweenas3.targets
 		{
 			t = time;
 		}
+		
+		public function clone():ITweenTarget
+		{
+			return new TestTweenTarget(d);
+		}
 	}
 }

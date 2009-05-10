@@ -27,6 +27,8 @@
  */
 package org.libspark.betweenas3.targets.single
 {
+	import org.libspark.betweenas3.targets.ITweenTarget;
+	import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
 	/**
 	 * .
 	 * 
@@ -39,6 +41,7 @@ package org.libspark.betweenas3.targets.single
 			_parentTweenTarget = parentTweenTarget;
 			_childTweenTarget = childTweenTarget;
 			_propertyName = propertyName;
+			_time = Math.max(parentTweenTarget.duration, childTweenTarget.duration);
 		}
 		
 		private var _parentTweenTarget:ISingleTweenTarget;
@@ -50,7 +53,17 @@ package org.libspark.betweenas3.targets.single
 		 */
 		override public function update(t:Number):void
 		{
+			_parentTweenTarget.update(t);
+			_childTweenTarget.update(t);
+			
 			_parentTweenTarget.setObject(_propertyName, _childTweenTarget.target);
+		}
+		
+		override public function clone():ITweenTarget 
+		{
+			var obj:SingleTweenTargetLadder = new SingleTweenTargetLadder(_parentTweenTarget.clone() as ISingleTweenTarget, _childTweenTarget.clone() as ISingleTweenTarget, _propertyName);
+			obj.setFrom(this);
+			return obj;
 		}
 	}
 }

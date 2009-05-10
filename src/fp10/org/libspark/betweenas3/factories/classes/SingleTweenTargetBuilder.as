@@ -72,7 +72,7 @@ package org.libspark.betweenas3.factories.classes
 			_tweenTargets.length = 0;
 		}
 		
-		public function createTweenTarget(propertyName:String):ISingleTweenTarget
+		public function createTweenTarget(propertyName:String, willAdd:Boolean = true):ISingleTweenTarget
 		{
 			var tweenTargetClass:Class = _registry.getClassByTargetClassAndPropertyName(_targetClass, propertyName);
 			if (tweenTargetClass != null) {
@@ -84,7 +84,9 @@ package org.libspark.betweenas3.factories.classes
 					t.time = _time;
 					t.easing = _easing;
 					_tweenTargetMap[tweenTargetClass] = t;
-					_tweenTargets.push(t);
+					if (willAdd) {
+						_tweenTargets.push(t);
+					}
 				}
 				return t;
 			}

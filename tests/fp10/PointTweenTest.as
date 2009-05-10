@@ -50,7 +50,7 @@ package
 		{
 			_p = new Point(100, 150);
 			
-			var t:ITween = BetweenAS3.tween(_p, {x: 300}, null, 1.5, Back.easeInOut);
+			var t:ITween = BetweenAS3.tween(_p, {x: 300}, {x: _p.x}, 1.5, Back.easeInOut);
 			t = BetweenAS3.serial(t, BetweenAS3.reverse(t));
 			t.stopOnComplete = false;
 			t.play();

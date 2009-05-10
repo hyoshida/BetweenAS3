@@ -75,5 +75,13 @@ package org.libspark.betweenas3.targets
 			}
 			_baseTweenTarget.update(time);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function clone():ITweenTarget
+		{
+			return new RepeatedTweenTarget(_baseTweenTarget.clone(), _repeatCount);
+		}
 	}
 }

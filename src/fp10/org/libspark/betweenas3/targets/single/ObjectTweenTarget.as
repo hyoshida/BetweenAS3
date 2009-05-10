@@ -27,6 +27,10 @@
  */
 package org.libspark.betweenas3.targets.single
 {
+	import flash.utils.Dictionary;
+	import org.libspark.betweenas3.targets.ITweenTarget;
+	import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
+	
 	/**
 	 * 全てのオブジェクトを対象とした ISignelTweenTarget の実装です.
 	 * 
@@ -35,8 +39,10 @@ package org.libspark.betweenas3.targets.single
 	public class ObjectTweenTarget extends AbstractSingleTweenTarget
 	{
 		protected var _target:Object = null;
-		protected var _source:Object = new Object();
-		protected var _destination:Object = new Object();
+		protected var _source:Dictionary = new Dictionary();
+		protected var _destination:Dictionary = new Dictionary();
+		protected var _relativeMap:Dictionary = new Dictionary();
+		protected var _isInitialized:Boolean = false;
 		
 		/**
 		 * @inheritDoc
@@ -59,15 +65,8 @@ package org.libspark.betweenas3.targets.single
 		 */
 		override public function setSourceValue(propertyName:String, value:Number, isRelative:Boolean = false):void
 		{
-			if (!(propertyName in _destination)) {
-				_destination[propertyName] = _target[propertyName];
-			}
-			if (isRelative) {
-				_source[propertyName] = _target[propertyName] + value;
-			}
-			else {
-				_source[propertyName] = value;
-			}
+			_source[propertyName] = value;
+			_relativeMap['source.' + propertyName] = isRelative;
 		}
 		
 		/**
@@ -75,15 +74,8 @@ package org.libspark.betweenas3.targets.single
 		 */
 		override public function setDestinationValue(propertyName:String, value:Number, isRelative:Boolean = false):void
 		{
-			if (!(propertyName in _source)) {
-				_source[propertyName] = _target[propertyName];
-			}
-			if (isRelative) {
-				_destination[propertyName] = _target[propertyName] + value;
-			}
-			else {
-				_destination[propertyName] = value;
-			}
+			_destination[propertyName] = value;
+			_relativeMap['dest.' + propertyName] = isRelative;
 		}
 		
 		/**
@@ -102,11 +94,38 @@ package org.libspark.betweenas3.targets.single
 			_target[propertyName] = value;
 		}
 		
+		protected function initialize():void
+		{
+			var key:String, target:Object = _target, source:Dictionary = _source, dest:Dictionary = _destination, rMap:Dictionary = _relativeMap;
+			
+			for (key in source) {
+				if (dest[key] == undefined) {
+					dest[key] = target[key];
+				}
+				if (rMap['source.' + key]) {
+					source[key] += target[key];
+				}
+			}
+			for (key in dest) {
+				if (source[key] == undefined) {
+					source[key] = target[key];
+				}
+				if (rMap['dest.' + key]) {
+					dest[key] += target[key];
+				}
+			}
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
 		override public function update(time:Number):void
 		{
+			if (!_isInitialized) {
+				initialize();
+				_isInitialized = true;
+			}
+			
 			if (time < _delay) {
 				time = 0;
 			}
@@ -124,6 +143,31 @@ package org.libspark.betweenas3.targets.single
 			for (name in d) {
 				t[name] = s[name] * invert + d[name] * factor;
 			}
+		}
+		
+		override public function setFrom(o:AbstractSingleTweenTarget):void 
+		{
+			super.setFrom(o);
+			
+			var obj:ObjectTweenTarget = o as ObjectTweenTarget;
+			
+			_target = obj._target;
+			copyObject(_source, obj._source);
+			copyObject(_destination, obj._destination);
+		}
+		
+		private function copyObject(to:Object, from:Object):void
+		{
+			for (var name:String in from) {
+				to[name] = from[name];
+			}
+		}
+		
+		override public function clone():ITweenTarget 
+		{
+			var obj:ObjectTweenTarget = new ObjectTweenTarget();
+			obj.setFrom(this);
+			return obj;
 		}
 	}
 }

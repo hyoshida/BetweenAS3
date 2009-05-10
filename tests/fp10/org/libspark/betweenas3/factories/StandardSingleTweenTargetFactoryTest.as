@@ -260,7 +260,7 @@ internal class TestSingleTweenTargetBuilder extends SingleTweenTargetBuilder
 		_easing = easing;
 	}
 	
-	override public function createTweenTarget(propertyName:String):ISingleTweenTarget
+	override public function createTweenTarget(propertyName:String, willAdd:Boolean = true):ISingleTweenTarget
 	{
 		target.time = _time;
 		target.delay = _delay;

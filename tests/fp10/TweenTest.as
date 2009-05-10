@@ -80,14 +80,14 @@ package
 				BetweenAS3.serial(
 					BetweenAS3.tween(mc1, {$x: 100}, null, 1, Exponential.easeIn),
 					BetweenAS3.tween(mc1, {$y: 100}, null, 1, Exponential.easeIn),
-					BetweenAS3.tween(mc1, {$x: 0}, {$x: 100}, 1, Exponential.easeIn),
-					BetweenAS3.tween(mc1, {$y: 0}, {$y: 100}, 1, Exponential.easeIn)
+					BetweenAS3.tween(mc1, {$x: -100}, null, 1, Exponential.easeIn),
+					BetweenAS3.tween(mc1, {$y: -100}, null, 1, Exponential.easeIn)
 				),
 				BetweenAS3.serial(
 					BetweenAS3.tween(mc2, {$x: 100}, null, 1, Cubic.easeOut),
 					BetweenAS3.tween(mc2, {$y: 100}, null, 1, Cubic.easeOut),
-					BetweenAS3.tween(mc2, {$x: 0}, {$x: 100}, 1, Cubic.easeOut),
-					BetweenAS3.tween(mc2, {$y: 0}, {$y: 100}, 1, Cubic.easeOut)
+					BetweenAS3.tween(mc2, {$x: -100}, null, 1, Cubic.easeOut),
+					BetweenAS3.tween(mc2, {$y: -100}, null, 1, Cubic.easeOut)
 				)
 			);
 			
