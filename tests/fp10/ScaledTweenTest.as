@@ -69,7 +69,7 @@ package
 			
 			// 普通にトゥイーンして、帰るときは三倍の時間を掛ける
 			
-			var t:ITween = BetweenAS3.delay(BetweenAS3.tween(mc, {x: 500}, null, 1.0, Exponential.easeOut), 0.5);
+			var t:ITween = BetweenAS3.delay(BetweenAS3.tween(mc, {x: 500}, {x: 100}, 1.0, Exponential.easeOut), 0.5);
 			
 			_t = BetweenAS3.serial(
 				t,
