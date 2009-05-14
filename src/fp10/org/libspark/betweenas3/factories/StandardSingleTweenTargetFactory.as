@@ -94,7 +94,7 @@ package org.libspark.betweenas3.factories
 					else {
 						parentTarget = tweenTargetBuilder.createTweenTarget(name, false);
 						childTarget = create(parentTarget.getObject(name), dest != null ? dest[name] : null, value, time, easing);
-						tweenTargetBuilder.addTweenTarget(new SingleTweenTargetLadder(parentTarget, childTarget, name));
+						tweenTargetBuilder.addTweenTarget(new SingleTweenTargetLadder(target, time, easing, parentTarget, childTarget, name));
 					}
 				}
 			}
@@ -110,7 +110,7 @@ package org.libspark.betweenas3.factories
 						if (!(source != null && name in source)) {
 							parentTarget = tweenTargetBuilder.createTweenTarget(name, false);
 							childTarget = create(parentTarget.getObject(name), value, source != null ? source[name] : null, time, easing);
-							tweenTargetBuilder.addTweenTarget(new SingleTweenTargetLadder(parentTarget, childTarget, name));
+							tweenTargetBuilder.addTweenTarget(new SingleTweenTargetLadder(target, time, easing, parentTarget, childTarget, name));
 						}
 					}
 				}

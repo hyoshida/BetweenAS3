@@ -54,7 +54,7 @@ package org.libspark.betweenas3.targets.single
 			child.easing = Linear.easeNone;
 			child.target = o2;
 			
-			var ladder:SingleTweenTargetLadder = new SingleTweenTargetLadder(parent, child, 'child');
+			var ladder:SingleTweenTargetLadder = new SingleTweenTargetLadder(null, 1.0, null, parent, child, 'child');
 			ladder.update(0);
 			
 			assertSame(o2, obj.child);

@@ -27,6 +27,7 @@
  */
 package org.libspark.betweenas3.targets.single
 {
+	import org.libspark.betweenas3.easing.IEasing;
 	import org.libspark.betweenas3.targets.ITweenTarget;
 	import org.libspark.betweenas3.targets.single.AbstractSingleTweenTarget;
 	/**
@@ -36,17 +37,36 @@ package org.libspark.betweenas3.targets.single
 	 */
 	public class SingleTweenTargetLadder extends AbstractSingleTweenTarget
 	{
-		public function SingleTweenTargetLadder(parentTweenTarget:ISingleTweenTarget, childTweenTarget:ISingleTweenTarget, propertyName:String)
+		public function SingleTweenTargetLadder(target:Object, time:Number, easing:IEasing, parentTweenTarget:ISingleTweenTarget, childTweenTarget:ISingleTweenTarget, propertyName:String)
 		{
 			_parentTweenTarget = parentTweenTarget;
 			_childTweenTarget = childTweenTarget;
 			_propertyName = propertyName;
-			_time = Math.max(parentTweenTarget.duration, childTweenTarget.duration);
+			_target = target;
+			_time = time;
+			_easing = easing;
 		}
 		
+		private var _target:Object = null;
 		private var _parentTweenTarget:ISingleTweenTarget;
 		private var _childTweenTarget:ISingleTweenTarget;
 		private var _propertyName:String;
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get target():Object
+		{
+			return _target;
+		}
+		
+		/**
+		 * @private
+		 */
+		override public function set target(value:Object):void
+		{
+			_target = value;
+		}
 		
 		/**
 		 * @inheritDoc
@@ -61,7 +81,7 @@ package org.libspark.betweenas3.targets.single
 		
 		override public function clone():ITweenTarget 
 		{
-			var obj:SingleTweenTargetLadder = new SingleTweenTargetLadder(_parentTweenTarget.clone() as ISingleTweenTarget, _childTweenTarget.clone() as ISingleTweenTarget, _propertyName);
+			var obj:SingleTweenTargetLadder = new SingleTweenTargetLadder(_target, _time, _easing, _parentTweenTarget.clone() as ISingleTweenTarget, _childTweenTarget.clone() as ISingleTweenTarget, _propertyName);
 			obj.setFrom(this);
 			return obj;
 		}
