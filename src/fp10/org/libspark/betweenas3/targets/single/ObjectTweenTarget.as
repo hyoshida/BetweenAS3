@@ -157,6 +157,8 @@ package org.libspark.betweenas3.targets.single
 			_target = obj._target;
 			copyObject(_source, obj._source);
 			copyObject(_destination, obj._destination);
+			copyObject(_relativeMap, obj._relativeMap);
+			_isInitialized = obj._isInitialized;
 		}
 		
 		private function copyObject(to:Object, from:Object):void

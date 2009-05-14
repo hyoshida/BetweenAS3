@@ -180,6 +180,7 @@ package org.libspark.betweenas3.targets.single.geom
 			_dy = obj._dy;
 			_fx = obj._fx;
 			_fy = obj._fy;
+			_flags = obj._flags;
 		}
 		
 		override public function clone():ITweenTarget 
