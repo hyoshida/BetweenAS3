@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="BetweenAS3" basedir=".">
+
+	<!--
+	  -- How to run:
+	  --
+	  --  $ ant -lib /path/to/flex_sdk/ant/lib/flexTasks.jar target-name
+	  --
+	  -- Note: Edit build.properties and set your /path/to/flex_sdk to FLEX_HOME.
+	  -- Note: Create output directory before execute ant task.
+	  -->
+
 	<taskdef resource="flexTasks.tasks" classpath="${basedir}/flexTasks/lib/flexTasks.jar" />
 	<property file="build.properties" />
 	
@@ -46,5 +56,25 @@
 			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml" />
 			<source-path path-element="${src.fp9.dir}" />
 		</compc>
+	</target>
+	
+	<target name="clean.src.fp10">
+		<delete file="${output.src.fp10.name}" />
+	</target>
+	
+	<target name="clean.src.fp9">
+		<delete file="${output.src.fp9.name}" />
+	</target>
+	
+	<target name="src.fp10" depends="clean.src.fp10">
+		<zip destfile="${output.src.fp10.name}">
+			<fileset refid="src.fp10.fileset" />
+		</zip>
+	</target>
+	
+	<target name="src.fp9" depends="clean.src.fp9">
+		<zip destfile="${output.src.fp9.name}">
+			<fileset refid="src.fp9.fileset" />
+		</zip>
 	</target>
 </project>
