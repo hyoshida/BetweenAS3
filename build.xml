@@ -2,12 +2,12 @@
 <project name="BetweenAS3" basedir=".">
 
 	<!--
-	  -- How to run:
-	  --
-	  --  $ ant -lib /path/to/flex_sdk/ant/lib/flexTasks.jar target-name
-	  --
-	  -- Note: Edit build.properties and set your /path/to/flex_sdk to FLEX_HOME.
-	  -- Note: Create output directory before execute ant task.
+	     How to run:
+	    
+	      $ ant -lib /path/to/flex_sdk/ant/lib/flexTasks.jar target-name
+	    
+	     Note: Edit build.properties and set your /path/to/flex_sdk to FLEX_HOME.
+	     Note: Create output directory before execute ant task.
 	  -->
 
 	<taskdef resource="flexTasks.tasks" classpath="${basedir}/flexTasks/lib/flexTasks.jar" />
