@@ -27,10 +27,11 @@
  */
 package org.libspark.betweenas3.easing
 {
-	import org.libspark.betweenas3.easing.classes.QuadraticEaseIn;
-	import org.libspark.betweenas3.easing.classes.QuadraticEaseInOut;
-	import org.libspark.betweenas3.easing.classes.QuadraticEaseOut;
-	import org.libspark.betweenas3.easing.classes.QuadraticEaseOutIn;
+	import org.libspark.betweenas3.core.easing.IEasing;
+	import org.libspark.betweenas3.core.easing.QuadraticEaseIn;
+	import org.libspark.betweenas3.core.easing.QuadraticEaseInOut;
+	import org.libspark.betweenas3.core.easing.QuadraticEaseOut;
+	import org.libspark.betweenas3.core.easing.QuadraticEaseOutIn;
 	
 	/**
 	 * Quadratic.

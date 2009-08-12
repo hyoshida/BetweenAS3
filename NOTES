@@ -1,0 +1,67 @@
+﻿BetweenAS3 Notes
+========================================
+
+FAQ
+--------------------
+
+ Q. How to do filter tween?
+ A. Do the following:
+ 
+     BetweenAS3.tween{mc, {_glowFilter: {blurX: 32, blurY: 32}});
+ 
+    The following properties for filter are supported.
+  
+     * _bevelFilter
+     * _blurFilter
+     * _colorMatrixFilter
+     * _convolutionFilter
+     * _displacementMapFilter
+     * _dropShadowFilter
+     * _glowFilter
+     * _gradientBevelFilter
+     * _gradientGlowFilter
+     * _shaderFilter
+
+ Q. How to do ColorTransform tween?
+ A. Do the following:
+ 
+     BetweenAS3.tween(mc, {transfrom: {colorTransfrom: {redOffset: 255}}});
+
+ Q. How to do SoundTransform tween?
+ A. Do the following:
+ 
+     BetweenAS3.tween(sc, {soundTransform: {volume: 0.0}});
+
+ Q. How to set delay?
+ A. By using BetweenAS3.delay, add delay to tween.
+ 
+     BetweenAS3.delay(BetweenAS3.tween(mc, {x: 100}), 1.0); // Delay 1.0 sec
+
+ Q. How to do bezier tween?
+ A. Do the following. Pass control points in argument 4. Set Array of control points for each property.
+ 
+     BetweenAS3.bezier(mc, {x: 385, y: 207}, null, {x: [58.05, 145.9, 246.7, 345.55], y: [61.4, 80.65, 167.05, 209.3]});
+
+Tips for Performance
+--------------------
+
+ * Tween for the following classes and properties are optimized. (excluding using bezier tween or physical tween)
+  * DisplayObject
+   * x
+   * y
+   * z
+   * scaleX
+   * scaleY
+   * scaleZ
+   * rotation
+   * rotationX
+   * rotationY
+   * rotationZ
+   * alpha
+   * width
+   * height
+  * Point
+   * x
+   * y
+ * If you tween massive objects, do not use BetweenAS3.parallel.
+ * When you tween a lot of properties with physical tween, performance is not good than standard tween.

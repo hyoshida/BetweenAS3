@@ -27,10 +27,11 @@
  */
 package org.libspark.betweenas3.easing
 {
-	import org.libspark.betweenas3.easing.classes.BackEaseIn;
-	import org.libspark.betweenas3.easing.classes.BackEaseInOut;
-	import org.libspark.betweenas3.easing.classes.BackEaseOut;
-	import org.libspark.betweenas3.easing.classes.BackEaseOutIn;
+	import org.libspark.betweenas3.core.easing.BackEaseIn;
+	import org.libspark.betweenas3.core.easing.BackEaseInOut;
+	import org.libspark.betweenas3.core.easing.BackEaseOut;
+	import org.libspark.betweenas3.core.easing.BackEaseOutIn;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
 	 * Back.

@@ -27,10 +27,11 @@
  */
 package org.libspark.betweenas3.easing
 {
-	import org.libspark.betweenas3.easing.classes.ExponentialEaseIn;
-	import org.libspark.betweenas3.easing.classes.ExponentialEaseInOut;
-	import org.libspark.betweenas3.easing.classes.ExponentialEaseOut;
-	import org.libspark.betweenas3.easing.classes.ExponentialEaseOutIn;
+	import org.libspark.betweenas3.core.easing.ExponentialEaseIn;
+	import org.libspark.betweenas3.core.easing.ExponentialEaseInOut;
+	import org.libspark.betweenas3.core.easing.ExponentialEaseOut;
+	import org.libspark.betweenas3.core.easing.ExponentialEaseOutIn;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
 	 * Exponential.

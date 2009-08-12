@@ -27,10 +27,11 @@
  */
 package org.libspark.betweenas3.easing
 {
-	import org.libspark.betweenas3.easing.classes.CircularEaseIn;
-	import org.libspark.betweenas3.easing.classes.CircularEaseInOut;
-	import org.libspark.betweenas3.easing.classes.CircularEaseOut;
-	import org.libspark.betweenas3.easing.classes.CircularEaseOutIn;
+	import org.libspark.betweenas3.core.easing.CircularEaseIn;
+	import org.libspark.betweenas3.core.easing.CircularEaseInOut;
+	import org.libspark.betweenas3.core.easing.CircularEaseOut;
+	import org.libspark.betweenas3.core.easing.CircularEaseOutIn;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
 	 * Circular.

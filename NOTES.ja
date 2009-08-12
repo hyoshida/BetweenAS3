@@ -1,0 +1,67 @@
+﻿BetweenAS3 ノート
+========================================
+
+FAQ
+--------------------
+
+ Q. フィルタのトゥイーンはどうやるんですか？
+ A. 次のようにします。
+ 
+     BetweenAS3.tween{mc, {_glowFilter: {blurX: 32, blurY: 32}});
+ 
+    次のフィルタ用プロパティがサポートされています。
+  
+     * _bevelFilter
+     * _blurFilter
+     * _colorMatrixFilter
+     * _convolutionFilter
+     * _displacementMapFilter
+     * _dropShadowFilter
+     * _glowFilter
+     * _gradientBevelFilter
+     * _gradientGlowFilter
+     * _shaderFilter
+
+ Q. ColorTransform のトゥイーンはどうやるんですか？
+ A. 次のようにします。
+ 
+     BetweenAS3.tween(mc, {transfrom: {colorTransfrom: {redOffset: 255}}});
+
+ Q. SoundTransform のトゥイーンはどうやるんですか？
+ A. 次のようにします。
+ 
+     BetweenAS3.tween(sc, {soundTransform: {volume: 0.0}});
+
+ Q. ディレイはどのように設定するのですか？
+ A. BetweenAS3.delay を使用して、トゥイーンに遅延を加えます。
+ 
+     BetweenAS3.delay(BetweenAS3.tween(mc, {x: 100}), 1.0); // Delay 1.0 sec
+
+ Q. ベジェトゥイーンはどうやるんですか？
+ A. 次のようにします。第四引数でコントロールポイントを指定します。各プロパティごとにコントロールポイントの配列を指定します。
+ 
+     BetweenAS3.bezier(mc, {x: 385, y: 207}, null, {x: [58.05, 145.9, 246.7, 345.55], y: [61.4, 80.65, 167.05, 209.3]});
+
+Tips for Performance
+--------------------
+
+ * 次のクラスおよびプロパティに対するトゥイーンは最適化されています (ベジェトゥイーンや物理トゥイーンを使用する場合を除く)
+  * DisplayObject
+   * x
+   * y
+   * z
+   * scaleX
+   * scaleY
+   * scaleZ
+   * rotation
+   * rotationX
+   * rotationY
+   * rotationZ
+   * alpha
+   * width
+   * height
+  * Point
+   * x
+   * y
+ * 大量のオブジェクトをトゥイーンさせる場合は parallel を使わないようにしてください
+ * 物理的なトゥイーンで多くのプロパティをトゥイーンさせようとすると標準のトゥイーンに比べてパフォーマンスが落ちます

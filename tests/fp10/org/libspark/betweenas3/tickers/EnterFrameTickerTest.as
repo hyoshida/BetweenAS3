@@ -163,8 +163,8 @@ package org.libspark.betweenas3.tickers
 	}
 }
 
-import org.libspark.betweenas3.tickers.TickerListener;
-import org.libspark.betweenas3.tickers.ITicker;
+import org.libspark.betweenas3.core.ticker.TickerListener;
+import org.libspark.betweenas3.core.ticker.ITicker;
 
 internal class MockTickerListener extends TickerListener
 {

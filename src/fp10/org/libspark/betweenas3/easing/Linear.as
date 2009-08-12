@@ -27,7 +27,8 @@
  */
 package org.libspark.betweenas3.easing
 {
-	import org.libspark.betweenas3.easing.classes.EaseNone;
+	import org.libspark.betweenas3.core.easing.EaseNone;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
 	 * リニアなイージングへのショートカット.

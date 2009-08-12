@@ -28,7 +28,6 @@
 package org.libspark.betweenas3.tweens
 {
 	import flash.events.IEventDispatcher;
-	import org.libspark.betweenas3.targets.ITweenTarget;
 	
 	// EventDispatcher は委譲 & 遅延生成で実装しましょう。
 	
@@ -39,11 +38,6 @@ package org.libspark.betweenas3.tweens
 	 */
 	public interface ITween extends IEventDispatcher
 	{
-		/**
-		 * 制御の対象となるトゥイーンターゲットを設定します.
-		 */
-		function get tweenTarget():ITweenTarget;
-		
 		/**
 		 * このトゥイーンの継続時間 (秒) を返します.
 		 */
@@ -97,6 +91,11 @@ package org.libspark.betweenas3.tweens
 		function stop():void;
 		
 		/**
+		 * このトゥイーンの再生を一時停止または再開します.
+		 */
+		function togglePause():void;
+		
+		/**
 		 * このトゥイーンの再生を指定された位置から開始します.
 		 * 
 		 * @param	position	再生を開始する位置 (秒)
@@ -109,5 +108,12 @@ package org.libspark.betweenas3.tweens
 		 * @param	position	再生を停止する位置 (秒)
 		 */
 		function gotoAndStop(position:Number):void;
+		
+		/**
+		 * この ITween のクローンを生成して返します.
+		 * 
+		 * @return	この ITween のクローン
+		 */
+		function clone():ITween;
 	}
 }

@@ -27,10 +27,11 @@
  */
 package org.libspark.betweenas3.easing
 {
-	import org.libspark.betweenas3.easing.classes.QuinticEaseIn;
-	import org.libspark.betweenas3.easing.classes.QuinticEaseInOut;
-	import org.libspark.betweenas3.easing.classes.QuinticEaseOut;
-	import org.libspark.betweenas3.easing.classes.QuinticEaseOutIn;
+	import org.libspark.betweenas3.core.easing.IEasing;
+	import org.libspark.betweenas3.core.easing.QuinticEaseIn;
+	import org.libspark.betweenas3.core.easing.QuinticEaseInOut;
+	import org.libspark.betweenas3.core.easing.QuinticEaseOut;
+	import org.libspark.betweenas3.core.easing.QuinticEaseOutIn;
 	
 	/**
 	 * Quintic.

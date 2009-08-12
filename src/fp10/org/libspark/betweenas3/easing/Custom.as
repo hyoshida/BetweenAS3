@@ -27,7 +27,8 @@
  */
 package org.libspark.betweenas3.easing
 {
-	import org.libspark.betweenas3.easing.classes.CustomFunctionEasing;
+	import org.libspark.betweenas3.core.easing.CustomFunctionEasing;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
 	 * Custom.

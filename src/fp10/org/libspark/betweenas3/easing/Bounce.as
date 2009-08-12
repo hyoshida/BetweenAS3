@@ -27,10 +27,11 @@
  */
 package org.libspark.betweenas3.easing
 {
-	import org.libspark.betweenas3.easing.classes.BounceEaseIn;
-	import org.libspark.betweenas3.easing.classes.BounceEaseInOut;
-	import org.libspark.betweenas3.easing.classes.BounceEaseOut;
-	import org.libspark.betweenas3.easing.classes.BounceEaseOutIn;
+	import org.libspark.betweenas3.core.easing.BounceEaseIn;
+	import org.libspark.betweenas3.core.easing.BounceEaseInOut;
+	import org.libspark.betweenas3.core.easing.BounceEaseOut;
+	import org.libspark.betweenas3.core.easing.BounceEaseOutIn;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
 	 * Bounce.
