@@ -34,7 +34,7 @@ package org.libspark.betweenas3.core.updaters
 	 */
 	public class CompositeUpdater implements IUpdater
 	{
-		public function CompositeUpdater(target:Object, updaters:Vector.<IUpdater>)
+		public function CompositeUpdater(target:Object, updaters:Array)
 		{
 			_target = target;
 			
@@ -49,7 +49,7 @@ package org.libspark.betweenas3.core.updaters
 						if (l >= 4) {
 							_d = updaters[3];
 							if (l >= 5) {
-								_updaters = new Vector.<IUpdater>(l - 4, true);
+								_updaters = new Array(l - 4);
 								for (var i:uint = 4; i < l; ++i) {
 									_updaters[i - 4] = updaters[i];
 								}
@@ -66,7 +66,7 @@ package org.libspark.betweenas3.core.updaters
 		private var _b:IUpdater;
 		private var _c:IUpdater;
 		private var _d:IUpdater;
-		private var _updaters:Vector.<IUpdater>;
+		private var _updaters:Array;
 		
 		/**
 		 * .
@@ -150,10 +150,10 @@ package org.libspark.betweenas3.core.updaters
 						if (_d != null) {
 							_d.update(factor);
 							if (_updaters != null) {
-								var updaters:Vector.<IUpdater> = _updaters;
+								var updaters:Array = _updaters;
 								var l:uint = updaters.length;
 								for (var i:uint = 0; i < l; ++i) {
-									updaters[i].update(factor);
+									(updaters[i] as IUpdater).update(factor);
 								}
 							}
 						}
@@ -167,7 +167,7 @@ package org.libspark.betweenas3.core.updaters
 		 */
 		public function clone():IUpdater
 		{
-			var updaters:Vector.<IUpdater> = new Vector.<IUpdater>();
+			var updaters:Array = [];
 			
 			if (_a != null) {
 				updaters.push(_a.clone());
@@ -178,7 +178,7 @@ package org.libspark.betweenas3.core.updaters
 						if (_d != null) {
 							updaters.push(_d.clone());
 							if (_updaters != null) {
-								var u:Vector.<IUpdater> = _updaters;
+								var u:Array = _updaters;
 								var l:uint = u.length;
 								for (var i:uint = 0; i < l; ++i) {
 									updaters.push(u[i].clone());

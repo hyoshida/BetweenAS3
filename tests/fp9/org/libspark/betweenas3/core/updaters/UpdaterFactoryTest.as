@@ -65,7 +65,7 @@ package org.libspark.betweenas3.core.updaters
 		{
 			var obj:Object = new ClassA();
 			var map:Dictionary = new Dictionary();
-			var list:Vector.<IUpdater> = new Vector.<IUpdater>();
+			var list:Array = [];
 			
 			var u1:IUpdater = _factory.getUpdaterFor(obj, 'a1', map, list);
 			var u2:IUpdater = _factory.getUpdaterFor(obj, 'a1', map, list);
@@ -85,7 +85,7 @@ package org.libspark.betweenas3.core.updaters
 		{
 			var obj:Object = new ClassB();
 			var map:Dictionary = new Dictionary();
-			var list:Vector.<IUpdater> = new Vector.<IUpdater>();
+			var list:Array = [];
 			
 			var u1:IUpdater = _factory.getUpdaterFor(obj, 'a1', map, list);
 			var u2:IUpdater = _factory.getUpdaterFor(obj, 'a1', map, list);

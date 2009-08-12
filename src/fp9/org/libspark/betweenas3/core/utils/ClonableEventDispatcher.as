@@ -56,14 +56,18 @@ package org.libspark.betweenas3.core.utils
 			data.priority = priority;
 			data.useWeakReference = useWeakReference;
 			
-			((_listeners[type] || (_listeners[type] = new Vector.<ListenerData>())) as Vector.<ListenerData>).push(data);
+			var listeners:Array = _listeners[type] as Array;
+			if (listeners == null) {
+				_listeners[type] = listeners = [];
+			}
+			listeners.push(data);
 		}
 		
 		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
 		{
 			super.removeEventListener(type, listener, useCapture);
 			
-			var listeners:Vector.<ListenerData> = _listeners[type] as Vector.<ListenerData>;
+			var listeners:Array = _listeners[type] as Array;
 			if (listeners != null) {
 				var l:uint = listeners.length;
 				for (var i:int = 0; i < l; ++i) {
@@ -81,7 +85,7 @@ package org.libspark.betweenas3.core.utils
 		{
 			var listeners:Dictionary = source._listeners;
 			for (var type:String in listeners) {
-				var list:Vector.<ListenerData> = listeners[type] as Vector.<ListenerData>;
+				var list:Array = listeners[type] as Array;
 				var l:uint = list.length;
 				for (var i:uint = 0; i < l; ++i) {
 					var data:ListenerData = list[i] as ListenerData;

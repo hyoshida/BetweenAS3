@@ -46,7 +46,7 @@ package org.libspark.betweenas3.core.updaters
 			var updater5:TestUpdater = new TestUpdater(5.0);
 			var updater6:TestUpdater = new TestUpdater(6.0);
 			
-			var updaters:Vector.<IPhysicalUpdater> = new Vector.<IPhysicalUpdater>(6);
+			var updaters:Array = new Array(6);
 			updaters[0] = updater1;
 			updaters[1] = updater2;
 			updaters[2] = updater3;
@@ -68,7 +68,7 @@ package org.libspark.betweenas3.core.updaters
 			var updater5:TestUpdater = new TestUpdater();
 			var updater6:TestUpdater = new TestUpdater();
 			
-			var updaters:Vector.<IPhysicalUpdater> = new Vector.<IPhysicalUpdater>(6);
+			var updaters:Array = new Array(6);
 			updaters[0] = updater1;
 			updaters[1] = updater2;
 			updaters[2] = updater3;

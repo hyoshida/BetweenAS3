@@ -46,21 +46,21 @@ package org.libspark.betweenas3.core.updaters
 		private var _registry:ClassRegistry;
 		
 		private var _poolIndex:uint = 0;
-		private var _mapPool:Vector.<Dictionary> = new Vector.<Dictionary>();
-		private var _listPool:Vector.<Vector.<IUpdater>> = new Vector.<Vector.<IUpdater>>();
+		private var _mapPool:Array = [];
+		private var _listPool:Array = [];
 		
 		public function create(target:Object, dest:Object, source:Object):IUpdater
 		{
-			var map:Dictionary, updaters:Vector.<IUpdater>, name:String, value:Object, isRelative:Boolean, parent:IUpdater, child:IUpdater, updater:IUpdater;
+			var map:Dictionary, updaters:Array, name:String, value:Object, isRelative:Boolean, parent:IUpdater, child:IUpdater, updater:IUpdater;
 			
 			if (_poolIndex > 0) {
 				--_poolIndex;
-				map = _mapPool[_poolIndex];
-				updaters = _listPool[_poolIndex];
+				map = _mapPool[_poolIndex] as Dictionary;
+				updaters = _listPool[_poolIndex] as Array;
 			}
 			else {
 				map = new Dictionary();
-				updaters = new Vector.<IUpdater>();
+				updaters = [];
 			}
 			
 			if (source != null) {
@@ -97,7 +97,7 @@ package org.libspark.betweenas3.core.updaters
 			}
 			
 			if (updaters.length == 1) {
-				updater = updaters[0];
+				updater = updaters[0] as IUpdater;
 			}
 			else if (updaters.length > 1) {
 				updater = new CompositeUpdater(target, updaters);
@@ -115,7 +115,7 @@ package org.libspark.betweenas3.core.updaters
 			return updater;
 		}
 		
-		public function getUpdaterFor(target:Object, propertyName:String, map:Dictionary, list:Vector.<IUpdater>):IUpdater
+		public function getUpdaterFor(target:Object, propertyName:String, map:Dictionary, list:Array):IUpdater
 		{
 			var updaterClass:Class = _registry.getClassByTargetClassAndPropertyName(target.constructor, propertyName);
 			if (updaterClass != null) {
@@ -135,7 +135,7 @@ package org.libspark.betweenas3.core.updaters
 		
 		public function createBezier(target:Object, dest:Object, source:Object, controlPoint:Object):IUpdater
 		{
-			var map:Dictionary = new Dictionary(), updaters:Vector.<IUpdater> = new Vector.<IUpdater>, bezierUpdater:BezierUpdater = new BezierUpdater(), name:String, value:Object, isRelative:Boolean, cp:Array, l:uint, i:uint, child:IUpdater, updater:IUpdater;
+			var map:Dictionary = new Dictionary(), updaters:Array = [], bezierUpdater:BezierUpdater = new BezierUpdater(), name:String, value:Object, isRelative:Boolean, cp:Array, l:uint, i:uint, child:IUpdater, updater:IUpdater;
 			
 			bezierUpdater.target = target;
 			
@@ -201,7 +201,7 @@ package org.libspark.betweenas3.core.updaters
 			}
 			
 			if (updaters.length == 1) {
-				updater = updaters[0];
+				updater = updaters[0] as IUpdater;
 			}
 			else if (updaters.length > 1) {
 				updater = new CompositeUpdater(target, updaters);
@@ -212,7 +212,7 @@ package org.libspark.betweenas3.core.updaters
 		
 		public function createPhysical(target:Object, dest:Object, source:Object, easing:IPhysicalEasing):IPhysicalUpdater
 		{
-			var map:Dictionary = new Dictionary(), updaters:Vector.<IPhysicalUpdater> = new Vector.<IPhysicalUpdater>, physicalUpdater:PhysicalUpdater = new PhysicalUpdater(), name:String, value:Object, isRelative:Boolean, child:IPhysicalUpdater, updater:IPhysicalUpdater;
+			var map:Dictionary = new Dictionary(), updaters:Array = [], physicalUpdater:PhysicalUpdater = new PhysicalUpdater(), name:String, value:Object, isRelative:Boolean, child:IPhysicalUpdater, updater:IPhysicalUpdater;
 			
 			physicalUpdater.target = target;
 			physicalUpdater.easing = easing;
@@ -255,7 +255,7 @@ package org.libspark.betweenas3.core.updaters
 			}
 			
 			if (updaters.length == 1) {
-				updater = updaters[0];
+				updater = updaters[0] as IPhysicalUpdater;
 			}
 			else if (updaters.length > 1) {
 				updater = new CompositePhysicalUpdater(target, updaters);

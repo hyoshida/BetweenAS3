@@ -61,7 +61,7 @@ package org.libspark.betweenas3.core.tweens.groups
 							_d = targets[3] as IITween;
 							_duration += _d.duration;
 							if (l > 4) {
-								_targets = new Vector.<IITween>(l - 4, true);
+								_targets = new Array(l - 4);
 								for (var i:uint = 4; i < l; ++i) {
 									var t:IITween = targets[i] as IITween;
 									_targets[i - 4] = t;
@@ -78,7 +78,7 @@ package org.libspark.betweenas3.core.tweens.groups
 		private var _b:IITween;
 		private var _c:IITween;
 		private var _d:IITween;
-		private var _targets:Vector.<IITween>;
+		private var _targets:Array;
 		private var _lastTime:Number = 0;
 		
 		
@@ -196,7 +196,7 @@ package org.libspark.betweenas3.core.tweens.groups
 								if (_targets != null) {
 									l = _targets.length;
 									for (i = 0; i < l; ++i) {
-										t = _targets[i];
+										t = _targets[i] as IITween;
 										if (lt <= (d += t.duration) && ld <= time) {
 											t.update(time - ld);
 										}
@@ -213,7 +213,7 @@ package org.libspark.betweenas3.core.tweens.groups
 				ld = d;
 				if (_targets != null) {
 					for (i = _targets.length - 1; i >= 0; --i) {
-						t = _targets[i];
+						t = _targets[i] as IITween;
 						if (lt >= (d -= t.duration) && ld >= time) {
 							t.update(time - d);
 						}
@@ -267,7 +267,7 @@ package org.libspark.betweenas3.core.tweens.groups
 				targets.push(_d.clone());
 			}
 			if (_targets != null) {
-				var t:Vector.<IITween> = _targets;
+				var t:Array = _targets;
 				var l:uint = t.length;
 				for (var i:uint = 0; i < l; ++i) {
 					targets.push(t[i].clone());

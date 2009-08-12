@@ -44,7 +44,7 @@ package org.libspark.betweenas3.tickers
 		
 		public function EnterFrameTicker()
 		{
-			_tickerListenerPaddings = new Vector.<TickerListener>(10, true);
+			_tickerListenerPaddings = new Array(10);
 			
 			var prevListener:TickerListener = null;
 			
@@ -61,7 +61,7 @@ package org.libspark.betweenas3.tickers
 		
 		private var _first:TickerListener = null;
 		private var _numListeners:uint = 0;
-		private var _tickerListenerPaddings:Vector.<TickerListener>;
+		private var _tickerListenerPaddings:Array;
 		private var _time:Number;
 		
 		/**
@@ -149,7 +149,7 @@ package org.libspark.betweenas3.tickers
 		{
 			// リスナの数を 8 の倍数になるようにパディングして 8 個ずつ一気にループさせる
 			
-			var t:Number = _time = getTimer() / 1000, n:uint = 8 - (_numListeners % 8), listener:TickerListener = _tickerListenerPaddings[0], l:TickerListener = _tickerListenerPaddings[n], ll:TickerListener = null;
+			var t:Number = _time = getTimer() / 1000, n:uint = 8 - (_numListeners % 8), listener:TickerListener = _tickerListenerPaddings[0] as TickerListener, l:TickerListener = _tickerListenerPaddings[n] as TickerListener, ll:TickerListener = null;
 			
 			// このようにつなぎかえることでパディングの数を変える
 			if ((l.nextListener = _first) != null) {
@@ -267,7 +267,7 @@ package org.libspark.betweenas3.tickers
 			if ((_first = l.nextListener) != null) {
 				_first.prevListener = null;
 			}
-			l.nextListener = _tickerListenerPaddings[n + 1];
+			l.nextListener = _tickerListenerPaddings[n + 1] as TickerListener;
 		}
 	}
 }

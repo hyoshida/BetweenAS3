@@ -38,7 +38,7 @@ package org.libspark.betweenas3.core.updaters.display
 	import flash.filters.GlowFilter;
 	import flash.filters.GradientBevelFilter;
 	import flash.filters.GradientGlowFilter;
-	import flash.filters.ShaderFilter;
+//	import flash.filters.ShaderFilter;
 	import org.libspark.betweenas3.core.updaters.AbstractUpdater;
 	import org.libspark.betweenas3.core.utils.ClassRegistry;
 	
@@ -52,14 +52,14 @@ package org.libspark.betweenas3.core.updaters.display
 		public static const TARGET_PROPERTIES:Array = [
 			'x',
 			'y',
-			'z',
+//			'z',
 			'scaleX',
 			'scaleY',
-			'scaleZ',
+//			'scaleZ',
 			'rotation',
-			'rotationX',
-			'rotationY',
-			'rotationZ',
+//			'rotationX',
+//			'rotationY',
+//			'rotationZ',
 			'alpha',
 			'width',
 			'height',
@@ -72,7 +72,7 @@ package org.libspark.betweenas3.core.updaters.display
 			'_glowFilter',
 			'_gradientBevelFilter',
 			'_gradientGlowFilter',
-			'_shaderFilter',
+//			'_shaderFilter',
 		];
 		
 		public static function register(registry:ClassRegistry):void
@@ -116,11 +116,11 @@ package org.libspark.betweenas3.core.updaters.display
 				_source.relativeFlags |= isRelative ? 0x0002 : 0;
 				_source.y = value;
 			}
-			else if (propertyName == 'z') {
-				_flags |= 0x0004;
-				_source.relativeFlags |= isRelative ? 0x0004 : 0;
-				_source.z = value;
-			}
+//			else if (propertyName == 'z') {
+//				_flags |= 0x0004;
+//				_source.relativeFlags |= isRelative ? 0x0004 : 0;
+//				_source.z = value;
+//			}
 			else if (propertyName == 'scaleX') {
 				_flags |= 0x0008;
 				_source.relativeFlags |= isRelative ? 0x0008 : 0;
@@ -131,31 +131,31 @@ package org.libspark.betweenas3.core.updaters.display
 				_source.relativeFlags |= isRelative ? 0x0010 : 0;
 				_source.scaleY = value;
 			}
-			else if (propertyName == 'scaleZ') {
-				_flags |= 0x0020;
-				_source.relativeFlags |= isRelative ? 0x0020 : 0;
-				_source.scaleZ = value;
-			}
+//			else if (propertyName == 'scaleZ') {
+//				_flags |= 0x0020;
+//				_source.relativeFlags |= isRelative ? 0x0020 : 0;
+//				_source.scaleZ = value;
+//			}
 			else if (propertyName == 'rotation') {
 				_flags |= 0x0040;
 				_source.relativeFlags |= isRelative ? 0x0040 : 0;
 				_source.rotation = value;
 			}
-			else if (propertyName == 'rotationX') {
-				_flags |= 0x0080;
-				_source.relativeFlags |= isRelative ? 0x0080 : 0;
-				_source.rotationX = value;
-			}
-			else if (propertyName == 'rotationY') {
-				_flags |= 0x0100;
-				_source.relativeFlags |= isRelative ? 0x0100 : 0;
-				_source.rotationY = value;
-			}
-			else if (propertyName == 'rotationZ') {
-				_flags |= 0x0200;
-				_source.relativeFlags |= isRelative ? 0x0200 : 0;
-				_source.rotationZ = value;
-			}
+//			else if (propertyName == 'rotationX') {
+//				_flags |= 0x0080;
+//				_source.relativeFlags |= isRelative ? 0x0080 : 0;
+//				_source.rotationX = value;
+//			}
+//			else if (propertyName == 'rotationY') {
+//				_flags |= 0x0100;
+//				_source.relativeFlags |= isRelative ? 0x0100 : 0;
+//				_source.rotationY = value;
+//			}
+//			else if (propertyName == 'rotationZ') {
+//				_flags |= 0x0200;
+//				_source.relativeFlags |= isRelative ? 0x0200 : 0;
+//				_source.rotationZ = value;
+//			}
 			else if (propertyName == 'alpha') {
 				_flags |= 0x0400;
 				_source.relativeFlags |= isRelative ? 0x0400 : 0;
@@ -188,11 +188,11 @@ package org.libspark.betweenas3.core.updaters.display
 				_destination.relativeFlags |= isRelative ? 0x0002 : 0;
 				_destination.y = value;
 			}
-			else if (propertyName == 'z') {
-				_flags |= 0x0004;
-				_destination.relativeFlags |= isRelative ? 0x0004 : 0;
-				_destination.z = value;
-			}
+//			else if (propertyName == 'z') {
+//				_flags |= 0x0004;
+//				_destination.relativeFlags |= isRelative ? 0x0004 : 0;
+//				_destination.z = value;
+//			}
 			else if (propertyName == 'scaleX') {
 				_flags |= 0x0008;
 				_destination.relativeFlags |= isRelative ? 0x0008 : 0;
@@ -203,31 +203,31 @@ package org.libspark.betweenas3.core.updaters.display
 				_destination.relativeFlags |= isRelative ? 0x0010 : 0;
 				_destination.scaleY = value;
 			}
-			else if (propertyName == 'scaleZ') {
-				_flags |= 0x0020;
-				_destination.relativeFlags |= isRelative ? 0x0020 : 0;
-				_destination.scaleZ = value;
-			}
+//			else if (propertyName == 'scaleZ') {
+//				_flags |= 0x0020;
+//				_destination.relativeFlags |= isRelative ? 0x0020 : 0;
+//				_destination.scaleZ = value;
+//			}
 			else if (propertyName == 'rotation') {
 				_flags |= 0x0040;
 				_destination.relativeFlags |= isRelative ? 0x0040 : 0;
 				_destination.rotation = value;
 			}
-			else if (propertyName == 'rotationX') {
-				_flags |= 0x0080;
-				_destination.relativeFlags |= isRelative ? 0x0080 : 0;
-				_destination.rotationX = value;
-			}
-			else if (propertyName == 'rotationY') {
-				_flags |= 0x0100;
-				_destination.relativeFlags |= isRelative ? 0x0100 : 0;
-				_destination.rotationY = value;
-			}
-			else if (propertyName == 'rotationZ') {
-				_flags |= 0x0200;
-				_destination.relativeFlags |= isRelative ? 0x0200 : 0;
-				_destination.rotationZ = value;
-			}
+//			else if (propertyName == 'rotationX') {
+//				_flags |= 0x0080;
+//				_destination.relativeFlags |= isRelative ? 0x0080 : 0;
+//				_destination.rotationX = value;
+//			}
+//			else if (propertyName == 'rotationY') {
+//				_flags |= 0x0100;
+//				_destination.relativeFlags |= isRelative ? 0x0100 : 0;
+//				_destination.rotationY = value;
+//			}
+//			else if (propertyName == 'rotationZ') {
+//				_flags |= 0x0200;
+//				_destination.relativeFlags |= isRelative ? 0x0200 : 0;
+//				_destination.rotationZ = value;
+//			}
 			else if (propertyName == 'alpha') {
 				_flags |= 0x0400;
 				_destination.relativeFlags |= isRelative ? 0x0400 : 0;
@@ -277,9 +277,9 @@ package org.libspark.betweenas3.core.updaters.display
 			if (propertyName == '_displacementMapFilter') {
 				return getFilterByClass(DisplacementMapFilter);
 			}
-			if (propertyName == '_shaderFilter') {
-				return getFilterByClass(ShaderFilter);
-			}
+//			if (propertyName == '_shaderFilter') {
+//				return getFilterByClass(ShaderFilter);
+//			}
 			return null;
 		}
 		
@@ -340,10 +340,10 @@ package org.libspark.betweenas3.core.updaters.display
 				setFilterByClass(value as BitmapFilter, DisplacementMapFilter);
 				return;
 			}
-			if (propertyName == '_shaderFilter') {
-				setFilterByClass(value as BitmapFilter, ShaderFilter);
-				return;
-			}
+//			if (propertyName == '_shaderFilter') {
+//				setFilterByClass(value as BitmapFilter, ShaderFilter);
+//				return;
+//			}
 		}
 		
 		protected function setFilterByClass(filter:BitmapFilter, klass:Class):void
@@ -393,20 +393,20 @@ package org.libspark.betweenas3.core.updaters.display
 					d.y += t.y;
 				}
 			}
-			if ((f & 0x0004) != 0) {
-				if (isNaN(s.z)) {
-					s.z = t.z;
-				}
-				else if ((s.relativeFlags & 0x0004) != 0) {
-					s.z += t.z;
-				}
-				if (isNaN(d.z)) {
-					d.z = t.z;
-				}
-				else if ((d.relativeFlags & 0x0004) != 0) {
-					d.z += t.z;
-				}
-			}
+//			if ((f & 0x0004) != 0) {
+//				if (isNaN(s.z)) {
+//					s.z = t.z;
+//				}
+//				else if ((s.relativeFlags & 0x0004) != 0) {
+//					s.z += t.z;
+//				}
+//				if (isNaN(d.z)) {
+//					d.z = t.z;
+//				}
+//				else if ((d.relativeFlags & 0x0004) != 0) {
+//					d.z += t.z;
+//				}
+//			}
 			if ((f & 0x0008) != 0) {
 				if (isNaN(s.scaleX)) {
 					s.scaleX = t.scaleX;
@@ -435,20 +435,20 @@ package org.libspark.betweenas3.core.updaters.display
 					d.scaleY += t.scaleY;
 				}
 			}
-			if ((f & 0x0020) != 0) {
-				if (isNaN(s.scaleZ)) {
-					s.scaleZ = t.scaleZ;
-				}
-				else if ((s.relativeFlags & 0x0020) != 0) {
-					s.scaleZ += t.scaleZ;
-				}
-				if (isNaN(d.scaleZ)) {
-					d.scaleZ = t.scaleZ;
-				}
-				else if ((d.relativeFlags & 0x0020) != 0) {
-					d.scaleZ += t.scaleZ;
-				}
-			}
+//			if ((f & 0x0020) != 0) {
+//				if (isNaN(s.scaleZ)) {
+//					s.scaleZ = t.scaleZ;
+//				}
+//				else if ((s.relativeFlags & 0x0020) != 0) {
+//					s.scaleZ += t.scaleZ;
+//				}
+//				if (isNaN(d.scaleZ)) {
+//					d.scaleZ = t.scaleZ;
+//				}
+//				else if ((d.relativeFlags & 0x0020) != 0) {
+//					d.scaleZ += t.scaleZ;
+//				}
+//			}
 			if ((f & 0x0040) != 0) {
 				if (isNaN(s.rotation)) {
 					s.rotation = t.rotation;
@@ -463,48 +463,48 @@ package org.libspark.betweenas3.core.updaters.display
 					d.rotation += t.rotation;
 				}
 			}
-			if ((f & 0x0080) != 0) {
-				if (isNaN(s.rotationX)) {
-					s.rotationX = t.rotationX;
-				}
-				else if ((s.relativeFlags & 0x0080) != 0) {
-					s.rotationX += t.rotationX;
-				}
-				if (isNaN(d.rotationX)) {
-					d.rotationX = t.rotationX;
-				}
-				else if ((d.relativeFlags & 0x0080) != 0) {
-					d.rotationX += t.rotationX;
-				}
-			}
-			if ((f & 0x0100) != 0) {
-				if (isNaN(s.rotationY)) {
-					s.rotationY = t.rotationY;
-				}
-				else if ((s.relativeFlags & 0x0100) != 0) {
-					s.rotationY += t.rotationY;
-				}
-				if (isNaN(d.rotationY)) {
-					d.rotationY = t.rotationY;
-				}
-				else if ((d.relativeFlags & 0x0100) != 0) {
-					d.rotationY += t.rotationY;
-				}
-			}
-			if ((f & 0x0200) != 0) {
-				if (isNaN(s.rotationZ)) {
-					s.rotationZ = t.rotationZ;
-				}
-				else if ((s.relativeFlags & 0x0200) != 0) {
-					s.rotationZ += t.rotationZ;
-				}
-				if (isNaN(d.rotationZ)) {
-					d.rotationZ = t.rotationZ;
-				}
-				else if ((d.relativeFlags & 0x0200) != 0) {
-					d.rotationZ += t.rotationZ;
-				}
-			}
+//			if ((f & 0x0080) != 0) {
+//				if (isNaN(s.rotationX)) {
+//					s.rotationX = t.rotationX;
+//				}
+//				else if ((s.relativeFlags & 0x0080) != 0) {
+//					s.rotationX += t.rotationX;
+//				}
+//				if (isNaN(d.rotationX)) {
+//					d.rotationX = t.rotationX;
+//				}
+//				else if ((d.relativeFlags & 0x0080) != 0) {
+//					d.rotationX += t.rotationX;
+//				}
+//			}
+//			if ((f & 0x0100) != 0) {
+//				if (isNaN(s.rotationY)) {
+//					s.rotationY = t.rotationY;
+//				}
+//				else if ((s.relativeFlags & 0x0100) != 0) {
+//					s.rotationY += t.rotationY;
+//				}
+//				if (isNaN(d.rotationY)) {
+//					d.rotationY = t.rotationY;
+//				}
+//				else if ((d.relativeFlags & 0x0100) != 0) {
+//					d.rotationY += t.rotationY;
+//				}
+//			}
+//			if ((f & 0x0200) != 0) {
+//				if (isNaN(s.rotationZ)) {
+//					s.rotationZ = t.rotationZ;
+//				}
+//				else if ((s.relativeFlags & 0x0200) != 0) {
+//					s.rotationZ += t.rotationZ;
+//				}
+//				if (isNaN(d.rotationZ)) {
+//					d.rotationZ = t.rotationZ;
+//				}
+//				else if ((d.relativeFlags & 0x0200) != 0) {
+//					d.rotationZ += t.rotationZ;
+//				}
+//			}
 			if ((f & 0x0400) != 0) {
 				if (isNaN(s.alpha)) {
 					s.alpha = t.alpha;
@@ -564,9 +564,9 @@ package org.libspark.betweenas3.core.updaters.display
 			if ((f & 0x0002) != 0) {
 				t.y = s.y * invert + d.y * factor;
 			}
-			if ((f & 0x0004) != 0) {
-				t.z = s.z * invert + d.z * factor;
-			}
+//			if ((f & 0x0004) != 0) {
+//				t.z = s.z * invert + d.z * factor;
+//			}
 			if ((f & 0x0038) != 0) {
 				if ((f & 0x0008) != 0) {
 					t.scaleX = s.scaleX * invert + d.scaleX * factor;
@@ -574,23 +574,23 @@ package org.libspark.betweenas3.core.updaters.display
 				if ((f & 0x0010) != 0) {
 					t.scaleY = s.scaleY * invert + d.scaleY * factor;
 				}
-				if ((f & 0x0020) != 0) {
-					t.scaleZ = s.scaleZ * invert + d.scaleZ * factor;
-				}
+//				if ((f & 0x0020) != 0) {
+//					t.scaleZ = s.scaleZ * invert + d.scaleZ * factor;
+//				}
 			}
 			if ((f & 0x03c0) != 0) {
 				if ((f & 0x0040) != 0) {
 					t.rotation = s.rotation * invert + d.rotation * factor;
 				}
-				if ((f & 0x0080) != 0) {
-					t.rotationX = s.rotationX * invert + d.rotationX * factor;
-				}
-				if ((f & 0x0100) != 0) {
-					t.rotationY = s.rotationY * invert + d.rotationY * factor;
-				}
-				if ((f & 0x0200) != 0) {
-					t.rotationZ = s.rotationZ * invert + d.rotationZ * factor;
-				}
+//				if ((f & 0x0080) != 0) {
+//					t.rotationX = s.rotationX * invert + d.rotationX * factor;
+//				}
+//				if ((f & 0x0100) != 0) {
+//					t.rotationY = s.rotationY * invert + d.rotationY * factor;
+//				}
+//				if ((f & 0x0200) != 0) {
+//					t.rotationZ = s.rotationZ * invert + d.rotationZ * factor;
+//				}
 			}
 			if ((f & 0x1c00) != 0) {
 				if ((f & 0x0400) != 0) {
@@ -629,14 +629,14 @@ internal class DisplayObjectParameter
 	public var relativeFlags:uint = 0;
 	public var x:Number;
 	public var y:Number;
-	public var z:Number;
+//	public var z:Number;
 	public var scaleX:Number;
 	public var scaleY:Number;
-	public var scaleZ:Number;
+//	public var scaleZ:Number;
 	public var rotation:Number;
-	public var rotationX:Number;
-	public var rotationY:Number;
-	public var rotationZ:Number;
+//	public var rotationX:Number;
+//	public var rotationY:Number;
+//	public var rotationZ:Number;
 	public var alpha:Number;
 	public var width:Number;
 	public var height:Number;
@@ -646,14 +646,14 @@ internal class DisplayObjectParameter
 		relativeFlags = obj.relativeFlags;
 		x = obj.x;
 		y = obj.y;
-		z = obj.z;
+//		z = obj.z;
 		scaleX = obj.scaleX;
 		scaleY = obj.scaleY;
-		scaleZ = obj.scaleZ;
+//		scaleZ = obj.scaleZ;
 		rotation = obj.rotation;
-		rotationX = obj.rotationX;
-		rotationY = obj.rotationY;
-		rotationZ = obj.rotationZ;
+//		rotationX = obj.rotationX;
+//		rotationY = obj.rotationY;
+//		rotationZ = obj.rotationZ;
 		alpha = obj.alpha;
 		width = obj.width;
 		height = obj.height;

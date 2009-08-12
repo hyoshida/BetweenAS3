@@ -54,11 +54,11 @@ package org.libspark.betweenas3.core.utils
 			
 			// サブクラスへ新しい値を伝播
 			
-			var subclasses:Vector.<Class> = _subclasses[targetClass] as Vector.<Class>;
+			var subclasses:Array = _subclasses[targetClass] as Array;
 			if (subclasses != null) {
 				var l:uint = subclasses.length;
 				for (var i:uint = 0; i < l; ++i) {
-					var subclass:Class = subclasses[i];
+					var subclass:Class = subclasses[i] as Class;
 					if (classes[subclass][propertyName] == oldClass) {
 						classes[subclass][propertyName] = klass;
 					}
@@ -98,11 +98,11 @@ package org.libspark.betweenas3.core.utils
 			var classes:Dictionary = _classes;
 			var subclasses:Dictionary = _subclasses;
 			var dict:Dictionary = new Dictionary();
-			var tree:Vector.<Class> = getClassTree(targetClass);
+			var tree:Array = getClassTree(targetClass);
 			var l:uint = tree.length;
 			var i:int = l;
 			while (--i >= 0) {
-				var c:Class = tree[i];
+				var c:Class = tree[i] as Class;
 				var d:Dictionary = classes[c] as Dictionary;
 				var p:String;
 				if (d != null) {
@@ -134,9 +134,9 @@ package org.libspark.betweenas3.core.utils
 				// このクラス (c) のサブクラスのリストを保存
 				
 				if (subclasses[c] != undefined) {
-					var sub:Vector.<Class> = subclasses[c] as Vector.<Class>;
+					var sub:Array = subclasses[c] as Array;
 					for (var j:int = i - 1; j >= 0; --j) {
-						var subC:Class = tree[j];
+						var subC:Class = tree[j] as Class;
 						if (sub.indexOf(subC) == -1) {
 							sub.push(subC);
 						}
@@ -148,9 +148,9 @@ package org.libspark.betweenas3.core.utils
 			}
 		}
 		
-		private function getClassTree(klass:Class):Vector.<Class>
+		private function getClassTree(klass:Class):Array
 		{
-			var tree:Vector.<Class> = new Vector.<Class>();
+			var tree:Array = [];
 			var superClassName:String;
 			var c:Class = klass;
 			

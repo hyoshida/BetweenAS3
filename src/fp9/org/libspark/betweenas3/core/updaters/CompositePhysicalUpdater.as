@@ -35,7 +35,7 @@ package org.libspark.betweenas3.core.updaters
 	 */
 	public class CompositePhysicalUpdater implements IPhysicalUpdater
 	{
-		public function CompositePhysicalUpdater(target:Object, updaters:Vector.<IPhysicalUpdater>)
+		public function CompositePhysicalUpdater(target:Object, updaters:Array)
 		{
 			_target = target;
 			
@@ -62,9 +62,9 @@ package org.libspark.betweenas3.core.updaters
 								_duration = _d.duration;
 							}
 							if (l >= 5) {
-								_updaters = new Vector.<IPhysicalUpdater>(l - 4, true);
+								_updaters = new Array(l - 4);
 								for (var i:uint = 4; i < l; ++i) {
-									var updater:IPhysicalUpdater = updaters[i];
+									var updater:IPhysicalUpdater = updaters[i] as IPhysicalUpdater;
 									_updaters[i - 4] = updater;
 									if (_duration < updater.duration) {
 										_duration = updater.duration;
@@ -84,7 +84,7 @@ package org.libspark.betweenas3.core.updaters
 		private var _b:IPhysicalUpdater;
 		private var _c:IPhysicalUpdater;
 		private var _d:IPhysicalUpdater;
-		private var _updaters:Vector.<IPhysicalUpdater>;
+		private var _updaters:Array;
 		
 		/**
 		 * .
@@ -192,10 +192,10 @@ package org.libspark.betweenas3.core.updaters
 						if (_d != null) {
 							_d.update(factor);
 							if (_updaters != null) {
-								var updaters:Vector.<IPhysicalUpdater> = _updaters;
+								var updaters:Array = _updaters;
 								var l:uint = updaters.length;
 								for (var i:uint = 0; i < l; ++i) {
-									updaters[i].update(factor);
+									(updaters[i] as IPhysicalUpdater).update(factor);
 								}
 							}
 						}
@@ -209,7 +209,7 @@ package org.libspark.betweenas3.core.updaters
 		 */
 		public function clone():IUpdater
 		{
-			var updaters:Vector.<IPhysicalUpdater> = new Vector.<IPhysicalUpdater>();
+			var updaters:Array = [];
 			
 			if (_a != null) {
 				updaters.push(_a.clone());
@@ -220,7 +220,7 @@ package org.libspark.betweenas3.core.updaters
 						if (_d != null) {
 							updaters.push(_d.clone());
 							if (_updaters != null) {
-								var u:Vector.<IPhysicalUpdater> = _updaters;
+								var u:Array = _updaters;
 								var l:uint = u.length;
 								for (var i:uint = 0; i < l; ++i) {
 									updaters.push(u[i].clone());

@@ -67,9 +67,9 @@ package org.libspark.betweenas3.core.updaters
 		 */
 		public function addControlPoint(propertyName:String, value:Number, isRelative:Boolean = false):void
 		{
-			var controlPoint:Vector.<Number> = _controlPoint[propertyName] as Vector.<Number>;
+			var controlPoint:Array = _controlPoint[propertyName] as Array;
 			if (controlPoint == null) {
-				_controlPoint[propertyName] = controlPoint = new Vector.<Number>();
+				_controlPoint[propertyName] = controlPoint = [];
 			}
 			controlPoint.push(value);
 			_relativeMap['cp.' + propertyName + '.' + controlPoint.length] = isRelative;
@@ -114,7 +114,7 @@ package org.libspark.betweenas3.core.updaters
 		 */
 		override protected function resolveValues():void
 		{
-			var key:String, target:Object = _target, source:Dictionary = _source, dest:Dictionary = _destination, controlPoint:Dictionary = _controlPoint, cpVec:Vector.<Number>, l:uint, i:uint, rMap:Dictionary = _relativeMap;
+			var key:String, target:Object = _target, source:Dictionary = _source, dest:Dictionary = _destination, controlPoint:Dictionary = _controlPoint, cpVec:Array, l:uint, i:uint, rMap:Dictionary = _relativeMap;
 			
 			for (key in source) {
 				if (dest[key] == undefined) {
@@ -133,7 +133,7 @@ package org.libspark.betweenas3.core.updaters
 				}
 			}
 			for (key in controlPoint) {
-				cpVec = controlPoint[key] as Vector.<Number>;
+				cpVec = controlPoint[key] as Array;
 				l = cpVec.length;
 				for (i = 0; i < l; ++i) {
 					if (rMap['cp.' + key + '.' + i]) {
@@ -154,7 +154,7 @@ package org.libspark.betweenas3.core.updaters
 			var s:Dictionary = _source;
 			var b:Number;
 			var cp:Dictionary = _controlPoint;
-			var cpVec:Vector.<Number>;
+			var cpVec:Array;
 			var l:uint;
 			var ip:uint, it:Number, p1:Number, p2:Number;
 			var name:String;
@@ -165,7 +165,7 @@ package org.libspark.betweenas3.core.updaters
 				
 				b = s[name];
 				
-				if (factor != 1.0 && (cpVec = _controlPoint[name] as Vector.<Number>) != null) {
+				if (factor != 1.0 && (cpVec = _controlPoint[name] as Array) != null) {
 					if ((l = cpVec.length) == 1) {
 						t[name] = b + factor * (2 * invert * (cpVec[0] - b) + factor * (d[name] - b));
 					}
