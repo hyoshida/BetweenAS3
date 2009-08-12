@@ -25,21 +25,21 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * Cubic.easeInOut.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class CubicEaseInOut implements IEasing
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * @inheritDoc
+		 */
+		public function calculate(t:Number, b:Number, c:Number, d:Number):Number
+		{
+			return ((t /= d / 2) < 1) ? c / 2 * t * t * t + b : c / 2 * ((t -= 2) * t * t + 2) + b;
+		}
 	}
 }

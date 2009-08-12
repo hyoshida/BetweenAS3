@@ -25,21 +25,24 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.tweens
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	// target の各プロパティに対する値のセッター、特殊プロパティの処理の提供などが主な役割。
+	// 各プロパティといっても、全てのプロパティに対して責任を持つ必要は無く、特殊化したいものだけ処理すればよい。
+	// たとえば DisplayObject に対するものであれば、主要な x, y, rotation といったプロパティのみに対する処理だけでも良い。
+	// それ以外のプロパティに関しては、全てのプロパティを扱うことができる汎用的な ObjectTweenTarget が責任を持って処理をするので
+	// 意識する必要は無い。
 	
 	/**
+	 * ひとつのオブジェクトを対象としたトゥイーンターゲットです.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface IObjectTween extends ITween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * このトゥイーンの対象となるオブジェクトを取得します.
+		 */
+		function get target():Object;
 	}
 }

@@ -25,21 +25,35 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * Back.easeOutIn.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class BackEaseOutIn implements IEasing
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * 
+		 * @param	s	Specifies the amount of overshoot, where the higher the value, the greater the overshoot.
+		 */
+		public function BackEaseOutIn(s:Number = 1.70158)
+		{
+			this.s = s;
+		}
+		
+		public var s:Number;
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function calculate(t:Number, b:Number, c:Number, d:Number):Number
+		{
+			if (t < d / 2) {
+				return (c / 2) * ((t = (t * 2) / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+			}
+			return (c / 2) * (t = (t * 2 - d) / d) * t * ((s + 1) * t - s) + (b + c / 2);
+		}
 	}
 }

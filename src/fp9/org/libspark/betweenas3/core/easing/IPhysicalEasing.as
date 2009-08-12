@@ -25,21 +25,32 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * 物理的なイージングを表すインターフェイスです.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface IPhysicalEasing
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * このイージングにかかる時間を返します.
+		 * 
+		 * @param	b
+		 * @param	e
+		 * @return	このイージングにかかる時間
+		 */
+		function getDuration(b:Number, e:Number):Number;
+		
+		/**
+		 * イージングの値を計算して返します.
+		 * 
+		 * @param	t
+		 * @param	b
+		 * @param	e
+		 * @return
+		 */
+		function calculate(t:Number, b:Number, e:Number):Number;
 	}
 }

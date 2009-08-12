@@ -25,21 +25,55 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.decorators
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.tweens.AbstractTween;
+	import org.libspark.betweenas3.core.tweens.IITween;
+	import org.libspark.betweenas3.core.tweens.TweenDecorator;
 	
 	/**
+	 * ITween に遅延を加えて実行.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class DelayedTween extends TweenDecorator
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function DelayedTween(baseTween:IITween, preDelay:Number, postDelay:Number)
+		{
+			super(baseTween, 0);
+			
+			_duration = preDelay + baseTween.duration + postDelay;
+			_preDelay = preDelay;
+			_postDelay = postDelay;
+		}
+		
+		private var _preDelay:Number;
+		private var _postDelay:Number;
+		
+		public function get preDelay():Number
+		{
+			return _preDelay;
+		}
+		
+		public function get postDelay():Number
+		{
+			return _postDelay;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function internalUpdate(time:Number):void 
+		{
+			_baseTween.update(time - _preDelay);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function newInstance():AbstractTween 
+		{
+			return new DelayedTween(_baseTween.clone() as IITween, _preDelay, _postDelay);
+		}
 	}
 }

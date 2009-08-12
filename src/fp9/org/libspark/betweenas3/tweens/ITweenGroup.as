@@ -25,21 +25,17 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.tweens
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * 複数のトゥイーンのコンテナ.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface ITweenGroup extends ITween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		function contains(tween:ITween):Boolean;
+		function getTweenAt(index:int):ITween;
+		function getTweenIndex(tween:ITween):int;
 	}
 }

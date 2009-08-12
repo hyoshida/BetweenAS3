@@ -25,21 +25,49 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.decorators
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.tweens.AbstractTween;
+	import org.libspark.betweenas3.core.tweens.IITween;
+	import org.libspark.betweenas3.core.tweens.TweenDecorator;
+	import org.libspark.betweenas3.tweens.ITween;
 	
 	/**
+	 * ITween をタイムスケールして実行.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class ScaledTween extends TweenDecorator
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function ScaledTween(baseTween:IITween, scale:Number)
+		{
+			super(baseTween, 0);
+			
+			_duration = baseTween.duration * scale;
+			_scale = scale;
+		}
+		
+		private var _scale:Number;
+		
+		public function get scale():Number
+		{
+			return _scale;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function internalUpdate(time:Number):void 
+		{
+			_baseTween.update(time / scale);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function newInstance():AbstractTween 
+		{
+			return new ScaledTween(_baseTween.clone() as IITween, _scale);
+		}
 	}
 }

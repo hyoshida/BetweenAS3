@@ -25,21 +25,45 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.actions
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import flash.display.Sprite;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.before;
+	import org.libspark.as3unit.after;
+	import org.libspark.as3unit.test;
+	
+	use namespace before;
+	use namespace after;
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class RemoveFromParentActionTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		test function action():void
+		{
+			var parent:Sprite = new Sprite();
+			var child:Sprite = new Sprite();
+			
+			parent.addChild(child);
+			
+			var tween:RemoveFromParentAction = new RemoveFromParentAction(null, child);
+			var tester:ActionTweenTester = new ActionTweenTester(tween);
+			
+			assertSame(parent, child.parent);
+			assertTrue(parent.contains(child));
+			
+			tester.doAction();
+			
+			assertNull(child.parent);
+			assertFalse(parent.contains(child));
+			
+			tester.doRollback();
+			
+			assertSame(parent, child.parent);
+			assertTrue(parent.contains(child));
+		}
 	}
 }

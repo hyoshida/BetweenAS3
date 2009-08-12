@@ -25,21 +25,24 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.easing.BounceEaseIn;
+	import org.libspark.betweenas3.core.easing.BounceEaseInOut;
+	import org.libspark.betweenas3.core.easing.BounceEaseOut;
+	import org.libspark.betweenas3.core.easing.BounceEaseOutIn;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
+	 * Bounce.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class Bounce
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public static const easeIn:IEasing = new BounceEaseIn();
+		public static const easeOut:IEasing = new BounceEaseOut();
+		public static const easeInOut:IEasing = new BounceEaseInOut();
+		public static const easeOutIn:IEasing = new BounceEaseOutIn();
 	}
 }

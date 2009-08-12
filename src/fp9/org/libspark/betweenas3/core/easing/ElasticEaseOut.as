@@ -25,21 +25,52 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * Elastic.easeOut.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class ElasticEaseOut implements IEasing
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * 
+		 * @param	a	Specifies the amplitude of the sine wave.
+		 * @param	p	Specifies the period of the sine wave.
+		 */
+		public function ElasticEaseOut(a:Number = 0, p:Number = 0)
+		{
+			this.a = a;
+			this.p = p;
+		}
+		
+		public var a:Number;
+		public var p:Number;
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function calculate(t:Number, b:Number, c:Number, d:Number):Number
+		{
+			if (t == 0) {
+				return b;
+			}
+			if ((t /= d) == 1) {
+				return b + c;
+			}
+			if (!p) {
+				p = d * 0.3;
+			}
+			var s:Number;
+			if (!a || a < Math.abs(c)) {
+				a = c;
+				s = p / 4;
+			}
+			else {
+				s = p / (2 * Math.PI) * Math.asin(c / a);
+			}
+			return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;
+		}
 	}
 }

@@ -25,21 +25,42 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.ticker
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * 更新のタイミングを管理する.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface ITicker
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * 現在の時間を返します.
+		 */
+		function get time():Number;
+		
+		/**
+		 * コールバックを受け取るリスナを追加します.
+		 * 
+		 * @param	listener	コールバックを受け取るリスナ
+		 */
+		function addTickerListener(listener:TickerListener):void;
+		
+		/**
+		 * 追加されているリスナを削除します.
+		 * 
+		 * @param	listener	削除するリスナ
+		 */
+		function removeTickerListener(listener:TickerListener):void;
+		
+		/**
+		 * タイミング管理の処理を開始します.
+		 */
+		function start():void;
+		
+		/**
+		 * タイミング管理の処理を停止します.
+		 */
+		function stop():void;
 	}
 }

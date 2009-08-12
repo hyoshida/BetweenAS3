@@ -25,21 +25,21 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.easing.CustomFunctionEasing;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
+	 * Custom.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class Custom
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public static function func(f:Function):IEasing
+		{
+			return new CustomFunctionEasing(f);
+		}
 	}
 }

@@ -25,21 +25,30 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.actions
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.tweens.AbstractActionTween;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class ActionTweenTester
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function ActionTweenTester(tween:AbstractActionTween)
+		{
+			_tween = tween;
+		}
+		
+		private var _tween:AbstractActionTween;
+		
+		public function doAction():void
+		{
+			_tween.update(1);
+		}
+		
+		public function doRollback():void
+		{
+			_tween.update(0);
+		}
 	}
 }

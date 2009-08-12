@@ -25,21 +25,78 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.tweens.ITween;
 	
 	/**
+	 * .
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class TweenDecorator extends AbstractTween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function TweenDecorator(baseTween:IITween, position:Number)
+		{
+			super(baseTween.ticker, position);
+			
+			_baseTween = baseTween;
+			_duration = baseTween.duration;
+		}
+		
+		protected var _baseTween:IITween;
+		
+		public function get baseTween():IITween
+		{
+			return _baseTween;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function play():void 
+		{
+			if (!_isPlaying) {
+				_baseTween.firePlay();
+				super.play();
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function firePlay():void 
+		{
+			super.firePlay();
+			_baseTween.firePlay();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function stop():void 
+		{
+			if (_isPlaying) {
+				super.stop();
+				_baseTween.fireStop();
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function fireStop():void 
+		{
+			super.fireStop();
+			_baseTween.fireStop();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function internalUpdate(time:Number):void 
+		{
+			_baseTween.update(time);
+		}
 	}
 }

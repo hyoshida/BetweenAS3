@@ -25,21 +25,61 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.decorators
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.test;
+	import org.libspark.betweenas3.core.tweens.TestTween;
+	
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class RepeatedTweenTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		test function repeat():void
+		{
+			var t:TestTween = new TestTween(2, null);
+			var r:RepeatedTween = new RepeatedTween(t, 3);
+			
+			assertEquals(6, r.duration);
+			
+			r.update(0);
+			
+			assertEquals(0, t.t);
+			
+			r.update(1);
+			
+			assertEquals(1, t.t);
+			
+			r.update(2);
+			
+			assertEquals(0, t.t);
+			
+			r.update(3);
+			
+			assertEquals(1, t.t);
+			
+			r.update(4);
+			
+			assertEquals(0, t.t);
+			
+			r.update(5);
+			
+			assertEquals(1, t.t);
+			
+			r.update(5.5);
+			
+			assertEquals(1.5, t.t);
+			
+			r.update(6);
+			
+			assertEquals(2, t.t);
+			
+			r.update(7);
+			
+			assertEquals(3, t.t);
+		}
 	}
 }

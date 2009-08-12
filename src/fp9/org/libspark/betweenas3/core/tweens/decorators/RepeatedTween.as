@@ -25,21 +25,54 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.decorators
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.tweens.AbstractTween;
+	import org.libspark.betweenas3.core.tweens.IITween;
+	import org.libspark.betweenas3.core.tweens.TweenDecorator;
+	import org.libspark.betweenas3.tweens.ITween;
 	
 	/**
+	 * ITween を指定回数繰り返して実行.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class RepeatedTween extends TweenDecorator
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function RepeatedTween(baseTween:IITween, repeatCount:uint)
+		{
+			super(baseTween, 0);
+			
+			_baseDuration = baseTween.duration;
+			_repeatCount = repeatCount;
+			_duration = _baseDuration * repeatCount;
+		}
+		
+		private var _baseDuration:Number;
+		private var _repeatCount:uint;
+		
+		public function get repeatCount():uint
+		{
+			return _repeatCount;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function internalUpdate(time:Number):void 
+		{
+			if (time >= 0) {
+				time -= time < _duration ? _baseDuration * int(time / _baseDuration) : _duration - _baseDuration;
+			}
+			_baseTween.update(time);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function newInstance():AbstractTween 
+		{
+			return new RepeatedTween(_baseTween.clone() as IITween, repeatCount);
+		}
 	}
 }

@@ -25,21 +25,52 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.PixelSnapping;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.geom.ColorTransform;
+	import flash.geom.Point;
+	import org.libspark.betweenas3.BetweenAS3;
+	import org.libspark.betweenas3.easing.Back;
+	import org.libspark.betweenas3.tweens.ITween;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	[SWF(width = 400, height = 300, frameRate = 30, backgroundColor = 0x000000)]
+	public class PointTweenTest extends Sprite
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		private static const FADE:ColorTransform = new ColorTransform(1, 1, 1, 1, -32, -16, -16);
+		
+		public function PointTweenTest()
+		{
+			_p = new Point(100, 150);
+			
+			var t:ITween = BetweenAS3.tween(_p, {x: 300}, {x: _p.x}, 1.5, Back.easeInOut);
+			t = BetweenAS3.serial(t, BetweenAS3.reverse(t));
+			t.stopOnComplete = false;
+			t.play();
+			
+			_bitmapData = new BitmapData(400, 300, false, 0x000000);
+			
+			addChild(new Bitmap(_bitmapData, PixelSnapping.NEVER, false));
+			
+			addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+		}
+		
+		private var _bitmapData:BitmapData;
+		private var _p:Point;
+		
+		private function enterFrameHandler(e:Event):void
+		{
+			_bitmapData.lock();
+			_bitmapData.colorTransform(_bitmapData.rect, FADE);
+			_bitmapData.setPixel(_p.x, _p.y, 0xffffff);
+			_bitmapData.unlock();
+		}
 	}
 }

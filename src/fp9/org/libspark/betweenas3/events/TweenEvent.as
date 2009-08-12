@@ -25,21 +25,25 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.events
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import flash.events.Event;
 	
 	/**
+	 * ITween によって配信されるイベント.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class TweenEvent extends Event
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public static const PLAY:String = 'play';
+		public static const STOP:String = 'stop';
+		public static const UPDATE:String = 'update';
+		public static const COMPLETE:String = 'complete';
+		
+		public function TweenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+		{
+			super(type, bubbles, cancelable);
+		}
 	}
 }

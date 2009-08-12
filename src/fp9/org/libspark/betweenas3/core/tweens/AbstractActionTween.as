@@ -25,21 +25,55 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.ticker.ITicker;
 	
 	/**
+	 * IIActionTween を実装するための抽象クラスです.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class AbstractActionTween extends AbstractTween implements IIActionTween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function AbstractActionTween(ticker:ITicker)
+		{
+			super(ticker, 0);
+			
+			_duration = 0.01;
+			_lastTime = -1;
+		}
+		
+		private var _lastTime:Number;
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function internalUpdate(time:Number):void 
+		{
+			if (_lastTime < 0.01 && time >= 0.01) {
+				action();
+			}
+			else if (_lastTime > 0 && time <= 0) {
+				rollback();
+			}
+			_lastTime = time;
+		}
+		
+		/**
+		 * このメソッドをオーバーライドして実行する動作を記述します.
+		 */
+		protected function action():void
+		{
+			
+		}
+		
+		/**
+		 * このメソッドをオーバーライドして実行した動作を元に戻す処理を記述します.
+		 */
+		protected function rollback():void
+		{
+			
+		}
 	}
 }

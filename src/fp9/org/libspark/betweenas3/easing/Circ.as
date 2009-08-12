@@ -25,21 +25,24 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.easing.CircularEaseIn;
+	import org.libspark.betweenas3.core.easing.CircularEaseInOut;
+	import org.libspark.betweenas3.core.easing.CircularEaseOut;
+	import org.libspark.betweenas3.core.easing.CircularEaseOutIn;
+	import org.libspark.betweenas3.core.easing.IEasing;
 	
 	/**
+	 * Circular.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class Circ
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public static const easeIn:IEasing = new CircularEaseIn();
+		public static const easeOut:IEasing = new CircularEaseOut();
+		public static const easeInOut:IEasing = new CircularEaseInOut();
+		public static const easeOutIn:IEasing = new CircularEaseOutIn();
 	}
 }

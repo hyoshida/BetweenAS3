@@ -25,21 +25,42 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.ticker.ITicker;
+	import org.libspark.betweenas3.tweens.ITween;
+	
+	// BetweenAS3 の「トゥイーンの加工」は IITween が肝になる。
+	// 末端は IIObjectTween で、それを他の IITween 実装クラスでデコレートすることで
+	// トゥイーンの振る舞いを様々に変化させる。
 	
 	/**
+	 * ITween 完全版.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface IITween extends ITween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * .
+		 */
+		function get ticker():ITicker;
+		
+		/**
+		 * .
+		 */
+		function firePlay():void;
+		
+		/**
+		 * .
+		 */
+		function fireStop():void;
+		
+		/**
+		 * このトゥイーンを指定された時間の状態に更新します.
+		 * 
+		 * @param	time	時間 (秒)
+		 */
+		function update(time:Number):void;
 	}
 }

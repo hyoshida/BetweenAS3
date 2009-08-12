@@ -25,21 +25,24 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.easing.IEasing;
+	import org.libspark.betweenas3.core.easing.QuarticEaseIn;
+	import org.libspark.betweenas3.core.easing.QuarticEaseInOut;
+	import org.libspark.betweenas3.core.easing.QuarticEaseOut;
+	import org.libspark.betweenas3.core.easing.QuarticEaseOutIn;
 	
 	/**
+	 * Quartic.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class Quartic
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public static const easeIn:IEasing = new QuarticEaseIn();
+		public static const easeOut:IEasing = new QuarticEaseOut();
+		public static const easeInOut:IEasing = new QuarticEaseInOut();
+		public static const easeOutIn:IEasing = new QuarticEaseOutIn();
 	}
 }

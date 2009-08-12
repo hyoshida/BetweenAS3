@@ -25,21 +25,41 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.decorators
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.tweens.AbstractTween;
+	import org.libspark.betweenas3.core.tweens.IITween;
+	import org.libspark.betweenas3.core.tweens.TweenDecorator;
+	import org.libspark.betweenas3.tweens.ITween;
 	
 	/**
+	 * ITween を逆に実行.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class ReversedTween extends TweenDecorator
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function ReversedTween(baseTween:IITween, position:Number)
+		{
+			super(baseTween, position);
+			
+			_duration = baseTween.duration;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function internalUpdate(time:Number):void 
+		{
+			_baseTween.update(_duration - time);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function newInstance():AbstractTween 
+		{
+			return new ReversedTween(_baseTween.clone() as IITween, 0);
+		}
 	}
 }

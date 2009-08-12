@@ -25,21 +25,54 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.updaters
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.test;
+	
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class PhysicalUpdaterLadderTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		test function update():void
+		{
+			var o1:Object = new Object();
+			var o2:Object = new Object();
+			var obj:Object = {
+				child: o1
+			};
+			
+			var parent:TestUpdater = new TestUpdater();
+			parent.target = obj;
+			
+			var child:TestUpdater = new TestUpdater();
+			child.target = o2;
+			
+			var ladder:PhysicalUpdaterLadder = new PhysicalUpdaterLadder(parent, child, 'child');
+			
+			assertTrue(isNaN(parent.f));
+			assertTrue(isNaN(child.f));
+			
+			ladder.update(0.5);
+			
+			assertTrue(isNaN(parent.f));
+			assertEquals(0.5, child.f);
+			assertSame(o2, obj.child);
+		}
+	}
+}
+
+import org.libspark.betweenas3.core.updaters.PhysicalUpdater;
+
+internal class TestUpdater extends PhysicalUpdater
+{
+	public var f:Number = NaN;
+	
+	override public function update(factor:Number):void 
+	{
+		f = factor;
 	}
 }

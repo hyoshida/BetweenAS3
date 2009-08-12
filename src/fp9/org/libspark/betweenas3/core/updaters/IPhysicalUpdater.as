@@ -25,21 +25,30 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.updaters
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.easing.IPhysicalEasing;
 	
 	/**
+	 * オブジェクトのプロパティを更新.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface IPhysicalUpdater extends IUpdater
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * このアップデータで使用するイージングを設定します.
+		 */
+		function get easing():IPhysicalEasing
+		
+		/**
+		 * @private
+		 */
+		function set easing(value:IPhysicalEasing):void;
+		
+		/**
+		 * このアップデータが所要する時間を返します.
+		 */
+		function get duration():Number;
 	}
 }

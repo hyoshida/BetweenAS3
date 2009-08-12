@@ -25,21 +25,38 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.ticker
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	// 本当はインターフェイスのほうが好ましいのだけど速度とメモリ的な理由からクラスで。
 	
 	/**
+	 * 更新のタイミングを受け取るためのリスナー.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class TickerListener
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * ひとつ前のリスナーを設定します.
+		 * 双方向リンクリストのために内部的に使用されます。
+		 */
+		public var prevListener:TickerListener = null;
+		
+		/**
+		 * ひとつ後のリスナーを設定します.
+		 * 双方向リンクリストのために内部的に使用されます。
+		 */
+		public var nextListener:TickerListener = null;
+		
+		/**
+		 * 指定された時間に基づいて処理を行うべき時に呼び出されるコールバック.
+		 * 
+		 * @param	time	時間 (秒)
+		 * @return	このリスナの処理が完了し今後コールバックを受け取る必要がないのであれば true, そうでなければ false.
+		 */
+		public function tick(time:Number):Boolean
+		{
+			return false;
+		}
 	}
 }

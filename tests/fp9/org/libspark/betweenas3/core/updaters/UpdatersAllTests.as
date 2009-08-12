@@ -25,21 +25,26 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.updaters
 {
 	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.updaters.display.DisplayAllTests;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class UpdatersAllTests
 	{
 		public static const RunWith:Class = Suite;
 		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
+			ObjectUpdaterTest,
+			UpdaterLadderTest,
+			CompositeUpdaterTest,
+			DisplayAllTests,
+			PhysicalUpdaterTest,
+			PhysicalUpdaterLadderTest,
+			CompositePhysicalUpdaterTest,
+			UpdaterFactoryTest
 		];
 	}
 }

@@ -25,21 +25,42 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.ticker.ITicker;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class TestTween extends AbstractTween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function TestTween(d:Number, ticker:ITicker)
+		{
+			super(ticker, 0);
+			
+			this.d = d;
+		}
+		
+		public var t:Number = NaN;
+		
+		public function get d():Number
+		{
+			return _duration;
+		}
+		
+		public function set d(value:Number):void
+		{
+			_duration = value;
+		}
+		
+		override protected function internalUpdate(time:Number):void 
+		{
+			t = time;
+		}
+		
+		override protected function newInstance():AbstractTween 
+		{
+			return new TestTween(d, ticker);
+		}
 	}
 }

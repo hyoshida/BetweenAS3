@@ -25,21 +25,43 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import flash.display.MovieClip;
+	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import org.libspark.betweenas3.BetweenAS3;
+	import org.libspark.betweenas3.easing.Cubic;
+	import org.libspark.betweenas3.easing.Exponential;
+	import org.libspark.betweenas3.easing.Linear;
+	import org.libspark.betweenas3.tweens.ITween;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class ApplyTest extends Sprite
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function ApplyTest()
+		{
+			var mc1:MovieClip = new MovieClip();
+			mc1.graphics.beginFill(0);
+			mc1.graphics.drawRect(-10, -10, 20, 20);
+			mc1.graphics.endFill();
+			addChild(mc1);
+			
+			var mc2:MovieClip = new MovieClip();
+			mc2.graphics.beginFill(0x666666);
+			mc2.graphics.drawRect(-10, -10, 20, 20);
+			mc2.graphics.endFill();
+			addChild(mc2);
+			
+			// その場で適用
+			BetweenAS3.apply(mc1, {x: 100, y: 200});
+			
+			// 指定した時間の値 (0.5/1.0) をその場で適用
+			BetweenAS3.apply(mc2, {x: 300, y: 240}, {x: 100, y: 240}, 1.0, 0.5);
+		}
 	}
 }

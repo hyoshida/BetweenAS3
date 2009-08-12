@@ -25,21 +25,49 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.decorators
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.test;
+	import org.libspark.betweenas3.core.tweens.TestTween;
+	
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class ScaledTweenTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		test function scale():void
+		{
+			var t:TestTween = new TestTween(2, null);
+			var s:ScaledTween = new ScaledTween(t, 4);
+			
+			assertEquals(8, s.duration);
+			
+			s.update(0);
+			
+			assertEquals(0, t.t);
+			
+			s.update(1);
+			
+			assertEquals(0.25, t.t);
+			
+			s.update(2);
+			
+			assertEquals(0.5, t.t);
+			
+			s.update(4);
+			
+			assertEquals(1, t.t);
+			
+			s.update(7);
+			
+			assertEquals(1.75, t.t);
+			
+			s.update(8);
+			
+			assertEquals(2, t.t);
+		}
 	}
 }

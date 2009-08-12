@@ -25,21 +25,44 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * Bounce.easeOutIn.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class BounceEaseOutIn implements IEasing
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * @inheritDoc
+		 */
+		public function calculate(t:Number, b:Number, c:Number, d:Number):Number
+		{
+			if (t < d / 2) {
+				if ((t = (t * 2) / d) < (1 / 2.75)) {
+					return (c / 2) * (7.5625 * t * t) + b;
+				}
+				if (t < (2 / 2.75)) {
+					return (c / 2) * (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75) + b;
+				}
+				if (t < (2.5 / 2.75)) {
+					return (c / 2) * (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375) + b;
+				}
+				return (c / 2) * (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375) + b;
+			}
+			else {
+				if ((t = (d - (t * 2 - d)) / d) < (1 / 2.75)) {
+					return (c / 2) - ((c / 2) * (7.5625 * t * t)) + (b + c / 2);
+				}
+				if (t < (2 / 2.75)) {
+					return (c / 2) - ((c / 2) * (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75)) + (b + c / 2);
+				}
+				if (t < (2.5 / 2.75)) {
+					return (c / 2) - ((c / 2) * (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375)) + (b + c / 2);
+				}
+				return (c / 2) - ((c / 2) * (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375)) + (b + c / 2);
+			}
+		}
 	}
 }

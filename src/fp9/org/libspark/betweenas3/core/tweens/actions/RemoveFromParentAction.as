@@ -25,21 +25,49 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.actions
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import org.libspark.betweenas3.core.ticker.ITicker;
+	import org.libspark.betweenas3.core.tweens.AbstractActionTween;
 	
 	/**
+	 * 指定された DisplayObject を親から削除する動作を行うアクショントゥイーンです.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class RemoveFromParentAction extends AbstractActionTween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function RemoveFromParentAction(ticker:ITicker, target:DisplayObject)
+		{
+			super(ticker);
+			
+			_target = target;
+		}
+		
+		private var _target:DisplayObject;
+		private var _parent:DisplayObjectContainer;
+		
+		public function get target():DisplayObject
+		{
+			return _target;
+		}
+		
+		override protected function action():void 
+		{
+			if (_target != null && _target.parent != null) {
+				_parent = _target.parent;
+				_parent.removeChild(_target);
+			}
+		}
+		
+		override protected function rollback():void 
+		{
+			if (_target != null && _parent != null) {
+				_parent.addChild(_target);
+				_parent = null;
+			}
+		}
 	}
 }

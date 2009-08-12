@@ -25,21 +25,47 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.easing.IEasing;
+	import org.libspark.betweenas3.core.updaters.IUpdater;
+	import org.libspark.betweenas3.tweens.IObjectTween;
 	
 	/**
+	 * IObjectTween 完全版.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface IIObjectTween extends IObjectTween, IITween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * このトゥイーンに掛ける時間 (秒) を設定します.
+		 */
+		function get time():Number;
+		
+		/**
+		 * @private
+		 */
+		function set time(value:Number):void;
+		
+		/**
+		 * このトゥイーンで使用するイージングを設定します.
+		 */
+		function get easing():IEasing;
+		
+		/**
+		 * @private
+		 */
+		function set easing(value:IEasing):void;
+		
+		/**
+		 * このトゥイーンで使用するアップデータを設定します.
+		 */
+		function get updater():IUpdater;
+		
+		/**
+		 * @private
+		 */
+		function set updater(value:IUpdater):void;
 	}
 }

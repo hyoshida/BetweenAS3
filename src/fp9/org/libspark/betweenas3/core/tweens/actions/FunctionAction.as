@@ -25,21 +25,54 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.actions
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.ticker.ITicker;
+	import org.libspark.betweenas3.core.tweens.AbstractActionTween;
 	
 	/**
+	 * 指定された関数の実行動作を行うトゥイーンターゲットです.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class FunctionAction extends AbstractActionTween
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function FunctionAction(ticker:ITicker, func:Function, params:Array = null, useRollback:Boolean = false, rollbackFunc:Function = null, rollbackParams:Array = null)
+		{
+			super(ticker);
+			
+			_func = func;
+			_params = params;
+			
+			if (useRollback) {
+				if (rollbackFunc != null) {
+					_rollbackFunc = rollbackFunc;
+					_rollbackParams = rollbackParams;
+				}
+				else {
+					_rollbackFunc = func;
+					_rollbackParams = params;
+				}
+			}
+		}
+		
+		private var _func:Function;
+		private var _params:Array;
+		private var _rollbackFunc:Function;
+		private var _rollbackParams:Array;
+		
+		override protected function action():void 
+		{
+			if (_func != null) {
+				_func.apply(null, _params);
+			}
+		}
+		
+		override protected function rollback():void 
+		{
+			if (_rollbackFunc != null) {
+				_rollbackFunc.apply(null, _rollbackParams);
+			}
+		}
 	}
 }

@@ -25,21 +25,65 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens.decorators
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.betweenas3.core.tweens.AbstractTween;
+	import org.libspark.betweenas3.core.tweens.IITween;
+	import org.libspark.betweenas3.core.tweens.TweenDecorator;
 	
 	/**
+	 * ITween の一部分だけ実行.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class SlicedTween extends TweenDecorator
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function SlicedTween(baseTween:IITween, begin:Number, end:Number)
+		{
+			super(baseTween, 0);
+			
+			_duration = end - begin;
+			_begin = begin;
+			_end = end;
+		}
+		
+		private var _begin:Number;
+		private var _end:Number;
+		
+		public function get begin():Number
+		{
+			return _begin;
+		}
+		
+		public function get end():Number
+		{
+			return _end;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function internalUpdate(time:Number):void
+		{
+			if (time > 0) {
+				if (time < _duration) {
+					_baseTween.update(time + _begin);
+				}
+				else {
+					_baseTween.update(_end);
+				}
+			}
+			else {
+				_baseTween.update(_begin);
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function newInstance():AbstractTween 
+		{
+			return new SlicedTween(_baseTween.clone() as IITween, _begin, _end);
+		}
 	}
 }

@@ -25,21 +25,38 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * Physical.uniform
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class PhysicalUniform implements IPhysicalEasing
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function PhysicalUniform(v:Number, fps:Number)
+		{
+			_v = v;
+			_fps = fps;
+		}
+		
+		private var _v:Number;
+		private var _fps:Number;
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getDuration(b:Number, c:Number):Number
+		{
+			return (c / (c < 0 ? -_v : _v)) * (1.0 / _fps);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function calculate(t:Number, b:Number, c:Number):Number
+		{
+			return b + (c < 0 ? -_v : _v) * (t / (1.0 / _fps));
+		}
 	}
 }

@@ -25,21 +25,34 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	// お馴染みのイージングを計算する
+	
+	// 基本的には
+	// {transition: Cubic.easeOut}
+	// のように static かつ singleton なインスタンスを使いまわすが
+	
+	// Elastic のようにパラメータがあるものに関しては
+	// {transition: Elastic.easeOutWith(amplitude, period)}
+	// のようにそのパラメータとともに新しいインスタンスを作ることで対処する
 	
 	/**
+	 * イージングを表すインターフェイスです.
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public interface IEasing
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		/**
+		 * イージングの値を計算して返します.
+		 * 
+		 * @param	t
+		 * @param	b
+		 * @param	c
+		 * @param	d
+		 * @return
+		 */
+		function calculate(t:Number, b:Number, c:Number, d:Number):Number;
 	}
 }

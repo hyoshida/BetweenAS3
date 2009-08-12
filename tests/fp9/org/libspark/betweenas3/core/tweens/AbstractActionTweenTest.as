@@ -25,21 +25,76 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.tweens
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
+	import org.libspark.as3unit.assert.*;
+	import org.libspark.as3unit.before;
+	import org.libspark.as3unit.after;
+	import org.libspark.as3unit.test;
+	
+	use namespace before;
+	use namespace after;
+	use namespace test;
 	
 	/**
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class AbstractActionTweenTest
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		test function action():void
+		{
+			var tween:TestActionTween= new TestActionTween();
+			
+			Static.log = '';
+			
+			tween.update(0);
+			
+			assertEquals('', Static.log);
+			
+			tween.update(1);
+			
+			assertEquals('action ', Static.log);
+			
+			tween.update(2);
+			
+			assertEquals('action ', Static.log);
+			
+			tween.update(1);
+			
+			assertEquals('action ', Static.log);
+			
+			tween.update(0);
+			
+			assertEquals('action rollback ', Static.log);
+			
+			tween.update(-1);
+			
+			assertEquals('action rollback ', Static.log);
+		}
+	}
+}
+
+import org.libspark.betweenas3.core.tweens.AbstractActionTween;
+
+internal class Static
+{
+	public static var log:String;
+}
+
+internal class TestActionTween extends AbstractActionTween
+{
+	public function TestActionTween()
+	{
+		super(null);
+	}
+	
+	override protected function action():void 
+	{
+		Static.log += 'action ';
+	}
+	
+	override protected function rollback():void 
+	{
+		Static.log += 'rollback ';
 	}
 }

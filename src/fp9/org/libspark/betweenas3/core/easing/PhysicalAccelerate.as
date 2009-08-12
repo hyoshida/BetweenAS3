@@ -25,21 +25,44 @@
  * THE SOFTWARE.
  * 
  */
-package org.libspark.betweenas3
+package org.libspark.betweenas3.core.easing
 {
-	import org.libspark.as3unit.runners.Suite;
-	import org.libspark.betweenas3.core.CoreAllTests;
-	import org.libspark.betweenas3.tickers.TickersAllTests;
-	
 	/**
+	 * Physical.accelerate
+	 * 
 	 * @author	yossy:beinteractive
 	 */
-	public class BetweenAS3AllTests
+	public class PhysicalAccelerate implements IPhysicalEasing
 	{
-		public static const RunWith:Class = Suite;
-		public static const SuiteClasses:Array = [
-			TickersAllTests,
-			CoreAllTests,
-		];
+		public function PhysicalAccelerate(iv:Number, a:Number, fps:Number)
+		{
+			_iv = iv;
+			_a = a;
+			_fps = fps;
+		}
+		
+		private var _iv:Number;
+		private var _a:Number;
+		private var _fps:Number;
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getDuration(b:Number, c:Number):Number
+		{
+			var iv:Number = c < 0 ? -_iv : _iv;
+			var a:Number = c < 0 ? -_a : _a;
+			return ((-iv + Math.sqrt(iv * iv - 4 * (a / 2.0) * -c)) / (2 * (a / 2.0))) * (1.0 / _fps);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function calculate(t:Number, b:Number, c:Number):Number
+		{
+			var f:Number = c < 0 ? -1 : 1;
+			var n:Number = t / (1.0 / _fps);
+			return b + (f * _iv) * n + ((f * _a) * n) * n / 2.0;
+		}
 	}
 }
