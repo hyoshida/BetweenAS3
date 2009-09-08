@@ -1,7 +1,12 @@
 ﻿BetweenAS3 チェンジログ
 ========================================
 
-Alpha r2505 -> HEAD
+Alpha r3022 -> HEAD
+--------------------
+
+ * [r3021] 修正: 特定の条件下で EnterFrameTicker 内で ReferenceError が発生する (#108)
+
+Alpha r2505 -> Alpha r3022
 --------------------
 
  * [r3021] r3019 をベースに FlashPlayer9 版を作成

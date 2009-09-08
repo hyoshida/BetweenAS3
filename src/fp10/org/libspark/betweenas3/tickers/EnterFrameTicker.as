@@ -164,18 +164,8 @@ package org.libspark.betweenas3.tickers
 					if (listener.nextListener != null) {
 						listener.nextListener.prevListener = listener.prevListener;
 					}
-					ll = listener.prevListener;
-					listener.nextListener = null;
-					listener.prevListener = null;
-					listener = ll;
-					--_numListeners;
-				}
-				if ((listener = listener.nextListener).tick(t)) {
-					if (listener.prevListener != null) {
-						listener.prevListener.nextListener = listener.nextListener;
-					}
-					if (listener.nextListener != null) {
-						listener.nextListener.prevListener = listener.prevListener;
+					if (listener == _first) {
+						_first = listener.nextListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
@@ -190,18 +180,8 @@ package org.libspark.betweenas3.tickers
 					if (listener.nextListener != null) {
 						listener.nextListener.prevListener = listener.prevListener;
 					}
-					ll = listener.prevListener;
-					listener.nextListener = null;
-					listener.prevListener = null;
-					listener = ll;
-					--_numListeners;
-				}
-				if ((listener = listener.nextListener).tick(t)) {
-					if (listener.prevListener != null) {
-						listener.prevListener.nextListener = listener.nextListener;
-					}
-					if (listener.nextListener != null) {
-						listener.nextListener.prevListener = listener.prevListener;
+					if (listener == _first) {
+						_first = listener.nextListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
@@ -216,18 +196,8 @@ package org.libspark.betweenas3.tickers
 					if (listener.nextListener != null) {
 						listener.nextListener.prevListener = listener.prevListener;
 					}
-					ll = listener.prevListener;
-					listener.nextListener = null;
-					listener.prevListener = null;
-					listener = ll;
-					--_numListeners;
-				}
-				if ((listener = listener.nextListener).tick(t)) {
-					if (listener.prevListener != null) {
-						listener.prevListener.nextListener = listener.nextListener;
-					}
-					if (listener.nextListener != null) {
-						listener.nextListener.prevListener = listener.prevListener;
+					if (listener == _first) {
+						_first = listener.nextListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
@@ -242,6 +212,9 @@ package org.libspark.betweenas3.tickers
 					if (listener.nextListener != null) {
 						listener.nextListener.prevListener = listener.prevListener;
 					}
+					if (listener == _first) {
+						_first = listener.nextListener;
+					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
@@ -254,6 +227,57 @@ package org.libspark.betweenas3.tickers
 					}
 					if (listener.nextListener != null) {
 						listener.nextListener.prevListener = listener.prevListener;
+					}
+					if (listener == _first) {
+						_first = listener.nextListener;
+					}
+					ll = listener.prevListener;
+					listener.nextListener = null;
+					listener.prevListener = null;
+					listener = ll;
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					if (listener == _first) {
+						_first = listener.nextListener;
+					}
+					ll = listener.prevListener;
+					listener.nextListener = null;
+					listener.prevListener = null;
+					listener = ll;
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					if (listener == _first) {
+						_first = listener.nextListener;
+					}
+					ll = listener.prevListener;
+					listener.nextListener = null;
+					listener.prevListener = null;
+					listener = ll;
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					if (listener == _first) {
+						_first = listener.nextListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;

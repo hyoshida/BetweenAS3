@@ -160,6 +160,46 @@ package org.libspark.betweenas3.tickers
 			assertEquals(2, l2.c);
 			assertEquals(1, l3.c);
 		}
+		
+		// http://www.libspark.org/ticket/108
+		test function issue108():void
+		{
+			var ticker:EnterFrameTicker = new EnterFrameTicker();
+			
+			var l8:MockTickerListener = new MockTickerListener(2);
+			var l7:MockTickerListener = new MockTickerListener(2);
+			var l6:MockTickerListener = new MockTickerListener(2);
+			var l5:MockTickerListener = new MockTickerListener(2);
+			var l4:MockTickerListener = new MockTickerListener(2);
+			var l3:MockTickerListener = new MockTickerListener(2);
+			var l2_2:MockTickerListener = new MockTickerListener(2);
+			var l2_1:AddingListenerTickerListener = new AddingListenerTickerListener(1, ticker, l2_2);
+			var l1:MockTickerListener = new MockTickerListener(1);
+			
+			ticker.addTickerListener(l8);
+			ticker.addTickerListener(l7);
+			ticker.addTickerListener(l6);
+			ticker.addTickerListener(l5);
+			ticker.addTickerListener(l4);
+			ticker.addTickerListener(l3);
+			ticker.addTickerListener(l2_1);
+			ticker.addTickerListener(l1);
+			
+			ticker.update(null);
+			ticker.update(null);
+			ticker.update(null);
+			ticker.update(null);
+			
+			assertEquals(1, l1.c);
+			assertEquals(1, l2_1.c);
+			assertEquals(2, l2_2.c);
+			assertEquals(2, l3.c);
+			assertEquals(2, l4.c);
+			assertEquals(2, l5.c);
+			assertEquals(2, l6.c);
+			assertEquals(2, l7.c);
+			assertEquals(2, l8.c);
+		}
 	}
 }
 
