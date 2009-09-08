@@ -33,7 +33,7 @@ package
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import org.libspark.betweenas3.BetweenAS3;
-	import org.libspark.betweenas3.easing.Cubic;
+	import org.libspark.betweenas3.easing.Elastic;
 	import org.libspark.betweenas3.tweens.ITween;
 	
 	/**
@@ -65,7 +65,7 @@ package
 			mc.x = 10;
 			mc.y = 100;
 			
-			_t = BetweenAS3.bezier(mc, {x: 385, y: 207}, null, {x: [58.05, 145.9, 246.7, 345.55], y: [61.4, 80.65, 167.05, 209.3]}, 3.0, Cubic.easeOut);
+			_t = BetweenAS3.bezier(mc, {x: 385, y: 207}, null, {x: [58.05, 145.9, 246.7, 345.55], y: [61.4, 80.65, 167.05, 209.3]}, 3.0, Elastic.easeOut);
 			
 			_t.play();
 			

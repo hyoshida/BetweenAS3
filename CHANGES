@@ -4,6 +4,8 @@
 Alpha r3022 -> HEAD
 --------------------
 
+ * [r3079] Fix: RangeError has occurred when using bezier tween with Elastic or Back easing. (#106)
+ 
  * [r3077] [r3078] Fix: Sometimes ReferenceError has occurred in EnterFrameTicker. (#108)
 
 Alpha r2505 -> Alpha r3022

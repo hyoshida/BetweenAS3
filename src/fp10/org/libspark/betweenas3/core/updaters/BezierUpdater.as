@@ -170,7 +170,15 @@ package org.libspark.betweenas3.core.updaters
 						t[name] = b + factor * (2 * invert * (cpVec[0] - b) + factor * (d[name] - b));
 					}
 					else {
-						ip = (factor * l) >> 0;
+						if (factor < 0.0) {
+							ip = 0;
+						}
+						else if (factor > 1.0) {
+							ip = l - 1;
+						}
+						else {
+							ip = (factor * l) >> 0;
+						}
 						it = (factor - (ip * (1 / l))) * l;
 						if (ip == 0) {
 							p1 = b;
