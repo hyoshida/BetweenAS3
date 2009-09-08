@@ -282,7 +282,17 @@ package org.libspark.betweenas3.core.tweens
 				position = _duration;
 			}
 			_position = position;
-			play();
+			if (_isPlaying) {
+				if (_position >= _duration) {
+					_position = 0;
+				}
+				var t:Number = _ticker.time;
+				_startTime = t - _position;
+				tick(t);
+			}
+			else {
+				play();
+			}
 		}
 		
 		/**

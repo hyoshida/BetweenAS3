@@ -4,6 +4,8 @@
 Alpha r3022 -> HEAD
 --------------------
 
+ * [r3080] 修正: play 中の gotoAndPlay が効かない (#107)
+ 
  * [r3079] 修正: Elastic もしくは Back イージングでベジェトゥイーンをすると RangeError が発生する (#106)
  
  * [r3077] [r3078] 修正: 特定の条件下で EnterFrameTicker 内で ReferenceError が発生する (#108)

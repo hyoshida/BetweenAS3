@@ -154,6 +154,33 @@ package org.libspark.betweenas3.core.tweens
 			assertEquals('play update update ', Static.log);
 		}
 		
+		// http://www.libspark.org/ticket/107
+		test function playGotoAndPlay():void
+		{
+			assertFalse(_tween.isPlaying);
+			assertEquals(9999, _tween.t);
+			
+			_tween.play();
+			_ticker.t = 2500;
+			_ticker.listener.tick(2500);
+			
+			assertTrue(_tween.isPlaying);
+			assertEquals('play update update ', Static.log);
+			assertEquals(1500, _tween.t);
+			
+			_tween.gotoAndPlay(1000);
+			
+			assertTrue(_tween.isPlaying);
+			assertEquals('play update update update ', Static.log);
+			assertEquals(1000, _tween.t);
+			
+			_ticker.listener.tick(3500);
+			
+			assertTrue(_tween.isPlaying);
+			assertEquals('play update update update update ', Static.log);
+			assertEquals(2000, _tween.t);
+		}
+		
 		test function gotoAndStop():void
 		{
 			assertFalse(_tween.isPlaying);
