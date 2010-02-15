@@ -60,6 +60,7 @@ package org.libspark.betweenas3.tickers
 		}
 		
 		private var _first:TickerListener = null;
+		private var _last:TickerListener = null;
 		private var _numListeners:uint = 0;
 		private var _tickerListenerPaddings:Array;
 		private var _time:Number;
@@ -81,16 +82,20 @@ package org.libspark.betweenas3.tickers
 				return;
 			}
 			
-			if (_first != null) {
-				if (_first.prevListener != null) {
-					_first.prevListener.nextListener = listener;
-					listener.prevListener = _first.prevListener;
+			if (_last != null) {
+				if (_last.nextListener != null) {
+					_last.nextListener.prevListener = listener;
+					listener.nextListener = _last.nextListener;
 				}
-				listener.nextListener = _first;
-				_first.prevListener = listener;
+				listener.prevListener = _last;
+				_last.nextListener = listener;
 			}
 			
-			_first = listener;
+			_last = listener;
+			
+			if (_first == null) {
+				_first = listener;
+			}
 			
 			++_numListeners;
 		}
@@ -115,6 +120,9 @@ package org.libspark.betweenas3.tickers
 					if (l.nextListener != null) {
 						l.nextListener.prevListener = l.prevListener;
 						l.prevListener = null;
+					}
+					else {
+						_last = l.prevListener;
 					}
 					--_numListeners;
 				}
@@ -149,14 +157,14 @@ package org.libspark.betweenas3.tickers
 		{
 			// リスナの数を 8 の倍数になるようにパディングして 8 個ずつ一気にループさせる
 			
-			var t:Number = _time = getTimer() / 1000, n:uint = 8 - (_numListeners % 8), listener:TickerListener = _tickerListenerPaddings[0] as TickerListener, l:TickerListener = _tickerListenerPaddings[n] as TickerListener, ll:TickerListener = null;
+			var t:Number = _time = getTimer() / 1000, i:int = (_numListeners / 8 + 1) | 0, n:uint = i * 8 - _numListeners, listener:TickerListener = _tickerListenerPaddings[0] as TickerListener, l:TickerListener = _tickerListenerPaddings[n] as TickerListener, ll:TickerListener = null;
 			
 			// このようにつなぎかえることでパディングの数を変える
 			if ((l.nextListener = _first) != null) {
 				_first.prevListener = l;
 			}
 			
-			while (listener.nextListener != null) {
+			while (--i >= 0) {
 				if ((listener = listener.nextListener).tick(t)) {
 					if (listener.prevListener != null) {
 						listener.prevListener.nextListener = listener.nextListener;
@@ -166,6 +174,9 @@ package org.libspark.betweenas3.tickers
 					}
 					if (listener == _first) {
 						_first = listener.nextListener;
+					}
+					if (listener == _last) {
+						_last = listener.prevListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
@@ -183,21 +194,8 @@ package org.libspark.betweenas3.tickers
 					if (listener == _first) {
 						_first = listener.nextListener;
 					}
-					ll = listener.prevListener;
-					listener.nextListener = null;
-					listener.prevListener = null;
-					listener = ll;
-					--_numListeners;
-				}
-				if ((listener = listener.nextListener).tick(t)) {
-					if (listener.prevListener != null) {
-						listener.prevListener.nextListener = listener.nextListener;
-					}
-					if (listener.nextListener != null) {
-						listener.nextListener.prevListener = listener.prevListener;
-					}
-					if (listener == _first) {
-						_first = listener.nextListener;
+					if (listener == _last) {
+						_last = listener.prevListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
@@ -215,21 +213,8 @@ package org.libspark.betweenas3.tickers
 					if (listener == _first) {
 						_first = listener.nextListener;
 					}
-					ll = listener.prevListener;
-					listener.nextListener = null;
-					listener.prevListener = null;
-					listener = ll;
-					--_numListeners;
-				}
-				if ((listener = listener.nextListener).tick(t)) {
-					if (listener.prevListener != null) {
-						listener.prevListener.nextListener = listener.nextListener;
-					}
-					if (listener.nextListener != null) {
-						listener.nextListener.prevListener = listener.prevListener;
-					}
-					if (listener == _first) {
-						_first = listener.nextListener;
+					if (listener == _last) {
+						_last = listener.prevListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
@@ -247,21 +232,8 @@ package org.libspark.betweenas3.tickers
 					if (listener == _first) {
 						_first = listener.nextListener;
 					}
-					ll = listener.prevListener;
-					listener.nextListener = null;
-					listener.prevListener = null;
-					listener = ll;
-					--_numListeners;
-				}
-				if ((listener = listener.nextListener).tick(t)) {
-					if (listener.prevListener != null) {
-						listener.prevListener.nextListener = listener.nextListener;
-					}
-					if (listener.nextListener != null) {
-						listener.nextListener.prevListener = listener.prevListener;
-					}
-					if (listener == _first) {
-						_first = listener.nextListener;
+					if (listener == _last) {
+						_last = listener.prevListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
@@ -278,6 +250,66 @@ package org.libspark.betweenas3.tickers
 					}
 					if (listener == _first) {
 						_first = listener.nextListener;
+					}
+					if (listener == _last) {
+						_last = listener.prevListener;
+					}
+					ll = listener.prevListener;
+					listener.nextListener = null;
+					listener.prevListener = null;
+					listener = ll;
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					if (listener == _first) {
+						_first = listener.nextListener;
+					}
+					if (listener == _last) {
+						_last = listener.prevListener;
+					}
+					ll = listener.prevListener;
+					listener.nextListener = null;
+					listener.prevListener = null;
+					listener = ll;
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					if (listener == _first) {
+						_first = listener.nextListener;
+					}
+					if (listener == _last) {
+						_last = listener.prevListener;
+					}
+					ll = listener.prevListener;
+					listener.nextListener = null;
+					listener.prevListener = null;
+					listener = ll;
+					--_numListeners;
+				}
+				if ((listener = listener.nextListener).tick(t)) {
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
+					}
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
+					}
+					if (listener == _first) {
+						_first = listener.nextListener;
+					}
+					if (listener == _last) {
+						_last = listener.prevListener;
 					}
 					ll = listener.prevListener;
 					listener.nextListener = null;
@@ -290,6 +322,9 @@ package org.libspark.betweenas3.tickers
 			// 元に戻す
 			if ((_first = l.nextListener) != null) {
 				_first.prevListener = null;
+			}
+			else {
+				_last = null;
 			}
 			l.nextListener = _tickerListenerPaddings[n + 1] as TickerListener;
 		}

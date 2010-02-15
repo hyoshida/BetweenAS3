@@ -200,11 +200,77 @@ package org.libspark.betweenas3.tickers
 			assertEquals(2, l7.c);
 			assertEquals(2, l8.c);
 		}
+		
+		test function iterationOrder():void
+		{
+			var l01:LoggingTickerListener = new LoggingTickerListener('A', 1);
+			var l02:LoggingTickerListener = new LoggingTickerListener('B', 2);
+			var l03:LoggingTickerListener = new LoggingTickerListener('C', 3);
+			var l04:LoggingTickerListener = new LoggingTickerListener('D', 4);
+			var l05:LoggingTickerListener = new LoggingTickerListener('E', 5);
+			var l06:LoggingTickerListener = new LoggingTickerListener('F', 6);
+			var l07:LoggingTickerListener = new LoggingTickerListener('G', 7);
+			var l08:LoggingTickerListener = new LoggingTickerListener('H', 8);
+			
+			var ticker:EnterFrameTicker = new EnterFrameTicker();
+			
+			ticker.addTickerListener(l01);
+			ticker.addTickerListener(l02);
+			ticker.addTickerListener(l03);
+			ticker.addTickerListener(l04);
+			ticker.addTickerListener(l05);
+			ticker.addTickerListener(l06);
+			ticker.addTickerListener(l07);
+			ticker.addTickerListener(l08);
+			
+			Static.log = '';
+			
+			for (var i:uint = 1; i < 10; ++i) {
+				ticker.update(null);
+			}
+			
+			var log:String = '';
+			log += 'A1 B1 C1 D1 E1 F1 G1 H1 ';
+			log += 'B2 C2 D2 E2 F2 G2 H2 ';
+			log += 'C3 D3 E3 F3 G3 H3 ';
+			log += 'D4 E4 F4 G4 H4 ';
+			log += 'E5 F5 G5 H5 ';
+			log += 'F6 G6 H6 ';
+			log += 'G7 H7 ';
+			log += 'H8 ';
+			
+			assertEquals(log, Static.log);
+		}
+		
+		test function insertAfterDelete():void
+		{
+			var ticker:EnterFrameTicker = new EnterFrameTicker();
+			
+			var l1:MockTickerListener = new MockTickerListener(1);
+			var l2:MockTickerListener = new MockTickerListener(1);
+			var l3:AddingListenerTickerListener = new AddingListenerTickerListener(2, ticker, l1, 1);
+			
+			ticker.addTickerListener(l3);
+			ticker.addTickerListener(l2);
+			
+			ticker.update(null);
+			ticker.update(null);
+			ticker.update(null);
+			
+			assertEquals(1, l1.c);
+			assertEquals(1, l2.c);
+			assertEquals(2, l3.c);
+		}
 	}
 }
 
 import org.libspark.betweenas3.core.ticker.TickerListener;
 import org.libspark.betweenas3.core.ticker.ITicker;
+
+internal class Static
+{
+	public static var log:String;
+}
 
 internal class MockTickerListener extends TickerListener
 {
@@ -225,22 +291,47 @@ internal class MockTickerListener extends TickerListener
 
 internal class AddingListenerTickerListener extends MockTickerListener
 {
-	public function AddingListenerTickerListener(n:uint, ticker:ITicker, listener:TickerListener)
+	public function AddingListenerTickerListener(n:uint, ticker:ITicker, listener:TickerListener, n2:uint = 0)
 	{
 		super(n);
 		
 		this.ticker = ticker;
 		this.listener = listener;
+		this.n2 = n2;
 	}
 	
 	public var ticker:ITicker;
 	public var listener:TickerListener;
+	public var n2:uint;
 	
 	override public function tick(time:Number):Boolean
 	{
-		if (c == 0) {
+		if (c == n2) {
 			ticker.addTickerListener(listener);
 		}
 		return super.tick(time);
+	}
+}
+
+internal class LoggingTickerListener extends TickerListener
+{
+	public function LoggingTickerListener(name:String, n:uint)
+	{
+		this.name = name;
+		this.n = n;
+		this.c = 0;
+	}
+	
+	public var name:String;
+	public var n:uint;
+	public var c:uint;
+	
+	override public function tick(time:Number):Boolean
+	{
+		++c;
+		
+		Static.log += name + c + ' ';
+		
+		return c == n;
 	}
 }
